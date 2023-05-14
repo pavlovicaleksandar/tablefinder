@@ -6,6 +6,9 @@
           <v-card-title>{{ restaurant.name }}</v-card-title>
           <v-card-text>{{ restaurant.description }}</v-card-text>
           <v-card-actions>
+            <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }">
+              <v-btn color="primary">View</v-btn>
+            </router-link>
             <v-btn color="primary">Edit</v-btn>
             <v-btn color="primary">Add</v-btn>
             <v-btn @click="deleteRestaurant(restaurant.id)" color="primary">Delete</v-btn>
