@@ -1,14 +1,10 @@
 package com.pavlovicaleksandar.tablefinder.repository
 
-import org.springframework.data.relational.core.mapping.Table
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
 import java.sql.ResultSet
 import java.util.UUID
-
-@Table("tables")
-data class TableRecord(val id: UUID)
 
 @Repository
 class TableRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
@@ -28,4 +24,5 @@ class TableRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
     }
 }
 
+data class TableRecord(val id: UUID)
 fun ResultSet.getUUID(columnName: String): UUID = UUID.fromString(getString(columnName))
