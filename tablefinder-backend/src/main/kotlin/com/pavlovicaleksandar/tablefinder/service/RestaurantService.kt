@@ -10,6 +10,18 @@ class RestaurantService(private val repository: RestaurantRepository) {
     fun findAll(): List<Restaurant> {
         return repository.findAll().toRestaurantList()
     }
+
+    fun findById(restaurantId: UUID): Restaurant? {
+        return repository.findById(restaurantId)?.toRestaurant()
+    }
+}
+
+private fun RestaurantRecord.toRestaurant(): Restaurant {
+    return  Restaurant(
+        id = this.id,
+        name = this.name,
+        description = this.description
+    )
 }
 
 data class Restaurant(
@@ -20,10 +32,6 @@ data class Restaurant(
 
 private fun List<RestaurantRecord>.toRestaurantList(): List<Restaurant> {
     return map {
-        Restaurant(
-            id = it.id,
-            name = it.name,
-            description = it.description
-        )
+        it.toRestaurant()
     }
 }

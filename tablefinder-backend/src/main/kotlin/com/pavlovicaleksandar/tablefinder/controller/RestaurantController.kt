@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.notFound
+import org.springframework.web.bind.annotation.PathVariable
 
 @RestController
 @RequestMapping("/restaurants")
@@ -17,10 +20,15 @@ class RestaurantController(private val service: RestaurantService) {
         return service.findAll().toRestaurantResponseDTO()
     }
 
-//    @GetMapping("/{restaurantId}")
-//    fun getRestaurantById(restaurantId: UUID): RestaurantResponseDTO {
-//        return RestaurantResponseDTO(name = "Restaurant 1", description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
-//    }
+    @GetMapping("/{restaurantId}")
+    fun getRestaurantById(@PathVariable restaurantId: UUID): RestaurantResponseDTO? {
+        val restaurant = service.findById(restaurantId)
+        if (restaurant != null) {
+            return restaurant.toRestaurantResponseDTO()
+        }
+        // TODO handle not found case
+        return null
+    }
 }
 
 data class RestaurantResponseDTO(val id: UUID, val name: String, val description: String)

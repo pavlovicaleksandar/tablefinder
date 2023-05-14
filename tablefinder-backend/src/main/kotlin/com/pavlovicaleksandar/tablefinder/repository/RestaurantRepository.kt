@@ -1,15 +1,9 @@
 package com.pavlovicaleksandar.tablefinder.repository
 
-import java.util.UUID
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
-
-data class RestaurantRecord(
-    val id: UUID,
-    val name: String,
-    val description: String
-)
+import java.util.UUID
 
 @Repository
 class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
@@ -18,6 +12,16 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
             "select * from restaurants",
             rowMapper
         )
+    }
+
+    fun findById(id: UUID): RestaurantRecord? {
+        return jdbcTemplate.query(
+            "select * from restaurants where id = :id",
+            mapOf(
+                "id" to id
+            ),
+            rowMapper
+        ).firstOrNull()
     }
 
     private val rowMapper = RowMapper<RestaurantRecord> { resultSet, _ ->
@@ -30,3 +34,9 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
         }
     }
 }
+
+data class RestaurantRecord(
+    val id: UUID,
+    val name: String,
+    val description: String
+)
