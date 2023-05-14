@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.noContent
 import org.springframework.http.ResponseEntity.notFound
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 
 @RestController
@@ -28,6 +30,12 @@ class RestaurantController(private val service: RestaurantService) {
         }
         // TODO handle not found case
         return null
+    }
+
+    @DeleteMapping("/{restaurantId}")
+    fun deleteRestaurantById(@PathVariable restaurantId: UUID): ResponseEntity<Any> {
+        service.deleteById(restaurantId)
+        return noContent().build()
     }
 }
 

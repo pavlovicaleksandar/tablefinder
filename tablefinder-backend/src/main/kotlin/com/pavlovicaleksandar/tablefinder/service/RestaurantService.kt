@@ -14,6 +14,10 @@ class RestaurantService(private val repository: RestaurantRepository) {
     fun findById(restaurantId: UUID): Restaurant? {
         return repository.findById(restaurantId)?.toRestaurant()
     }
+
+    fun deleteById(restaurantId: UUID) {
+        return repository.deleteById(restaurantId)
+    }
 }
 
 private fun RestaurantRecord.toRestaurant(): Restaurant {

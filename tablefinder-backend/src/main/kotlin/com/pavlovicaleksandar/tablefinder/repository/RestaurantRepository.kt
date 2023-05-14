@@ -24,6 +24,13 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
         ).firstOrNull()
     }
 
+    fun deleteById(restaurantId: UUID) {
+        jdbcTemplate.update(
+            "DELETE FROM restaurants WHERE id = :id",
+            mapOf("id" to restaurantId)
+        )
+    }
+
     private val rowMapper = RowMapper<RestaurantRecord> { resultSet, _ ->
         with(resultSet) {
             RestaurantRecord(
