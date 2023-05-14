@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS tables (
+    id       VARCHAR(60)  PRIMARY KEY
+);
+
+INSERT INTO tables values('27e20fd9-a530-40cb-8890-628561c85021')
+
