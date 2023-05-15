@@ -12,7 +12,7 @@
           <span>{{ restaurant.description }}</span>
 
           <div class="reserve-now-btn">
-            <v-btn color="secondary">Reserve now </v-btn>
+            <v-btn color="secondary">Reserve now</v-btn>
           </div>
         </div>
       </div>

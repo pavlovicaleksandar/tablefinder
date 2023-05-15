@@ -2,31 +2,31 @@
   <v-container fluid>
     <v-row>
       <v-col v-for="(restaurant, index) in restaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
-        <v-card>
-          <v-card-title>{{ restaurant.name }}</v-card-title>
-          <v-img src="https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510" class="restaurant-img"></v-img>
-          <v-card-actions>
-            <v-menu>
-              <template v-slot:activator="{ props }">
-                <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
-              </template>
+          <v-card>
+            <v-card-title>{{ restaurant.name }}</v-card-title>
+            <v-img src="https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510" class="restaurant-img"></v-img>
+            <v-card-actions>
+              <v-menu>
+                <template v-slot:activator="{ props }">
+                  <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+                </template>
 
-              <v-list>
-                <v-list-item>
-                  <v-list-item-title>Edit</v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="deleteRestaurant(restaurant.id)">
-                  <v-list-item-title>Delete</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-            <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }">
-              <v-btn color="primary">View</v-btn>
-            </router-link>
-            <v-btn color="secondary">Reserve now</v-btn>
-<!--            <v-btn @click="deleteRestaurant(restaurant.id)" color="primary">Delete</v-btn>-->
-          </v-card-actions>
-        </v-card>
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>Edit</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item @click="deleteRestaurant(restaurant.id)">
+                    <v-list-item-title>Delete</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }" style="text-decoration: none">
+                <v-btn color="secondary">View</v-btn>
+              </router-link>
+              <v-btn color="secondary">Reserve now</v-btn>
+  <!--            <v-btn @click="deleteRestaurant(restaurant.id)" color="primary">Delete</v-btn>-->
+            </v-card-actions>
+          </v-card>
       </v-col>
     </v-row>
   </v-container>
