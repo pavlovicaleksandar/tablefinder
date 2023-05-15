@@ -4,12 +4,27 @@
       <v-col v-for="(restaurant, index) in restaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
         <v-card>
           <v-card-title>{{ restaurant.name }}</v-card-title>
-          <v-card-text>{{ restaurant.description }}</v-card-text>
+          <v-img src="https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510" class="restaurant-img"></v-img>
           <v-card-actions>
+            <v-menu>
+              <template v-slot:activator="{ props }">
+                <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+              </template>
+
+              <v-list>
+                <v-list-item>
+                  <v-list-item-title>Edit</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="deleteRestaurant(restaurant.id)">
+                  <v-list-item-title>Delete</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
             <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }">
               <v-btn color="primary">View</v-btn>
             </router-link>
-            <v-btn @click="deleteRestaurant(restaurant.id)" color="primary">Delete</v-btn>
+            <v-btn color="secondary">Reserve now</v-btn>
+<!--            <v-btn @click="deleteRestaurant(restaurant.id)" color="primary">Delete</v-btn>-->
           </v-card-actions>
         </v-card>
       </v-col>
@@ -49,3 +64,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.restaurant-img {
+  width: 300px; /* Set the desired width for the card */
+  height: 300px; /* Set the desired height for the card */
+}
+</style>
