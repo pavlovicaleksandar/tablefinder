@@ -12,7 +12,7 @@
           <span>{{ restaurant.description }}</span>
 
           <div class="reserve-now-btn">
-            <v-btn color="secondary">Reserve now</v-btn>
+            <ReservePopup></ReservePopup>
           </div>
         </div>
       </div>
@@ -20,7 +20,12 @@
   </v-container>
 </template>
 <script>
+import ReservePopup from "@/components/ReservePopup";
+
 export default {
+  components: {
+    ReservePopup,
+  },
   name: "RestaurantDetails",
   props: {
     id: {
