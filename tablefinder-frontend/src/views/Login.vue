@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     login() {
-      // Handle login logic
+      this.$router.push('/restaurants')
     }
   }
 }
