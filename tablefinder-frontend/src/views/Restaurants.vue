@@ -23,23 +23,28 @@
               <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }" style="text-decoration: none">
                 <v-btn color="secondary">View</v-btn>
               </router-link>
-              <v-btn color="secondary">Reserve now</v-btn>
-  <!--            <v-btn @click="deleteRestaurant(restaurant.id)" color="primary">Delete</v-btn>-->
+              <v-btn color="secondary" @click="showPopup=true">Reserve now</v-btn>
             </v-card-actions>
           </v-card>
       </v-col>
     </v-row>
   </v-container>
+  <ReservePopup v-model="showPopup"></ReservePopup>
 </template>
 
 <script>
 import axios from "axios";
+import ReservePopup from "@/components/ReservePopup";
 
 export default {
+  components: {
+    ReservePopup,
+  },
   data() {
     return {
       restaurants: [
-      ]
+      ],
+      showPopup: false
     }
   },
   mounted() {
