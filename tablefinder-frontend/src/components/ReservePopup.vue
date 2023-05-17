@@ -1,5 +1,6 @@
 <template>
-  <v-dialog v-model="showPopup" width="auto" max-width="500px">
+  <v-btn @click.stop="showPopup=true" color="secondary">Reserve now</v-btn>
+  <v-dialog v-model="showPopup" max-width="500px">
     <v-card>
       <v-card-title>Reservation</v-card-title>
       <v-card-text>
@@ -30,7 +31,7 @@ export default {
   methods: {
     reserve() {
       // Handle the reservation logic here
-      // You can access the selected date, time, and number of people using this.date, this.time, this.numberOfPeople
+      // You can access the selected using this.numberOfPeople
       console.log('Reserve button clicked');
     },
     cancel() {

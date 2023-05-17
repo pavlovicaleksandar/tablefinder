@@ -23,13 +23,12 @@
               <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }" style="text-decoration: none">
                 <v-btn color="secondary">View</v-btn>
               </router-link>
-              <v-btn color="secondary" @click="showPopup=true">Reserve now</v-btn>
+              <ReservePopup></ReservePopup>
             </v-card-actions>
           </v-card>
       </v-col>
     </v-row>
   </v-container>
-  <ReservePopup v-model="showPopup"></ReservePopup>
 </template>
 
 <script>
