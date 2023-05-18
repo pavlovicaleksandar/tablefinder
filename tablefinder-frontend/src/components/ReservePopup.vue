@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -33,6 +35,20 @@ export default {
       // Handle the reservation logic here
       // You can access the selected using this.numberOfPeople
       console.log('Reserve button clicked');
+      const reservationData = {
+        restaurantId: '11e20fd9-a530-40cb-8890-628561c85021',
+        userId: '11111111-a530-40cb-8890-628561c85021',
+        numberOfPeople: this.numberOfPeople
+      };
+      axios.post(`http://localhost:8080/reservations`, reservationData)
+        .then(response => {
+          console.log('Reservation created:', response.data);
+          alert('Reservation successfully created')
+        })
+        .catch(error => {
+          console.error('Error creating reservation:', error);
+        });
+        this.showPopup = false
     },
     cancel() {
       // Handle the cancel logic here
