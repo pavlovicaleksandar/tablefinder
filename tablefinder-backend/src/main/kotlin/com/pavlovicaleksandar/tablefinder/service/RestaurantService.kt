@@ -21,7 +21,7 @@ class RestaurantService(private val repository: RestaurantRepository) {
 }
 
 private fun RestaurantRecord.toRestaurant(): Restaurant {
-    return  Restaurant(
+    return Restaurant(
         id = this.id,
         name = this.name,
         description = this.description
