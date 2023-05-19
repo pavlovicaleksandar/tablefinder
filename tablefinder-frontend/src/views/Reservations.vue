@@ -64,7 +64,7 @@ export default {
     fetchReservations() {
       fetch('http://localhost:8080/reservations')
         .then(response => response.json())
-        // .then(data => this.reservations = data)
+        .then(data => this.reservations = data)
     },
     acceptReservation(res) {
       console.log(res)
