@@ -21,6 +21,12 @@ const routes = [
         name: 'RestaurantDetails',
         component: () => import(/* webpackChunkName: "home" */ '@/views/RestaurantDetails.vue'),
         props: true
+      },
+      {
+        path: 'reservations',
+        name: 'Reservations',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Reservations.vue'),
+        props: true
       }
     ],
   },

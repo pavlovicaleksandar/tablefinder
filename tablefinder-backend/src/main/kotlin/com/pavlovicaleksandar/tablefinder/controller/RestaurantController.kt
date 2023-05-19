@@ -2,16 +2,15 @@ package com.pavlovicaleksandar.tablefinder.controller
 
 import com.pavlovicaleksandar.tablefinder.service.Restaurant
 import com.pavlovicaleksandar.tablefinder.service.RestaurantService
+import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.noContent
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
-import org.springframework.http.ResponseEntity
-import org.springframework.http.ResponseEntity.noContent
-import org.springframework.http.ResponseEntity.notFound
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
 
 @RestController
 @RequestMapping("/restaurants")

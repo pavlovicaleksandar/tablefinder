@@ -1,0 +1,81 @@
+<template>
+  <v-data-table
+    v-model:items-per-page="itemsPerPage"
+    :headers="headers"
+    :items="reservations"
+    class="elevation-1"
+  >
+    <template v-slot:item.actions="{ item }">
+      <v-icon
+        size="small"
+        class="me-2"
+        @click="acceptReservation(item)"
+      >
+        mdi-pencil
+      </v-icon>
+      <v-icon
+        size="small"
+        @click="rejectReservation(item)"
+      >
+        mdi-delete
+      </v-icon>
+    </template>
+  </v-data-table>
+</template>
+
+<script>
+import { VDataTable } from 'vuetify/labs/VDataTable'
+
+export default {
+  components: {
+    VDataTable,
+  },
+  mounted() {
+    this.fetchReservations()
+  },
+  data() {
+    return {
+      itemsPerPage: 10,
+      headers: [
+        {title: 'Date & time', align: 'start', sortable: false, key: 'datetime'},
+        {title: 'Restaurant ID', align: 'start', key: 'restaurantId'},
+        {title: 'User ID', align: 'start', key: 'userId'},
+        {title: 'Status', align: 'start', key: 'status'},
+        {title: 'Number of People', align: 'start', key: 'numberOfPeople'},
+        {title: 'User Note', align: 'start', key: 'userNote'},
+        {title: 'Restaurant Note', align: 'start', key: 'restaurantNote'},
+        {title: 'Actions', value: 'actions', sortable: false},
+      ],
+      reservations: [
+        {
+          reservationId: 1,
+          datetime: '2023-05-18 19:00',
+          restaurantId: '123',
+          userId: '456',
+          status: 'Confirmed',
+          numberOfPeople: 2,
+          userNote: 'Special request: Vegan options',
+          restaurantNote: 'Will deliver',
+        },
+      ]
+    }
+  },
+  methods: {
+    fetchReservations() {
+      fetch('http://localhost:8080/reservations')
+        .then(response => response.json())
+        // .then(data => this.reservations = data)
+    },
+    acceptReservation(res) {
+      console.log(res)
+    },
+    rejectReservation(res) {
+      console.log(res)
+    }
+  }
+};
+</script>
+
+<style>
+/* Add custom styles for the component */
+</style>

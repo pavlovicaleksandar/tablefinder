@@ -2,13 +2,13 @@ package com.pavlovicaleksandar.tablefinder.controller
 
 import com.pavlovicaleksandar.tablefinder.service.Reservation
 import com.pavlovicaleksandar.tablefinder.service.ReservationService
-import java.util.UUID
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @RestController
 @RequestMapping("/reservations")
@@ -19,6 +19,7 @@ class ReservationController(private val service: ReservationService) {
     fun createReservation(@RequestBody createReservationDTO: CreateReservationDTO): Int {
         return service.createReservation(createReservationDTO)
     }
+
     @GetMapping
     fun getAllReservations(): List<ReservationResponseDTO> {
         return service.findAllReservations().toReservationResponseDTO()
