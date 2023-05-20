@@ -42,7 +42,7 @@ export default {
         {title: 'User ID', align: 'start', key: 'userId'},
         {title: 'Status', align: 'start', key: 'status'},
         {title: 'Number of People', align: 'start', key: 'numberOfPeople'},
-        {title: 'User Note', align: 'start', key: 'userNote'},
+        {title: 'Note for restaurant', align: 'start', key: 'noteForRestaurant'},
         {title: 'Restaurant Note', align: 'start', key: 'restaurantNote'},
         {title: 'Actions', value: 'actions', sortable: false},
       ],

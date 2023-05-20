@@ -10,11 +10,16 @@
               <v-text-field v-model.number="numberOfPeople" label="Number of People" type="number"></v-text-field>
             </v-col>
           </v-row>
+          <v-row>
+            <v-col cols="12" md="12">
+              <v-textarea color="secondary" v-model="noteForRestaurant"  label="Note" variant="outlined"></v-textarea>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" @click="reserve">Reserve</v-btn>
-        <v-btn color="error" @click="cancel">Cancel</v-btn>
+        <v-btn color="secondary" @click="reserve" variant="outlined">Reserve</v-btn>
+        <v-btn color="error" @click="cancel" variant="outlined">Cancel</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -28,6 +33,7 @@ export default {
     return {
       showPopup: false,
       numberOfPeople: 0,
+      noteForRestaurant: '',
     };
   },
   methods: {
@@ -38,7 +44,8 @@ export default {
       const reservationData = {
         restaurantId: '11e20fd9-a530-40cb-8890-628561c85021',
         userId: '11111111-a530-40cb-8890-628561c85021',
-        numberOfPeople: this.numberOfPeople
+        numberOfPeople: this.numberOfPeople,
+        noteForRestaurant: this.noteForRestaurant
       };
       axios.post(`http://localhost:8080/reservations`, reservationData)
         .then(response => {

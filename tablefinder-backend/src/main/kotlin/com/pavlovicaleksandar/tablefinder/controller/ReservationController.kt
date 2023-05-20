@@ -36,9 +36,21 @@ private fun Reservation.toReservationResponseDTO(): ReservationResponseDTO {
         id = this.id,
         numberOfPeople = this.numberOfPeople,
         userId = this.userId,
-        restaurantId = this.restaurantId
+        restaurantId = this.restaurantId,
+        noteForRestaurant = this.noteForRestaurant
     )
 }
 
-data class ReservationResponseDTO(val id: UUID, val numberOfPeople: Int, val userId: UUID, val restaurantId: UUID)
-data class CreateReservationDTO(val restaurantId: UUID, val userId: UUID, val numberOfPeople: Int)
+data class ReservationResponseDTO(
+    val id: UUID,
+    val numberOfPeople: Int,
+    val userId: UUID,
+    val restaurantId: UUID,
+    val noteForRestaurant: String
+)
+data class CreateReservationDTO(
+    val restaurantId: UUID,
+    val userId: UUID,
+    val numberOfPeople: Int,
+    val noteForRestaurant: String
+)

@@ -18,7 +18,8 @@ class ReservationService(val repository: ReservationRepository) {
         return repository.createReservation(
             createReservationDTO.userId,
             createReservationDTO.restaurantId,
-            createReservationDTO.numberOfPeople
+            createReservationDTO.numberOfPeople,
+            createReservationDTO.noteForRestaurant
         )
     }
 }
@@ -28,7 +29,8 @@ private fun ReservationRecord.toReservation(): Reservation {
         id = this.id,
         numberOfPeople = this.numberOfPeople,
         userId = this.userId,
-        restaurantId = this.restaurantId
+        restaurantId = this.restaurantId,
+        noteForRestaurant = this.noteForRestaurant
     )
 }
 
@@ -36,7 +38,8 @@ data class Reservation(
     val id: UUID,
     val numberOfPeople: Int,
     val userId: UUID,
-    val restaurantId: UUID
+    val restaurantId: UUID,
+    val noteForRestaurant: String
 )
 
 private fun List<ReservationRecord>.toReservationList(): List<Reservation> {

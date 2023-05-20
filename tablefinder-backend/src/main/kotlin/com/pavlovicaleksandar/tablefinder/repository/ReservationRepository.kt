@@ -15,14 +15,15 @@ class ReservationRepository(private val jdbcTemplate: NamedParameterJdbcTemplate
         )
     }
 
-    fun createReservation(userId: UUID, restaurantId: UUID, numberOfPeople: Int): Int {
+    fun createReservation(userId: UUID, restaurantId: UUID, numberOfPeople: Int, noteForRestaurant: String): Int {
         return jdbcTemplate.update(
-            "insert into reservations(id, user_id, restaurant_id, number_of_people) values(:id, :user_id, :restaurant_id, :number_of_people)",
+            "insert into reservations(id, user_id, restaurant_id, number_of_people, note_for_restaurant) values(:id, :user_id, :restaurant_id, :number_of_people, :note_for_restaurant)",
             mapOf(
                 "id" to randomUUID(),
                 "user_id" to userId,
                 "restaurant_id" to restaurantId,
-                "number_of_people" to numberOfPeople
+                "number_of_people" to numberOfPeople,
+                "note_for_restaurant" to noteForRestaurant
             )
         )
     }
@@ -33,11 +34,18 @@ class ReservationRepository(private val jdbcTemplate: NamedParameterJdbcTemplate
                 id = getUUID("id"),
                 userId = getUUID("user_id"),
                 restaurantId = getUUID("restaurant_id"),
-                numberOfPeople = getInt("number_of_people")
+                numberOfPeople = getInt("number_of_people"),
+                noteForRestaurant = getString("note_for_restaurant")
             )
         }
     }
 }
 
-data class ReservationRecord(val id: UUID, val numberOfPeople: Int, val userId: UUID, val restaurantId: UUID)
+data class ReservationRecord(
+    val id: UUID,
+    val numberOfPeople: Int,
+    val userId: UUID,
+    val restaurantId: UUID,
+    val noteForRestaurant: String
+)
 
