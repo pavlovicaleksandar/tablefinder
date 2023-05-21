@@ -2,8 +2,8 @@ package com.pavlovicaleksandar.tablefinder.repository
 
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import java.util.UUID
 import org.springframework.stereotype.Repository
+import java.util.UUID
 
 @Repository
 class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {

@@ -11,20 +11,22 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import org.springframework.web.bind.annotation.CrossOrigin
 
 @RestController
 @RequestMapping("/users")
-class UserController(private val userService: UserService) {
+@CrossOrigin(origins = ["http://localhost:3000"])
+class UserController(private val service: UserService) {
 
     @PostMapping
     fun createUser(@RequestBody user: CreateUserDTO): ResponseEntity<Int> {
-        val success = userService.createUser(user)
+        val success = service.createUser(user)
         return ResponseEntity(success, HttpStatus.CREATED)
     }
 
-    @PostMapping
+    @PostMapping("/login")
     fun login(@RequestBody login: LoginDTO): ResponseEntity<User> {
-        val user = userService.getUserByEmailAndPassword(login.email, login.password)
+        val user = service.getUserByEmailAndPassword(login.email, login.password)
         return if (user != null) {
             ResponseEntity(user, HttpStatus.OK)
         } else {
@@ -34,7 +36,7 @@ class UserController(private val userService: UserService) {
 
     @GetMapping("/{id}")
     fun getUserById(@PathVariable id: UUID): ResponseEntity<User> {
-        val user = userService.getUserById(id)
+        val user = service.getUserById(id)
         return if (user != null) {
             ResponseEntity(user, HttpStatus.OK)
         } else {
@@ -44,7 +46,7 @@ class UserController(private val userService: UserService) {
 
     @GetMapping
     fun getAllUsers(): ResponseEntity<List<User>> {
-        val users = userService.getAllUsers()
+        val users = service.getAllUsers()
         return ResponseEntity(users, HttpStatus.OK)
     }
 }
