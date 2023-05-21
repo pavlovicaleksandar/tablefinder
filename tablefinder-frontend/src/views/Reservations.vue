@@ -39,7 +39,7 @@ export default {
       headers: [
         {title: 'Date & time', align: 'start', sortable: false, key: 'datetime'},
         {title: 'Restaurant ID', align: 'start', key: 'restaurantId'},
-        {title: 'User ID', align: 'start', key: 'userId'},
+        {title: 'com.pavlovicaleksandar.tablefinder.service.User ID', align: 'start', key: 'userId'},
         {title: 'Status', align: 'start', key: 'status'},
         {title: 'Number of People', align: 'start', key: 'numberOfPeople'},
         {title: 'Note for restaurant', align: 'start', key: 'noteForRestaurant'},
