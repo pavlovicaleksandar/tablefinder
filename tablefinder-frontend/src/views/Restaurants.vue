@@ -1,7 +1,10 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col v-for="(restaurant, index) in restaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
+      <v-text-field v-model="search" label="Search by name" outlined></v-text-field>
+    </v-row>
+    <v-row>
+      <v-col v-for="(restaurant, index) in filteredRestaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
           <v-card>
             <v-card-title>{{ restaurant.name }}</v-card-title>
             <v-img src="https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510" class="restaurant-img"></v-img>
@@ -41,9 +44,9 @@ export default {
   },
   data() {
     return {
-      restaurants: [
-      ],
-      showPopup: false
+      restaurants: [],
+      showPopup: false,
+      search: ''
     }
   },
   mounted() {
@@ -64,6 +67,14 @@ export default {
           console.error('Error deleting restaurant:', error);
         });
       location.reload()
+    }
+  },
+  computed: {
+    filteredRestaurants() {
+      const searchTerm = this.search.toLowerCase();
+      return this.restaurants.filter((restaurant) => {
+        return restaurant.name.toLowerCase().includes(searchTerm);
+      });
     }
   }
 }
