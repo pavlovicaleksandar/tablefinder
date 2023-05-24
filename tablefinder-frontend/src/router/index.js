@@ -27,6 +27,12 @@ const routes = [
         name: 'Reservations',
         component: () => import(/* webpackChunkName: "home" */ '@/views/Reservations.vue'),
         props: true
+      },
+      {
+        path: 'users',
+        name: 'Users',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Users.vue'),
+        props: true
       }
     ],
   },

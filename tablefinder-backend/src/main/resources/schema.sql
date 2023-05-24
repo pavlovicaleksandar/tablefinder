@@ -35,5 +35,7 @@ INSERT INTO restaurants values('77e52fd9-a530-40cb-8890-543561c85091', 'Skok po 
 INSERT INTO restaurants values('88e52fd9-a530-40cb-8890-543561c85091', 'Babaroga', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.');
 INSERT INTO restaurants values('99e52fd9-a530-40cb-8890-543561c85091', 'Mozzarela Osteria', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.');
 
-INSERT INTO users values('11e20fd9-a530-40cb-8890-628561c85021', 'user@example.com', '098f6bcd4621d373cade4e832627b4f6', 'admin');
+INSERT INTO users values('11e20fd9-a530-40cb-8890-628561c85021', 'user1@example.com', '098f6bcd4621d373cade4e832627b4f6', 'admin');
+INSERT INTO users values('22e20fd9-a530-40cb-8890-628561c85021', 'user2@example.com', '098f6bcd4621d373cade4e832627b4f6', 'admin');
+INSERT INTO users values('33e20fd9-a530-40cb-8890-628561c85021', 'user3@example.com', '098f6bcd4621d373cade4e832627b4f6', 'admin');
 

@@ -11,6 +11,7 @@
       <div>
         <router-link to="/restaurants"><v-btn>Restaurants</v-btn></router-link>
         <router-link to="/reservations"><v-btn>Reservations</v-btn></router-link>
+        <router-link to="/users"><v-btn>Users</v-btn></router-link>
       </div>
     </v-app-bar-title>
     <div>
