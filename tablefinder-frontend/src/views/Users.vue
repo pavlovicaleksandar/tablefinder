@@ -30,16 +30,7 @@ export default {
         {title: 'role', align: 'start', key: 'role'},
         {title: 'Actions', value: 'actions', sortable: false},
       ],
-      users: [
-        {
-          userId: 1,
-          username: 'fake-username',
-          email: '123',
-          phoneNumber: '456',
-          isActive: true,
-          role: 'Admin'
-        },
-      ]
+      users: []
     }
   },
   methods: {
