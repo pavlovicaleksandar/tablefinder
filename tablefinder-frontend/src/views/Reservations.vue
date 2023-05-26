@@ -8,20 +8,10 @@
     <template v-slot:item.createdOn="{ item }">
       <span>{{ new Date(item.dateAndTime).toLocaleString() }}</span>
     </template>
-    <template v-slot:item.actions="{ item }">
-      <v-icon
-        size="small"
-        class="me-2"
-        @click="acceptReservation(item)"
-      >
+    <template v-slot:[`item.actions`]="{ item }">
+      <v-btn>
         mdi-pencil
-      </v-icon>
-      <v-icon
-        size="small"
-        @click="rejectReservation(item)"
-      >
-        mdi-delete
-      </v-icon>
+      </v-btn>
     </template>
   </v-data-table>
 </template>
@@ -47,7 +37,7 @@ export default {
         {title: 'Number of People', align: 'start', key: 'numberOfPeople'},
         {title: 'Note for restaurant', align: 'start', key: 'noteForRestaurant'},
         {title: 'Restaurant Note', align: 'start', key: 'restaurantNote'},
-        {title: 'Actions', value: 'actions', sortable: false},
+        {title: 'Actions', value: 'actions', key: 'actions', sortable: false},
       ],
       reservations: []
     }
