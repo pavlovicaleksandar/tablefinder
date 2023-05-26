@@ -1,5 +1,8 @@
 package com.pavlovicaleksandar.tablefinder.repository
 
+import com.pavlovicaleksandar.tablefinder.controller.ReservationStatus
+import java.sql.ResultSet
+import java.sql.Timestamp
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
@@ -15,15 +18,27 @@ class ReservationRepository(private val jdbcTemplate: NamedParameterJdbcTemplate
         )
     }
 
-    fun createReservation(userId: UUID, restaurantId: UUID, numberOfPeople: Int, noteForRestaurant: String): Int {
+    fun createReservation(
+        userId: UUID,
+        restaurantId: UUID,
+        dateAndTime: Long,
+        numberOfPeople: Int,
+        noteForRestaurant: String,
+    ): Int {
         return jdbcTemplate.update(
-            "insert into reservations(id, user_id, restaurant_id, number_of_people, note_for_restaurant) values(:id, :user_id, :restaurant_id, :number_of_people, :note_for_restaurant)",
+            """
+                insert into 
+                    reservations(id, user_id, date_and_time, restaurant_id, number_of_people, note_for_restaurant, status) 
+                    values(:id, :user_id, :date_and_time, :restaurant_id, :number_of_people, :note_for_restaurant, :status)"""
+                .trimMargin(),
             mapOf(
                 "id" to randomUUID(),
                 "user_id" to userId,
+                "date_and_time" to Timestamp(dateAndTime),
                 "restaurant_id" to restaurantId,
                 "number_of_people" to numberOfPeople,
-                "note_for_restaurant" to noteForRestaurant
+                "note_for_restaurant" to noteForRestaurant,
+                "status" to ReservationStatus.PENDING.name
             )
         )
     }
@@ -33,19 +48,26 @@ class ReservationRepository(private val jdbcTemplate: NamedParameterJdbcTemplate
             ReservationRecord(
                 id = getUUID("id"),
                 userId = getUUID("user_id"),
+                dateAndTime = getTimestamp("date_and_time").time,
                 restaurantId = getUUID("restaurant_id"),
                 numberOfPeople = getInt("number_of_people"),
-                noteForRestaurant = getString("note_for_restaurant")
+                noteForRestaurant = getString("note_for_restaurant"),
+                status = getReservationStatus("status")
             )
         }
     }
 }
 
+fun ResultSet.getReservationStatus(columnLabel: String): ReservationStatus {
+    return ReservationStatus.valueOf(getString(columnLabel))
+}
 data class ReservationRecord(
     val id: UUID,
+    val dateAndTime: Long,
     val numberOfPeople: Int,
     val userId: UUID,
     val restaurantId: UUID,
-    val noteForRestaurant: String
+    val noteForRestaurant: String,
+    val status: ReservationStatus
 )
 

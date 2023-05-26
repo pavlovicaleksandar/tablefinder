@@ -5,9 +5,13 @@
       <v-card-title>Reservation</v-card-title>
       <v-card-text>
         <v-container>
+          <v-row cols="12" md="12">
+            <v-text-field type="date" label="Date" v-model="pickedDate"></v-text-field>
+            <v-text-field v-model="pickedTime" label="Time" type="time"></v-text-field>
+          </v-row>
           <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field v-model.number="numberOfPeople" label="Number of People" type="number"></v-text-field>
+            <v-col cols="12" md="12">
+              <v-text-field v-model.number="numberOfPeople" label="Number of People" type="number" min="1"></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -28,11 +32,17 @@
 <script>
 import axios from "axios";
 
+
+// pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+// pickedTime: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toLocaleTimeString().substr(0, 5),
+
 export default {
   data() {
     return {
       showPopup: false,
-      numberOfPeople: 0,
+      pickedDate: (new Date(Date.now())).toISOString().substr(0, 10),
+      pickedTime: (new Date(Date.now())).toLocaleTimeString().substr(0, 5),
+      numberOfPeople: 1,
       noteForRestaurant: '',
     };
   },
@@ -41,9 +51,23 @@ export default {
       // Handle the reservation logic here
       // You can access the selected using this.numberOfPeople
       console.log('Reserve button clicked');
+      console.log('Picked date=', this.pickedDate);
+      console.log('Picked time=', this.pickedTime);
+      // Split the date and time parts
+      const [year, month, day] = this.pickedDate.split("-");
+      const [hours, minutes] = this.pickedTime.split(":");
+
+      // Create a new Date object with the parsed values
+      const parsedDate = new Date(year, month - 1, day, hours, minutes);
+
+      // Get the timestamp in milliseconds
+      const timestamp = parsedDate.getTime();
+      console.log(timestamp)
+      console.log(new Date(timestamp))
       const reservationData = {
         restaurantId: '11e20fd9-a530-40cb-8890-628561c85021',
         userId: '11111111-a530-40cb-8890-628561c85021',
+        dateAndTime: timestamp,
         numberOfPeople: this.numberOfPeople,
         noteForRestaurant: this.noteForRestaurant
       };

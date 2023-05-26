@@ -1,6 +1,7 @@
 package com.pavlovicaleksandar.tablefinder.service
 
 import com.pavlovicaleksandar.tablefinder.controller.CreateReservationDTO
+import com.pavlovicaleksandar.tablefinder.controller.ReservationStatus
 import com.pavlovicaleksandar.tablefinder.repository.ReservationRecord
 import com.pavlovicaleksandar.tablefinder.repository.ReservationRepository
 import org.springframework.stereotype.Service
@@ -15,6 +16,7 @@ class ReservationService(val repository: ReservationRepository) {
         return repository.createReservation(
             createReservationDTO.userId,
             createReservationDTO.restaurantId,
+            createReservationDTO.dateAndTime,
             createReservationDTO.numberOfPeople,
             createReservationDTO.noteForRestaurant
         )
@@ -26,19 +28,23 @@ class ReservationService(val repository: ReservationRepository) {
 
 data class Reservation(
     val id: UUID,
+    val dateAndTime: Long,
     val numberOfPeople: Int,
     val userId: UUID,
     val restaurantId: UUID,
-    val noteForRestaurant: String
+    val noteForRestaurant: String,
+    val status: ReservationStatus
 )
 
 private fun ReservationRecord.toReservation(): Reservation {
     return Reservation(
         id = this.id,
+        dateAndTime = this.dateAndTime,
         numberOfPeople = this.numberOfPeople,
         userId = this.userId,
         restaurantId = this.restaurantId,
-        noteForRestaurant = this.noteForRestaurant
+        noteForRestaurant = this.noteForRestaurant,
+        status = this.status
     )
 }
 

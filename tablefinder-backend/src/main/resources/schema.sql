@@ -13,9 +13,11 @@ CREATE TABLE IF NOT EXISTS restaurants (
 CREATE TABLE IF NOT EXISTS reservations (
     id UUID PRIMARY KEY,
     number_of_people INTEGER NOT NULL,
+    date_and_time TIMESTAMP NOT NULL,
     user_id UUID NOT NULL,
     restaurant_id UUID NOT NULL,
-    note_for_restaurant TEXT
+    note_for_restaurant TEXT,
+    status TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS users (

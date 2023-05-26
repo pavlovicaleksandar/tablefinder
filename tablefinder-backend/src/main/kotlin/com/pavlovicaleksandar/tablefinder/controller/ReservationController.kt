@@ -34,23 +34,28 @@ private fun List<Reservation>.toReservationResponseDTO(): List<ReservationRespon
 private fun Reservation.toReservationResponseDTO(): ReservationResponseDTO {
     return ReservationResponseDTO(
         id = this.id,
+        dateAndTime = this.dateAndTime,
         numberOfPeople = this.numberOfPeople,
         userId = this.userId,
         restaurantId = this.restaurantId,
-        noteForRestaurant = this.noteForRestaurant
+        noteForRestaurant = this.noteForRestaurant,
+        status = this.status
     )
 }
 
 data class ReservationResponseDTO(
     val id: UUID,
+    val dateAndTime: Long,
     val numberOfPeople: Int,
     val userId: UUID,
     val restaurantId: UUID,
-    val noteForRestaurant: String
+    val noteForRestaurant: String,
+    val status: ReservationStatus
 )
 data class CreateReservationDTO(
     val restaurantId: UUID,
     val userId: UUID,
+    val dateAndTime: Long,
     val numberOfPeople: Int,
     val noteForRestaurant: String
 )

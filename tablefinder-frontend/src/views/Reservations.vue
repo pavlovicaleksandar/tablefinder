@@ -5,6 +5,9 @@
     :items="reservations"
     class="elevation-1"
   >
+    <template v-slot:item.createdOn="{ item }">
+      <span>{{ new Date(item.dateAndTime).toLocaleString() }}</span>
+    </template>
     <template v-slot:item.actions="{ item }">
       <v-icon
         size="small"
@@ -37,7 +40,7 @@ export default {
     return {
       itemsPerPage: 10,
       headers: [
-        {title: 'Date & time', align: 'start', sortable: false, key: 'datetime'},
+        {title: 'Date & time', align: 'start', sortable: false, key: 'dateAndTime'},
         {title: 'Restaurant ID', align: 'start', key: 'restaurantId'},
         {title: 'User ID', align: 'start', key: 'userId'},
         {title: 'Status', align: 'start', key: 'status'},
@@ -46,18 +49,7 @@ export default {
         {title: 'Restaurant Note', align: 'start', key: 'restaurantNote'},
         {title: 'Actions', value: 'actions', sortable: false},
       ],
-      reservations: [
-        {
-          reservationId: 1,
-          datetime: '2023-05-18 19:00',
-          restaurantId: '123',
-          userId: '456',
-          status: 'Confirmed',
-          numberOfPeople: 2,
-          userNote: 'Special request: Vegan options',
-          restaurantNote: 'Will deliver',
-        },
-      ]
+      reservations: []
     }
   },
   methods: {
