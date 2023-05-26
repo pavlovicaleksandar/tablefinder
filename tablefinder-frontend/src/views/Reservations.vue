@@ -5,8 +5,8 @@
     :items="reservations"
     class="elevation-1"
   >
-    <template v-slot:item.createdOn="{ item }">
-      <span>{{ new Date(item.dateAndTime).toLocaleString() }}</span>
+    <template v-slot:[`item.dateAndTime`]="{ item }">
+      {{ new Date(item.columns.dateAndTime).toLocaleString() }}
     </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-btn>
