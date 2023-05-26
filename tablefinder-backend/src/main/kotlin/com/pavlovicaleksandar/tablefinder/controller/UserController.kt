@@ -26,7 +26,7 @@ class UserController(private val service: UserService) {
 
     @PostMapping("/login")
     fun login(@RequestBody login: LoginDTO): ResponseEntity<User> {
-        val user = service.getUserByEmailAndPassword(login.email, login.password)
+        val user = service.getUserByUsernameAndPassword(login.username, login.password)
         return if (user != null) {
             ResponseEntity(user, HttpStatus.OK)
         } else {
@@ -51,10 +51,11 @@ class UserController(private val service: UserService) {
     }
 }
 
-data class LoginDTO(val email: String, val password: String)
+data class LoginDTO(val username: String, val password: String)
 
 data class CreateUserDTO(
     val id: UUID,
+    val username: String,
     val email: String,
     val password: String,
     val role: String

@@ -9,9 +9,10 @@ import java.util.UUID
 class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
     fun save(user: UserRecord): Int {
         return jdbcTemplate.update(
-            "insert into users(id, email, password, role) values(:id, :email, :password, :role)",
+            "insert into users(id, username, email, password, role) values(:id, :username, :email, :password, :role)",
             mapOf(
                 "id" to user.id,
+                "username" to user.id,
                 "email" to user.email,
                 "password" to user.password,
                 "role" to user.role
@@ -19,11 +20,11 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         )
     }
 
-    fun findByEmailAndPassword(email: String, password: String): UserRecord? {
+    fun findByUsernameAndPassword(username: String, password: String): UserRecord? {
         return jdbcTemplate.query(
-            "select * from users where email = :email AND password = :password",
+            "select * from users where username = :username AND password = :password",
             mapOf(
-                "email" to email,
+                "username" to username,
                 "password" to password
             ),
             rowMapper
@@ -51,6 +52,7 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         with(resultSet) {
             UserRecord(
                 id = getUUID("id"),
+                username = getString("username"),
                 email = getString("email"),
                 password = getString("password"),
                 role = getString("role")
@@ -61,6 +63,7 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
 
 data class UserRecord(
     val id: UUID,
+    val username: String,
     val email: String,
     val password: String,
     val role: String

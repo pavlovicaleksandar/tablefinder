@@ -35,14 +35,13 @@ export default {
   methods: {
     login() {
       const loginData = {
-        email: this.username,
+        username: this.username,
         password: this.password
       };
 
       axios.post(`http://localhost:8080/users/login`, loginData)
         .then(response => {
           console.log('Successfully signed in', response.data);
-          alert('Successfully signed in')
           this.$router.push('/restaurants')
         })
         .catch(error => {

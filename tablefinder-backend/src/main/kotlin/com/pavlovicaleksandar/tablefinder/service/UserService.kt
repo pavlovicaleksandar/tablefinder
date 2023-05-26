@@ -22,9 +22,9 @@ class UserService(private val repository: UserRepository) {
         return repository.findAll().toUserList()
     }
 
-    fun getUserByEmailAndPassword(email: String, password: String): User? {
-        return repository.findByEmailAndPassword(
-            email,
+    fun getUserByUsernameAndPassword(username: String, password: String): User? {
+        return repository.findByUsernameAndPassword(
+            username,
             hashPassword(password)
         )?.toUser()
     }
@@ -35,6 +35,7 @@ class UserService(private val repository: UserRepository) {
 
 data class User(
     val id: UUID,
+    val username: String,
     val email: String,
     val password: String,
     val role: String
@@ -43,6 +44,7 @@ data class User(
 private fun UserRecord.toUser(): User {
     return User(
         id = id,
+        username = username,
         email = email,
         password = password,
         role = role
@@ -58,6 +60,7 @@ private fun List<UserRecord>.toUserList(): List<User> {
 fun CreateUserDTO.toUser(): User {
     return User(
         id = UUID.randomUUID(),
+        username = username,
         email = email,
         password = hashPassword(password),
         role = role
@@ -66,6 +69,7 @@ fun CreateUserDTO.toUser(): User {
 
 fun User.toRecord(): UserRecord = UserRecord(
     id = id,
+    username = username,
     email = email,
     password = password,
     role = role
