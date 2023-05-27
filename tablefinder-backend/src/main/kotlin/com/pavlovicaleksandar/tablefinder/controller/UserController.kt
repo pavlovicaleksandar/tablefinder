@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.CrossOrigin
 @CrossOrigin(origins = ["http://localhost:3000"])
 class UserController(private val service: UserService) {
 
-    @PostMapping
-    fun createUser(@RequestBody user: CreateUserDTO): ResponseEntity<Int> {
+    @PostMapping("/register")
+    fun register(@RequestBody user: RegisterUserDTO): ResponseEntity<Int> {
         val success = service.createUser(user)
         return ResponseEntity(success, HttpStatus.CREATED)
     }
@@ -53,10 +53,8 @@ class UserController(private val service: UserService) {
 
 data class LoginDTO(val username: String, val password: String)
 
-data class CreateUserDTO(
-    val id: UUID,
+data class RegisterUserDTO(
     val username: String,
     val email: String,
-    val password: String,
-    val role: String
+    val password: String
 )

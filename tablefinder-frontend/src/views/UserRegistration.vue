@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -61,15 +63,16 @@ export default {
       // Perform further logic such as API request, data submission, etc.
       // You can use Axios or any other HTTP library for making API requests.
       // Example using Axios:
-      /*
-      axios.post('/api/register', userData)
+
+      axios.post('http://localhost:8080/users/register', userData)
         .then(response => {
-          // Handle successful registration
+          console.log('Successfully registered');
+          this.$router.push('/')
         })
         .catch(error => {
-          // Handle registration error
+          console.error('Error registration:', error);
         });
-      */
+
     }
   }
 };

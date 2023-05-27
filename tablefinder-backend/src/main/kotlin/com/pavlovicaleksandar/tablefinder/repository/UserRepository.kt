@@ -12,7 +12,7 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
             "insert into users(id, username, email, password, role) values(:id, :username, :email, :password, :role)",
             mapOf(
                 "id" to user.id,
-                "username" to user.id,
+                "username" to user.username,
                 "email" to user.email,
                 "password" to user.password,
                 "role" to user.role

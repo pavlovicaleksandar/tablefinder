@@ -1,6 +1,6 @@
 package com.pavlovicaleksandar.tablefinder.service
 
-import com.pavlovicaleksandar.tablefinder.controller.CreateUserDTO
+import com.pavlovicaleksandar.tablefinder.controller.RegisterUserDTO
 import com.pavlovicaleksandar.tablefinder.repository.UserRecord
 import com.pavlovicaleksandar.tablefinder.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -9,8 +9,8 @@ import java.util.UUID
 
 @Service
 class UserService(private val repository: UserRepository) {
-    fun createUser(createUserDTO: CreateUserDTO): Int {
-        val user = createUserDTO.toUser()
+    fun createUser(registerUserDTO: RegisterUserDTO): Int {
+        val user = registerUserDTO.toUser()
         return repository.save(user.toRecord())
     }
 
@@ -57,13 +57,13 @@ private fun List<UserRecord>.toUserList(): List<User> {
     }
 }
 
-fun CreateUserDTO.toUser(): User {
+fun RegisterUserDTO.toUser(): User {
     return User(
         id = UUID.randomUUID(),
         username = username,
         email = email,
         password = hashPassword(password),
-        role = role
+        role = "GUEST"
     )
 }
 
