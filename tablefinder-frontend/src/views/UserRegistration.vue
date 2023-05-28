@@ -4,7 +4,7 @@
       <v-col cols="12" md="6" lg="4">
         <v-card class="elevation-12">
           <v-toolbar color="primary" dark>
-            <v-toolbar-title>Login</v-toolbar-title>
+            <v-toolbar-title>Register</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form @submit.prevent="registerUser">
