@@ -17,6 +17,22 @@
         </div>
       </div>
     </div>
+    <v-card>
+      <v-card-title class="headline">User Reviews</v-card-title>
+      <v-card-text>
+        <!-- Display user reviews here -->
+        <v-list>
+          <v-list-item v-for="review in reviews" :key="review.id">
+            <v-list-item-title>{{ review.user }}</v-list-item-title>
+            <v-list-item-subtitle>{{ review.date }}</v-list-item-subtitle>
+            <v-list-item-content>
+              <p>{{ review.comment }}</p>
+              <!-- Add more review details as needed -->
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
   </v-container>
 </template>
 <script>
@@ -35,7 +51,12 @@ export default {
   },
   data() {
     return {
-      restaurant: {}
+      restaurant: {},
+      reviews: [
+        { id: 1, user: 'John', date: '2023-05-17', comment: 'Great food and service!' },
+        { id: 2, user: 'Jane', date: '2023-05-16', comment: 'Highly recommend this place.' },
+        { id: 3, user: 'Mike', date: '2023-05-15', comment: 'Average experience, could be better.' }
+      ]
     }
   },
   mounted() {
