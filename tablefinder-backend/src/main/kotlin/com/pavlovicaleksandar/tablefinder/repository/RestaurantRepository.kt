@@ -1,5 +1,6 @@
 package com.pavlovicaleksandar.tablefinder.repository
 
+import com.pavlovicaleksandar.tablefinder.service.Restaurant
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
@@ -29,6 +30,21 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
             "DELETE FROM restaurants WHERE id = :id",
             mapOf("id" to restaurantId)
         )
+    }
+
+    fun createRestaurant(record: RestaurantRecord): RestaurantRecord {
+        jdbcTemplate.update(
+            """INSERT INTO
+                 restaurants(id, name, description) 
+                 values(:id, :name, :description)
+            """.trimMargin(),
+            mapOf(
+                "id" to record.id,
+                "name" to record.name,
+                "description" to record.description
+            )
+        )
+        return record
     }
 
     private val rowMapper = RowMapper<RestaurantRecord> { resultSet, _ ->

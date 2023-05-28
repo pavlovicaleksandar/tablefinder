@@ -11,11 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 
 @RestController
 @RequestMapping("/restaurants")
 @CrossOrigin(origins = ["http://localhost:3000"])
 class RestaurantController(private val service: RestaurantService) {
+    @PostMapping
+    fun createRestaurant(@RequestBody createRestaurantDTO: CreateRestaurantDTO): RestaurantResponseDTO {
+        return service.createRestaurant(createRestaurantDTO).toRestaurantResponseDTO()
+    }
     @GetMapping
     fun getAllRestaurants(): List<RestaurantResponseDTO> {
         return service.findAll().toRestaurantResponseDTO()
@@ -37,6 +43,8 @@ class RestaurantController(private val service: RestaurantService) {
         return noContent().build()
     }
 }
+
+data class CreateRestaurantDTO(val name: String, val description: String)
 
 data class RestaurantResponseDTO(val id: UUID, val name: String, val description: String)
 

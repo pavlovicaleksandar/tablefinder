@@ -39,6 +39,12 @@ const routes = [
         name: 'UserRegistration',
         component: () => import(/* webpackChunkName: "home" */ '@/views/UserRegistration.vue'),
         props: true
+      },
+      {
+        path: 'restaurants/add',
+        name: 'AddNewRestaurant',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/AddNewRestaurant.vue'),
+        props: true
       }
     ],
   },

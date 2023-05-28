@@ -22,13 +22,12 @@ export default {
     return {
       itemsPerPage: 10,
       headers: [
-        {title: 'User ID', align: 'start', key: 'userId'},
         {title: 'Username', align: 'start', key: 'username'},
         {title: 'Email', align: 'start', key: 'email'},
         {title: 'Is active', align: 'start', key: 'isActive'},
         {title: 'Phone number', align: 'start', key: 'phoneNumber'},
         {title: 'role', align: 'start', key: 'role'},
-        {title: 'Actions', value: 'actions', sortable: false},
+        {title: 'Actions', value: 'actions', key: 'actions', sortable: false},
       ],
       users: []
     }
