@@ -48,6 +48,13 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         )
     }
 
+    fun deleteByUsername(username: String) {
+        jdbcTemplate.update(
+            "DELETE FROM users WHERE username = :username",
+            mapOf("username" to username)
+        )
+    }
+
     private val rowMapper = RowMapper<UserRecord> { resultSet, _ ->
         with(resultSet) {
             UserRecord(

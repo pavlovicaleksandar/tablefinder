@@ -5,11 +5,20 @@
     :items="users"
     class="elevation-1"
   >
+    <template v-slot:[`item.actions`]="{ item }">
+      <v-btn>
+        Edit
+      </v-btn>
+      <v-btn @click="deleteUser(item.columns.username)">
+        Delete
+      </v-btn>
+    </template>
   </v-data-table>
 </template>
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import axios from "axios";
 
 export default {
   components: {
@@ -37,6 +46,16 @@ export default {
       fetch('http://localhost:8080/users')
         .then(response => response.json())
         .then(data => this.users = data)
+    },
+    deleteUser(username) {
+      axios.delete(`http://localhost:8080/users/${username}`)
+        .then(response => {
+          console.log('User deleted:', response.data);
+        })
+        .catch(error => {
+          console.error('Error deleting user:', error);
+        });
+      location.reload()
     }
   }
 };

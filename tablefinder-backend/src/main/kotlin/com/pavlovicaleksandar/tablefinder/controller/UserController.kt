@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.DeleteMapping
 
 @RestController
 @RequestMapping("/users")
@@ -48,6 +49,12 @@ class UserController(private val service: UserService) {
     fun getAllUsers(): ResponseEntity<List<User>> {
         val users = service.getAllUsers()
         return ResponseEntity(users, HttpStatus.OK)
+    }
+
+    @DeleteMapping("/{username}")
+    fun deleteUserByUsername(@PathVariable username: String): ResponseEntity<Any> {
+        service.deleteByUsername(username)
+        return ResponseEntity.noContent().build()
     }
 }
 

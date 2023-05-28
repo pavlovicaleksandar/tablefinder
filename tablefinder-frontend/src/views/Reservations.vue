@@ -10,7 +10,10 @@
     </template>
     <template v-slot:[`item.actions`]="{ item }">
       <v-btn>
-        mdi-pencil
+        Accept
+      </v-btn>
+      <v-btn>
+        Reject
       </v-btn>
     </template>
   </v-data-table>

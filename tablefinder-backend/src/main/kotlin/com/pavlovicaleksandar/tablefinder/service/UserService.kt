@@ -29,6 +29,10 @@ class UserService(private val repository: UserRepository) {
         )?.toUser()
     }
 
+    fun deleteByUsername(username: String) {
+        repository.deleteByUsername(username)
+    }
+
     fun <T : Any> Optional<out T>.toList(): List<T> =
         if (isPresent) listOf(get()) else emptyList()
 }
