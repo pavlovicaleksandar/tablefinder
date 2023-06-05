@@ -31,12 +31,18 @@
 
 <script>
 import axios from "axios";
-
-
+import { toRaw } from 'vue';
 // pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
 // pickedTime: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toLocaleTimeString().substr(0, 5),
 
 export default {
+  // props: {
+  //   restaurant: {
+  //     type: Object,
+  //     required: true
+  //   }
+  // },
+  props: ['restaurant'],
   data() {
     return {
       showPopup: false,
@@ -51,8 +57,6 @@ export default {
       // Handle the reservation logic here
       // You can access the selected using this.numberOfPeople
       console.log('Reserve button clicked');
-      console.log('Picked date=', this.pickedDate);
-      console.log('Picked time=', this.pickedTime);
       // Split the date and time parts
       const [year, month, day] = this.pickedDate.split("-");
       const [hours, minutes] = this.pickedTime.split(":");
@@ -65,7 +69,7 @@ export default {
       console.log(timestamp)
       console.log(new Date(timestamp))
       const reservationData = {
-        restaurantId: '11e20fd9-a530-40cb-8890-628561c85021',
+        restaurantId: this.restaurant.id,
         userId: '11111111-a530-40cb-8890-628561c85021',
         dateAndTime: timestamp,
         numberOfPeople: this.numberOfPeople,
@@ -82,6 +86,7 @@ export default {
         this.showPopup = false
     },
     cancel() {
+      console.log(this.currRestaurant)
       // Handle the cancel logic here
       this.showPopup = false
       console.log('Cancel button clicked');
