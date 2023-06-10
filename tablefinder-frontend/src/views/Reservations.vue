@@ -9,22 +9,20 @@
       {{ new Date(item.columns.dateAndTime).toLocaleString() }}
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <v-btn>
-        Accept
-      </v-btn>
-      <v-btn>
-        Reject
-      </v-btn>
+      <AcceptRejectReservation :statusForButton="'Accept'" :status="'ACCEPTED'" :reservation="{id: item.value}"></AcceptRejectReservation>
+      <AcceptRejectReservation :statusForButton="'Reject'" :status="'REJECTED'" :reservation="{id: item.value}"></AcceptRejectReservation>
     </template>
   </v-data-table>
 </template>
 
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import AcceptRejectReservation from "@/components/AcceptRejectReservation";
 
 export default {
   components: {
     VDataTable,
+    AcceptRejectReservation,
   },
   mounted() {
     this.fetchReservations()
@@ -39,7 +37,7 @@ export default {
         {title: 'Status', align: 'start', key: 'status'},
         {title: 'Number of People', align: 'start', key: 'numberOfPeople'},
         {title: 'Note for restaurant', align: 'start', key: 'noteForRestaurant'},
-        {title: 'Restaurant Note', align: 'start', key: 'restaurantNote'},
+        {title: 'Restaurant Note', align: 'start', key: 'noteFromRestaurant'},
         {title: 'Actions', value: 'actions', key: 'actions', sortable: false},
       ],
       reservations: []
@@ -51,12 +49,6 @@ export default {
         .then(response => response.json())
         .then(data => this.reservations = data)
     },
-    acceptReservation(res) {
-      console.log(res)
-    },
-    rejectReservation(res) {
-      console.log(res)
-    }
   }
 };
 </script>

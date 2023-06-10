@@ -24,6 +24,10 @@ class ReservationService(val repository: ReservationRepository) {
 
     fun <T : Any> Optional<out T>.toList(): List<T> =
         if (isPresent) listOf(get()) else emptyList()
+
+    fun changeReservationStatus(reservationId: UUID, noteFromRestaurant: String?, status: ReservationStatus) {
+        repository.changeReservationStatus(reservationId, noteFromRestaurant, status)
+    }
 }
 
 data class Reservation(
@@ -33,6 +37,7 @@ data class Reservation(
     val userId: UUID,
     val restaurantId: UUID,
     val noteForRestaurant: String,
+    val noteFromRestaurant: String,
     val status: ReservationStatus
 )
 
@@ -44,6 +49,7 @@ private fun ReservationRecord.toReservation(): Reservation {
         userId = this.userId,
         restaurantId = this.restaurantId,
         noteForRestaurant = this.noteForRestaurant,
+        noteFromRestaurant = this.noteFromRestaurant,
         status = this.status
     )
 }

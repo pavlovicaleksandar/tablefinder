@@ -28,8 +28,8 @@ class ReservationRepository(private val jdbcTemplate: NamedParameterJdbcTemplate
         return jdbcTemplate.update(
             """
                 insert into 
-                    reservations(id, user_id, date_and_time, restaurant_id, number_of_people, note_for_restaurant, status) 
-                    values(:id, :user_id, :date_and_time, :restaurant_id, :number_of_people, :note_for_restaurant, :status)"""
+                    reservations(id, user_id, date_and_time, restaurant_id, number_of_people, note_for_restaurant, note_from_restaurant, status) 
+                    values(:id, :user_id, :date_and_time, :restaurant_id, :number_of_people, :note_for_restaurant, :note_from_restaurant, :status)"""
                 .trimMargin(),
             mapOf(
                 "id" to randomUUID(),
@@ -38,7 +38,23 @@ class ReservationRepository(private val jdbcTemplate: NamedParameterJdbcTemplate
                 "restaurant_id" to restaurantId,
                 "number_of_people" to numberOfPeople,
                 "note_for_restaurant" to noteForRestaurant,
+                "note_from_restaurant" to "",
                 "status" to ReservationStatus.PENDING.name
+            )
+        )
+    }
+
+    fun changeReservationStatus(reservationId: UUID, noteFromRestaurant: String?, status: ReservationStatus) {
+        jdbcTemplate.update(
+            """
+            UPDATE reservations
+            SET status = :status, note_from_restaurant = :note_from_restaurant
+            WHERE id = :reservation_id
+        """.trimIndent(),
+            mapOf(
+                "reservation_id" to reservationId,
+                "status" to status.name,
+                "note_from_restaurant" to noteFromRestaurant
             )
         )
     }
@@ -52,6 +68,7 @@ class ReservationRepository(private val jdbcTemplate: NamedParameterJdbcTemplate
                 restaurantId = getUUID("restaurant_id"),
                 numberOfPeople = getInt("number_of_people"),
                 noteForRestaurant = getString("note_for_restaurant"),
+                noteFromRestaurant = getString("note_from_restaurant"),
                 status = getReservationStatus("status")
             )
         }
@@ -68,6 +85,7 @@ data class ReservationRecord(
     val userId: UUID,
     val restaurantId: UUID,
     val noteForRestaurant: String,
+    val noteFromRestaurant: String,
     val status: ReservationStatus
 )
 

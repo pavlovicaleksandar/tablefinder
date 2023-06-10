@@ -31,17 +31,11 @@
 
 <script>
 import axios from "axios";
-import { toRaw } from 'vue';
 // pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
 // pickedTime: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toLocaleTimeString().substr(0, 5),
 
 export default {
-  // props: {
-  //   restaurant: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
+
   props: ['restaurant'],
   data() {
     return {
