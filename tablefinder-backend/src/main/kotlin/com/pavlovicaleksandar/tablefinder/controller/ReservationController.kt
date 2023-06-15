@@ -51,7 +51,9 @@ private fun Reservation.toReservationResponseDTO(): ReservationResponseDTO {
         dateAndTime = this.dateAndTime,
         numberOfPeople = this.numberOfPeople,
         userId = this.userId,
+        username = this.username,
         restaurantId = this.restaurantId,
+        restaurantName = this.restaurantName,
         noteForRestaurant = this.noteForRestaurant,
         noteFromRestaurant = this.noteFromRestaurant,
         status = this.status
@@ -63,7 +65,9 @@ data class ReservationResponseDTO(
     val dateAndTime: Long,
     val numberOfPeople: Int,
     val userId: UUID,
+    val username: String,
     val restaurantId: UUID,
+    val restaurantName: String,
     val noteForRestaurant: String,
     val noteFromRestaurant: String,
     val status: ReservationStatus

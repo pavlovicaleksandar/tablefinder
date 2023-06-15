@@ -64,7 +64,7 @@ export default {
       console.log(new Date(timestamp))
       const reservationData = {
         restaurantId: this.restaurant.id,
-        userId: '11111111-a530-40cb-8890-628561c85021',
+        userId: '1465694f-ceef-46c4-b2bf-823f68066cb7',
         dateAndTime: timestamp,
         numberOfPeople: this.numberOfPeople,
         noteForRestaurant: this.noteForRestaurant

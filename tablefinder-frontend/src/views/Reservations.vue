@@ -32,8 +32,8 @@ export default {
       itemsPerPage: 10,
       headers: [
         {title: 'Date & time', align: 'start', sortable: false, key: 'dateAndTime'},
-        {title: 'Restaurant ID', align: 'start', key: 'restaurantId'},
-        {title: 'User ID', align: 'start', key: 'userId'},
+        {title: 'Restaurant', align: 'start', key: 'restaurantName'},
+        {title: 'Username', align: 'start', key: 'username'},
         {title: 'Status', align: 'start', key: 'status'},
         {title: 'Number of People', align: 'start', key: 'numberOfPeople'},
         {title: 'Note for restaurant', align: 'start', key: 'noteForRestaurant'},
