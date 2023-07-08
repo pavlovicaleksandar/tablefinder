@@ -20,15 +20,40 @@
     <v-card>
       <v-card-title class="headline">User Reviews</v-card-title>
       <v-card-text>
-        <!-- Display user reviews here -->
         <v-list>
+          <v-list-item>
+            <v-card>
+              <v-card-title>Write review...</v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" md="12">
+                      <v-textarea color="secondary" v-model="comment"  label="Review (optional)" variant="outlined"></v-textarea>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn color="secondary" @click="addReview" variant="outlined" class="mt-n8">Add</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-list-item>
           <v-list-item v-for="review in reviews" :key="review.id">
-            <v-list-item-title>{{ review.user }}</v-list-item-title>
-            <v-list-item-subtitle>{{ review.date }}</v-list-item-subtitle>
-            <v-list-item-content>
-              <p>{{ review.comment }}</p>
-              <!-- Add more review details as needed -->
-            </v-list-item-content>
+            <v-card>
+              <v-card-title>{{ review.username }}</v-card-title>
+              <v-card-subtitle>
+                {{ new Date(review.createdAt).toLocaleString() }}
+              </v-card-subtitle>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" md="12">
+                      <p>{{ review.comment }}</p>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+            </v-card>
           </v-list-item>
         </v-list>
       </v-card-text>
@@ -37,6 +62,7 @@
 </template>
 <script>
 import ReservePopup from "@/components/ReservePopup";
+import axios from "axios";
 
 export default {
   components: {
@@ -53,14 +79,16 @@ export default {
     return {
       restaurant: {},
       reviews: [
-        { id: 1, user: 'John', date: '2023-05-17', comment: 'Great food and service!' },
-        { id: 2, user: 'Jane', date: '2023-05-16', comment: 'Highly recommend this place.' },
-        { id: 3, user: 'Mike', date: '2023-05-15', comment: 'Average experience, could be better.' }
-      ]
+        { id: 1, username: 'John', createdAt: '2023-05-17', comment: 'Great food and service!' },
+        { id: 2, username: 'Jane', createdAt: '2023-05-16', comment: 'Highly recommend this place.' },
+        { id: 3, username: 'Mike', createdAt: '2023-05-15', comment: 'Average experience, could be better.' }
+      ],
+      comment: null
     }
   },
   mounted() {
     this.fetchRestaurantById()
+    this.fetchReviews()
   },
   methods: {
     fetchRestaurantById() {
@@ -68,6 +96,29 @@ export default {
         .then(response => response.json())
         .then(data => this.restaurant = data)
       this.restaurant.image = "https://media-cdn.tripadvisor.com/media/photo-s/07/35/14/37/kod-bore.jpg"
+    },
+    fetchReviews() {
+      fetch(`http://localhost:8080/reviews/${this.id}`)
+        .then(response => response.json())
+        .then(data => this.reviews = data)
+    },
+    addReview() {
+      if (this.comment != null && this.comment.trim() !== '') {
+        const reviewData = {
+          username: "user1",
+          comment: this.comment,
+          restaurantId: this.restaurant.id
+        };
+
+        axios.post('http://localhost:8080/reviews', reviewData)
+          .then(response => {
+            console.log('Successfully added new review');
+            location.reload()
+          })
+          .catch(error => {
+            console.error('Error adding new review:', error);
+          });
+      }
     }
   }
 }
