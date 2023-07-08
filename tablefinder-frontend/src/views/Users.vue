@@ -6,10 +6,10 @@
     class="elevation-1"
   >
     <template v-slot:[`item.actions`]="{ item }">
-      <v-btn>
+      <v-btn color="secondary">
         Edit
       </v-btn>
-      <v-btn @click="deleteUser(item.columns.username)">
+      <v-btn @click="deleteUser(item.columns.username)" color="secondary">
         Delete
       </v-btn>
     </template>

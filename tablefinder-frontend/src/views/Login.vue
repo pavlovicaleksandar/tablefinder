@@ -12,6 +12,11 @@
               <v-text-field label="Password" v-model="password" type="password"></v-text-field>
             </v-form>
           </v-card-text>
+          <v-card-text v-if="message != null" class="mt-n6">
+            <v-alert color="error">
+              {{message}}
+            </v-alert>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" @click="login">Login</v-btn>
@@ -29,8 +34,12 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      message: null
     }
+  },
+  mounted() {
+    this.message = null
   },
   methods: {
     login() {
@@ -46,6 +55,7 @@ export default {
         })
         .catch(error => {
           console.error('Error signing in:', error);
+          this.message = "You have entered an invalid username or password"
         });
     }
   }

@@ -3,8 +3,8 @@
     <v-row>
       <v-text-field v-model="search" label="Search by name" outlined></v-text-field>
     </v-row>
-    <v-row>
-      <router-link to="/restaurants/add"><v-btn color="secondary">Add new</v-btn></router-link>
+    <v-row justify="end">
+      <router-link to="/restaurants/add"><v-btn color="secondary" class="mr-6 mb-3">Add new</v-btn></router-link>
     </v-row>
     <v-row>
       <v-col v-for="(restaurant, index) in filteredRestaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
