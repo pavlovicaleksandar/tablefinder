@@ -1,6 +1,8 @@
 package com.pavlovicaleksandar.tablefinder.controller
 
+import com.pavlovicaleksandar.tablefinder.service.JwtTokenService
 import com.pavlovicaleksandar.tablefinder.service.User
+import com.pavlovicaleksandar.tablefinder.service.UserInfo
 import com.pavlovicaleksandar.tablefinder.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -17,7 +19,10 @@ import org.springframework.web.bind.annotation.DeleteMapping
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = ["http://localhost:3000"])
-class UserController(private val service: UserService) {
+class UserController(
+    private val service: UserService,
+    private val jwtTokenService: JwtTokenService
+) {
 
     @PostMapping("/register")
     fun register(@RequestBody user: RegisterUserDTO): ResponseEntity<Int> {
@@ -26,10 +31,22 @@ class UserController(private val service: UserService) {
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody login: LoginDTO): ResponseEntity<User> {
+    fun login(@RequestBody login: LoginDTO): ResponseEntity<String> {
         val user = service.getUserByUsernameAndPassword(login.username, login.password)
         return if (user != null) {
-            ResponseEntity(user, HttpStatus.OK)
+            val token = jwtTokenService.generateToken(user.username, user.role)
+            ResponseEntity(token, HttpStatus.OK)
+        } else {
+            ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+    }
+
+    @PostMapping("/userInfo")
+    fun getUserInfo(@RequestBody token: String): ResponseEntity<UserInfo> {
+        val userInfo = jwtTokenService.getUserInfo(token)
+
+        return if (userInfo != null) {
+            ResponseEntity(userInfo, HttpStatus.OK)
         } else {
             ResponseEntity(HttpStatus.NOT_FOUND)
         }
