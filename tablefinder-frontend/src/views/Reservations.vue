@@ -9,8 +9,9 @@
       {{ new Date(item.columns.dateAndTime).toLocaleString() }}
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <AcceptRejectReservation :statusForButton="'Accept'" :status="'ACCEPTED'" :reservation="{id: item.value}"></AcceptRejectReservation>
-      <AcceptRejectReservation :statusForButton="'Reject'" :status="'REJECTED'" :reservation="{id: item.value}"></AcceptRejectReservation>
+      {{}}
+      <AcceptRejectReservation :statusForButton="'Accept'" :status="'ACCEPTED'" :reservation="{id: item.value}" v-if="item.columns.status === 'PENDING'"></AcceptRejectReservation>
+      <AcceptRejectReservation :statusForButton="'Reject'" :status="'REJECTED'" :reservation="{id: item.value}" v-if="item.columns.status === 'PENDING'"></AcceptRejectReservation>
     </template>
   </v-data-table>
 </template>

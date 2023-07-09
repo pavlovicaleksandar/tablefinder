@@ -42,7 +42,6 @@ export default {
       axios.put(`http://localhost:8080/reservations/${this.reservation.id}`, changeReservationStatusData)
         .then(response => {
           console.log('Reservation status changed:', response.status);
-          alert('Reservation successfully created')
         })
         .catch(error => {
           console.error('Error changing reservation status:', error);
