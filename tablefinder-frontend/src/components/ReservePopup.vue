@@ -1,7 +1,7 @@
 <template>
   <v-btn @click.stop="showPopup=true" color="secondary">Reserve now</v-btn>
   <v-dialog v-model="showPopup" max-width="500px">
-    <v-card>
+    <v-card v-if="!isReservationCreated">
       <v-card-title>Reservation</v-card-title>
       <v-card-text>
         <v-container>
@@ -26,6 +26,21 @@
         <v-btn color="error" @click="cancel" variant="outlined">Cancel</v-btn>
       </v-card-actions>
     </v-card>
+    <v-card v-if="isReservationCreated"  justify="center">
+      <v-card-title>Reservation created</v-card-title>
+      <v-card-text>
+        <v-container>
+          <v-row>
+            <v-col cols="12" md="12">
+              <div>Reservation successfully created!</div>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="secondary" @click="closeModal" variant="outlined" >OK</v-btn>
+      </v-card-actions>
+    </v-card>
   </v-dialog>
 </template>
 
@@ -44,12 +59,14 @@ export default {
       pickedTime: (new Date(Date.now())).toLocaleTimeString().substr(0, 5),
       numberOfPeople: 1,
       noteForRestaurant: '',
+      isReservationCreated: false
     };
+  },
+  mounted() {
+    this.isReservationCreated = false
   },
   methods: {
     reserve() {
-      // Handle the reservation logic here
-      // You can access the selected using this.numberOfPeople
       console.log('Reserve button clicked');
       // Split the date and time parts
       const [year, month, day] = this.pickedDate.split("-");
@@ -72,19 +89,20 @@ export default {
       axios.post(`http://localhost:8080/reservations`, reservationData)
         .then(response => {
           console.log('Reservation created:', response.data);
-          alert('Reservation successfully created')
         })
         .catch(error => {
           console.error('Error creating reservation:', error);
         });
-        this.showPopup = false
+        this.isReservationCreated = true
     },
     cancel() {
-      console.log(this.currRestaurant)
-      // Handle the cancel logic here
       this.showPopup = false
       console.log('Cancel button clicked');
     },
+    closeModal() {
+      this.showPopup = false
+      location.reload()
+    }
   },
 };
 </script>
