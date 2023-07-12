@@ -51,6 +51,7 @@ export default {
       axios.post(`http://localhost:8080/users/login`, loginData)
         .then(response => {
           console.log('Successfully signed in', response.data);
+          localStorage.setItem('userToken', response.data)
           this.$router.push('/restaurants')
         })
         .catch(error => {
