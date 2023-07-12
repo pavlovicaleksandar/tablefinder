@@ -2,7 +2,9 @@
   <v-btn @click.stop="showPopup=true" color="secondary">{{statusForButton}}</v-btn>
   <v-dialog v-model="showPopup" max-width="500px">
     <v-card>
-      <v-card-title>Confirm your choice</v-card-title>
+      <v-toolbar color="primary" dark>
+        <v-card-title>Confirm your choice</v-card-title>
+      </v-toolbar>
       <v-card-text>
         <v-container>
           <v-row>

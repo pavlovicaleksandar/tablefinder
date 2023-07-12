@@ -2,7 +2,9 @@
   <v-btn @click.stop="showPopup=true" color="secondary">Reserve now</v-btn>
   <v-dialog v-model="showPopup" max-width="500px">
     <v-card v-if="!isReservationCreated">
-      <v-card-title>Reservation</v-card-title>
+      <v-toolbar color="primary" dark>
+        <v-card-title>Reservation</v-card-title>
+      </v-toolbar>
       <v-card-text>
         <v-container>
           <v-row cols="12" md="12">
@@ -26,8 +28,10 @@
         <v-btn color="error" @click="cancel" variant="outlined">Cancel</v-btn>
       </v-card-actions>
     </v-card>
-    <v-card v-if="isReservationCreated"  justify="center">
-      <v-card-title>Reservation created</v-card-title>
+    <v-card v-if="isReservationCreated">
+      <v-toolbar color="primary" dark>
+        <v-card-title>Reservation created</v-card-title>
+      </v-toolbar>
       <v-card-text>
         <v-container>
           <v-row>
