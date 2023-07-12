@@ -51,13 +51,15 @@ export default {
       axios.post(`http://localhost:8080/users/login`, loginData)
         .then(response => {
           console.log('Successfully signed in', response.data);
-          localStorage.setItem('userToken', response.data)
-          this.$router.push('/restaurants')
+          localStorage.setItem('user', response.data)
+          window.location.reload()
+          window.location.href = '/restaurants';
         })
         .catch(error => {
           console.error('Error signing in:', error);
           this.message = "You have entered an invalid username or password"
         });
+
     }
   }
 }

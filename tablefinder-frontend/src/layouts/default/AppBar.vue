@@ -10,11 +10,12 @@
       </div>
     </v-app-bar-title>
     <div>
-      <router-link to="/restaurants"><v-btn>Restaurants</v-btn></router-link>
-      <router-link to="/reservations"><v-btn>Reservations</v-btn></router-link>
-      <router-link to="/users"><v-btn>Users</v-btn></router-link>
+      <router-link to="/restaurants" v-if="user != null"><v-btn>Restaurants</v-btn></router-link>
+      <router-link to="/reservations" v-if="user != null"><v-btn>Reservations</v-btn></router-link>
+      <router-link to="/users" v-if="user != null"><v-btn>Users</v-btn></router-link>
       <router-link to="/registration"><v-btn>Register</v-btn></router-link>
       <router-link to="/"><v-btn>Login</v-btn></router-link>
+      <v-btn @click="logout" v-if="user != null">Logout</v-btn>
     </div>
     <div>
 
@@ -22,6 +23,22 @@
   </v-app-bar>
 </template>
 
-<script setup>
-  //
+<script>
+export default {
+  data() {
+    return {
+      user: null
+    }
+  },
+  mounted() {
+    this.user = localStorage.getItem("user")
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("user")
+      window.location.reload()
+      window.location.href = '/';
+    }
+  }
+}
 </script>

@@ -31,11 +31,19 @@ class UserController(
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody login: LoginDTO): ResponseEntity<String> {
+    fun login(@RequestBody login: LoginDTO): ResponseEntity<LoginResponseDTO> {
         val user = service.getUserByUsernameAndPassword(login.username, login.password)
         return if (user != null) {
             val token = jwtTokenService.generateToken(user.username, user.role)
-            ResponseEntity(token, HttpStatus.OK)
+            ResponseEntity(
+                LoginResponseDTO(
+                    user.username,
+                    user.email,
+                    user.role,
+                    token
+                ),
+                HttpStatus.OK
+            )
         } else {
             ResponseEntity(HttpStatus.NOT_FOUND)
         }
@@ -74,6 +82,13 @@ class UserController(
         return ResponseEntity.noContent().build()
     }
 }
+
+data class LoginResponseDTO(
+    val username: String,
+    val email: String,
+    val role: String,
+    val token: String
+)
 
 data class LoginDTO(val username: String, val password: String)
 
