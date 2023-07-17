@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS reviews (
     created_at TIMESTAMP NOT NULL,
     restaurant_id UUID NOT NULL,
     username TEXT NOT NULL,
+    rating INTEGER NOT NULL,
+    price INTEGER NOT NULL,
     comment TEXT
 );
 

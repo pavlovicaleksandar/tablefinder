@@ -14,15 +14,17 @@ class ReviewRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         return jdbcTemplate.update(
             """
                 insert into 
-                    reviews(id, username, comment, restaurant_id, created_at) 
-                    values(:id, :username, :comment, :restaurant_id, :created_at)"""
+                    reviews(id, username, comment, restaurant_id, created_at, price, rating) 
+                    values(:id, :username, :comment, :restaurant_id, :created_at, :price, :rating)"""
                 .trimMargin(),
             mapOf(
                 "id" to record.id,
                 "username" to record.username,
                 "created_at" to Timestamp(record.createdAt),
                 "comment" to record.comment,
-                "restaurant_id" to record.restaurantId
+                "restaurant_id" to record.restaurantId,
+                "price" to record.price,
+                "rating" to record.rating
             )
         )
     }
@@ -45,6 +47,8 @@ class ReviewRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
                 createdAt = getTimestamp("created_at").time,
                 restaurantId = getUUID("restaurant_id"),
                 comment = getString("comment"),
+                price = getInt("price"),
+                rating = getInt("rating")
             )
         }
     }
@@ -56,5 +60,7 @@ data class ReviewRecord(
     val createdAt: Long,
     val username: String,
     val restaurantId: UUID,
-    val comment: String
+    val comment: String,
+    val price: Int,
+    val rating: Int
 )

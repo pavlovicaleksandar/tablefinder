@@ -1,7 +1,6 @@
 package com.pavlovicaleksandar.tablefinder.controller
 
 import com.pavlovicaleksandar.tablefinder.repository.ReviewRecord
-import com.pavlovicaleksandar.tablefinder.service.Restaurant
 import com.pavlovicaleksandar.tablefinder.service.ReviewService
 import java.util.UUID
 import org.springframework.http.ResponseEntity
@@ -25,19 +24,27 @@ class ReviewController(private val service: ReviewService) {
     }
 
     @PostMapping
-    fun createRestaurant(@RequestBody createReviewDTO: CreateReviewDTO): ResponseEntity<Unit> {
+    fun createReview(@RequestBody createReviewDTO: CreateReviewDTO): ResponseEntity<Unit> {
         service.createReview(createReviewDTO)
         return noContent().build()
     }
 }
 
-data class CreateReviewDTO(val username: String, val comment: String, val restaurantId: UUID)
+data class CreateReviewDTO(
+    val username: String,
+    val comment: String,
+    val restaurantId: UUID,
+    val rating: Int,
+    val price: Int
+)
 
 data class ReviewResponseDTO(
     val id: UUID,
     val createdAt: Long,
     val username: String,
     val restaurantId: UUID,
+    val rating: Int,
+    val price: Int,
     val comment: String
 )
 
@@ -53,6 +60,8 @@ private fun ReviewRecord.toReviewResponseDTO(): ReviewResponseDTO {
         createdAt = this.createdAt,
         username = this.username,
         restaurantId = this.restaurantId,
-        comment = this.comment
+        comment = this.comment,
+        rating = this.rating,
+        price = this.price
     )
 }

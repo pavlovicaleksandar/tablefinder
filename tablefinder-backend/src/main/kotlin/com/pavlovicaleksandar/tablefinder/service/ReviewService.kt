@@ -24,7 +24,9 @@ fun CreateReviewDTO.toReviewRecord(): ReviewRecord {
         username = this.username,
         comment = this.comment,
         createdAt = now().toEpochMilli(),
-        restaurantId = this.restaurantId
+        restaurantId = this.restaurantId,
+        rating = this.rating,
+        price = this.price
     )
 }
 

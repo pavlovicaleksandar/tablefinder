@@ -21,12 +21,31 @@
       <v-card-title class="headline">User Reviews</v-card-title>
       <v-card-text>
         <v-list>
-          <v-list-item>
+          <v-list-item v-if="isAddReviewEnabled === true">
             <v-card>
-              <v-card-title>Write review...</v-card-title>
               <v-card-text>
                 <v-container>
                   <v-row>
+                    <v-col cols="12" md="12">
+                      <v-rating
+                        v-model="selectedRating"
+                        bg-color="orange-lighten-1"
+                        color="secondary"
+                      ></v-rating>
+                    </v-col>
+                    <v-col cols="12" md="12">
+                      <v-select color="secondary"
+                                v-model="selectedOptionForPrice"
+                                label="Price"
+                                variant="outlined"
+                                :items="priceOptions"
+                                item-value="value"
+                                item-title="displayText"
+                                return-object
+                                single-line
+                                >
+                      </v-select>
+                    </v-col>
                     <v-col cols="12" md="12">
                       <v-textarea color="secondary" v-model="comment"  label="Review (optional)" variant="outlined"></v-textarea>
                     </v-col>
@@ -38,6 +57,7 @@
               </v-card-actions>
             </v-card>
           </v-list-item>
+          <hr>
           <v-list-item v-for="review in reviews" :key="review.id">
             <v-card>
               <v-card-title>{{ review.username }}</v-card-title>
@@ -48,12 +68,28 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12" md="12">
+                      <h3> Price: {{['$', '$$', '$$$'].at(review.price - 1)}}</h3>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="12">
+                      <v-rating
+                        v-model="review.rating"
+                        bg-color="orange-lighten-1"
+                        color="secondary"
+                        readonly
+                      ></v-rating>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" md="12">
                       <p>{{ review.comment }}</p>
                     </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
             </v-card>
+            <hr>
           </v-list-item>
         </v-list>
       </v-card-text>
@@ -77,16 +113,22 @@ export default {
   },
   data() {
     return {
-      restaurant: {},
-      reviews: [
-        { id: 1, username: 'John', createdAt: '2023-05-17', comment: 'Great food and service!' },
-        { id: 2, username: 'Jane', createdAt: '2023-05-16', comment: 'Highly recommend this place.' },
-        { id: 3, username: 'Mike', createdAt: '2023-05-15', comment: 'Average experience, could be better.' }
+      priceOptions: [
+        { displayText: '$', value: 1 },
+        { displayText: '$$', value: 2 },
+        { displayText: '$$$', value: 3 }
       ],
-      comment: null
+      restaurant: {},
+      reviews: [],
+      selectedOptionForPrice: { displayText: '$', value: 1 },
+      selectedRating: null,
+      comment: null,
+      user: null,
+      isAddReviewEnabled: true
     }
   },
   mounted() {
+    this.user = JSON.parse(localStorage.getItem('user'))
     this.fetchRestaurantById()
     this.fetchReviews()
   },
@@ -101,12 +143,15 @@ export default {
       fetch(`http://localhost:8080/reviews/${this.id}`)
         .then(response => response.json())
         .then(data => this.reviews = data)
+        .then(data => this.isAddReviewEnabled = data.find(review => review.username === this.user.username) === undefined)
     },
     addReview() {
       if (this.comment != null && this.comment.trim() !== '') {
         const reviewData = {
-          username: "user1",
+          username: this.user.username,
           comment: this.comment,
+          rating: this.selectedRating,
+          price: this.selectedOptionForPrice.value,
           restaurantId: this.restaurant.id
         };
 
