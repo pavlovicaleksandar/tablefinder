@@ -51,7 +51,7 @@ export default {
       axios.post(`http://localhost:8080/users/login`, loginData)
         .then(response => {
           console.log('Successfully signed in', response.data);
-          localStorage.setItem('user', response.data)
+          localStorage.setItem('user', JSON.stringify(response.data))
           window.location.reload()
           window.location.href = '/restaurants';
         })

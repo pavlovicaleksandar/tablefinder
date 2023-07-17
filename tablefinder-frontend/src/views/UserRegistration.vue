@@ -8,11 +8,16 @@
           </v-toolbar>
           <v-card-text>
             <v-form @submit.prevent="registerUser">
-              <v-text-field v-model="username" label="Username" required></v-text-field>
-              <v-text-field v-model="email" label="Email" required></v-text-field>
-              <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
-              <v-text-field v-model="confirmPassword" label="Confirm Password" type="password" required></v-text-field>
+              <v-text-field v-model="username" label="*Username" required></v-text-field>
+              <v-text-field v-model="email" label="*Email" required></v-text-field>
+              <v-text-field v-model="password" label="*Password" type="password" required></v-text-field>
+              <v-text-field v-model="confirmPassword" label="*Confirm Password" type="password" required></v-text-field>
               <v-text-field v-model="phoneNumber" label="Phone Number"></v-text-field>
+              <v-card-text v-if="message != null" class="mt-n6">
+                <v-alert color="error">
+                  {{message}}
+                </v-alert>
+              </v-card-text>
               <v-row>
                 <v-col class="text-center">
                   <v-btn type="submit" color="primary">Register</v-btn>
@@ -36,20 +41,29 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      phoneNumber: ''
+      phoneNumber: '',
+      message: null
     };
+  },
+  mounted() {
+    this.message = null
   },
   methods: {
     registerUser() {
       // Validate form inputs
       if (!this.username || !this.email || !this.password || !this.confirmPassword) {
-        // Show error message or perform validation logic
+        this.message = "All fields marked with * are required"
         return;
       }
 
       if (this.password !== this.confirmPassword) {
-        // Show password mismatch error message or perform validation logic
+        this.message = "Passwords are not matching"
         return;
+      }
+
+      if (!this.isValidEmail(this.email)) {
+        this.message = "Email is in wrong format"
+        return
       }
 
       // Make API call to register the user with the provided data
@@ -60,9 +74,6 @@ export default {
         phoneNumber: this.phoneNumber
       };
 
-      // Perform further logic such as API request, data submission, etc.
-      // You can use Axios or any other HTTP library for making API requests.
-      // Example using Axios:
 
       axios.post('http://localhost:8080/users/register', userData)
         .then(response => {
@@ -73,6 +84,9 @@ export default {
           console.error('Error registration:', error);
         });
 
+    },
+    isValidEmail(email) {
+      return /^[^@]+@\w+(\.\w+)+\w$/.test(email);
     }
   }
 };
