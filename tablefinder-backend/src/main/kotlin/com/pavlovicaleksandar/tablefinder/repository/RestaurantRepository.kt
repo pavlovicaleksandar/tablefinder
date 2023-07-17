@@ -1,6 +1,5 @@
 package com.pavlovicaleksandar.tablefinder.repository
 
-import com.pavlovicaleksandar.tablefinder.service.Restaurant
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Repository
@@ -35,13 +34,14 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
     fun createRestaurant(record: RestaurantRecord): RestaurantRecord {
         jdbcTemplate.update(
             """INSERT INTO
-                 restaurants(id, name, description) 
-                 values(:id, :name, :description)
+                 restaurants(id, name, description, image_url) 
+                 values(:id, :name, :description, :image_url)
             """.trimMargin(),
             mapOf(
                 "id" to record.id,
                 "name" to record.name,
-                "description" to record.description
+                "description" to record.description,
+                "image_url" to record.imageUrl
             )
         )
         return record
@@ -52,7 +52,8 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
             RestaurantRecord(
                 id = getUUID("id"),
                 name = getString("name"),
-                description = getString("description")
+                description = getString("description"),
+                imageUrl = getString("image_url")
             )
         }
     }
@@ -61,5 +62,6 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
 data class RestaurantRecord(
     val id: UUID,
     val name: String,
-    val description: String
+    val description: String,
+    val imageUrl: String
 )

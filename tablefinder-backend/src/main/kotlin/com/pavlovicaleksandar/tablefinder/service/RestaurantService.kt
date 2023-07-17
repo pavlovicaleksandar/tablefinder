@@ -29,21 +29,24 @@ fun CreateRestaurantDTO.toRestaurantRecord(): RestaurantRecord {
     return RestaurantRecord(
         id = UUID.randomUUID(),
         name = this.name,
-        description = this.description
+        description = this.description,
+        imageUrl = this.imageUrl
     )
 }
 private fun RestaurantRecord.toRestaurant(): Restaurant {
     return Restaurant(
         id = this.id,
         name = this.name,
-        description = this.description
+        description = this.description,
+        imageUrl = this.imageUrl
     )
 }
 
 data class Restaurant(
     val id: UUID,
     val name: String,
-    val description: String
+    val description: String,
+    val imageUrl: String
 )
 
 private fun List<RestaurantRecord>.toRestaurantList(): List<Restaurant> {

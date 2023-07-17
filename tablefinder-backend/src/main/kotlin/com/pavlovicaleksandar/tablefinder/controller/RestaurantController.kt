@@ -44,9 +44,9 @@ class RestaurantController(private val service: RestaurantService) {
     }
 }
 
-data class CreateRestaurantDTO(val name: String, val description: String)
+data class CreateRestaurantDTO(val name: String, val description: String, val imageUrl: String)
 
-data class RestaurantResponseDTO(val id: UUID, val name: String, val description: String)
+data class RestaurantResponseDTO(val id: UUID, val name: String, val description: String, val imageUrl: String)
 
 private fun List<Restaurant>.toRestaurantResponseDTO(): List<RestaurantResponseDTO> {
     return map {
@@ -58,6 +58,7 @@ private fun Restaurant.toRestaurantResponseDTO(): RestaurantResponseDTO {
     return RestaurantResponseDTO(
         id = this.id,
         name = this.name,
-        description = this.description
+        description = this.description,
+        imageUrl = this.imageUrl
     )
 }

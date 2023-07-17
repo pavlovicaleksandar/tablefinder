@@ -6,7 +6,7 @@
     </v-btn>
     <div class="wrapper">
       <div class="d-flex gap-12">
-        <v-img src="https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510" width="800"></v-img>
+        <v-img :src='restaurant.imageUrl' width="800"></v-img>
         <div class="restaurant-description">
           <span class="text-h4">{{ restaurant.name }}</span>
           <span>{{ restaurant.description }}</span>
@@ -137,7 +137,6 @@ export default {
       fetch(`http://localhost:8080/restaurants/${this.id}`)
         .then(response => response.json())
         .then(data => this.restaurant = data)
-      this.restaurant.image = "https://media-cdn.tripadvisor.com/media/photo-s/07/35/14/37/kod-bore.jpg"
     },
     fetchReviews() {
       fetch(`http://localhost:8080/reviews/${this.id}`)

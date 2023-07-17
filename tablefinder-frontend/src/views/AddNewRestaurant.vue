@@ -13,6 +13,7 @@
           <v-card-text>
             <v-form @submit.prevent="addNewRestaurant">
               <v-text-field v-model="name" label="Name" required></v-text-field>
+              <v-text-field v-model="imageUrl" label="Image url" required></v-text-field>
               <v-textarea color="secondary" v-model="description"  label="Description" variant="outlined" base-color="primary"></v-textarea>
               <v-row>
                 <v-col class="text-center">
@@ -34,7 +35,8 @@ export default {
   data() {
     return {
       name: '',
-      description: ''
+      description: '',
+      imageUrl: ''
     };
   },
   methods: {
@@ -42,7 +44,8 @@ export default {
 
       const restaurantData = {
         name: this.name,
-        description: this.description
+        description: this.description,
+        imageUrl: this.imageUrl
       };
 
       axios.post('http://localhost:8080/restaurants', restaurantData)

@@ -10,7 +10,7 @@
       <v-col v-for="(restaurant, index) in filteredRestaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
           <v-card>
             <v-card-title>{{ restaurant.name }}</v-card-title>
-            <v-img src="https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510" class="restaurant-img"></v-img>
+            <v-img :src="restaurant.imageUrl" class="restaurant-img"></v-img>
             <v-card-actions>
               <v-menu>
                 <template v-slot:activator="{ props }">
