@@ -14,6 +14,7 @@
       <router-link to="/reservations" v-if="user != null"><v-btn>Reservations</v-btn></router-link>
       <router-link to="/users" v-if="user != null"><v-btn>Users</v-btn></router-link>
       <router-link to="/registration" v-if="user == null"><v-btn>Register</v-btn></router-link>
+      <router-link to="/profile" v-if="user != null"><v-btn>My profile</v-btn></router-link>
       <router-link to="/" v-if="user == null"><v-btn>Login</v-btn></router-link>
       <v-btn @click="logout" v-if="user != null">Logout ({{user.username}})</v-btn>
     </div>

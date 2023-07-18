@@ -45,6 +45,12 @@ const routes = [
         name: 'AddNewRestaurant',
         component: () => import(/* webpackChunkName: "home" */ '@/views/AddNewRestaurant.vue'),
         props: true
+      },
+      {
+        path: 'profile',
+        name: 'MyProfile',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/MyProfile.vue'),
+        props: true
       }
     ],
   },
