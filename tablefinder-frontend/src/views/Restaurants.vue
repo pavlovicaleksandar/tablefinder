@@ -46,7 +46,7 @@
             <v-card-title>{{ restaurant.name }}</v-card-title>
             <v-card-text>
               <v-row>
-                <v-rating readonly v-model="restaurant.rating" color="secondary"></v-rating>
+                <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
               </v-row>
               <v-row>
                   Number of reviews: ({{restaurant.numberOfRatings}})
