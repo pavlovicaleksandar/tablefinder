@@ -9,8 +9,10 @@
         <v-img :src='restaurant.imageUrl' width="800"></v-img>
         <div class="restaurant-description">
           <span class="text-h4">{{ restaurant.name }}</span>
+          <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
+          <span>Number of reviews: ({{restaurant.numberOfRatings}})</span>
+          <h3>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</h3>
           <span>{{ restaurant.description }}</span>
-
           <div class="reserve-now-btn">
             <ReservePopup></ReservePopup>
           </div>
