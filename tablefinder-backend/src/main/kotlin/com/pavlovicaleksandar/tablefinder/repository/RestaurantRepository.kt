@@ -33,18 +33,42 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
 
     fun createRestaurant(record: RestaurantRecord): RestaurantRecord {
         jdbcTemplate.update(
-            """INSERT INTO
-                 restaurants(id, name, description, image_url) 
-                 values(:id, :name, :description, :image_url)
+            """
+                INSERT INTO restaurants(id, name, description, image_url, number_of_ratings, ratings_sum, number_of_prices, prices_sum) 
+                            values(:id, :name, :description, :image_url, :number_of_ratings, :ratings_sum, :number_of_prices, :prices_sum)
             """.trimMargin(),
             mapOf(
                 "id" to record.id,
                 "name" to record.name,
                 "description" to record.description,
-                "image_url" to record.imageUrl
+                "image_url" to record.imageUrl,
+                "number_of_ratings" to record.numberOfRatings,
+                "ratings_sum" to record.ratingsSum,
+                "number_of_prices" to record.numberOfPrices,
+                "prices_sum" to record.pricesSum,
             )
         )
         return record
+    }
+
+    fun updateRestaurant(record: RestaurantRecord) {
+        jdbcTemplate.update(
+            """
+                UPDATE restaurants 
+                SET name = :name, description = :description, image_url = :image_url, number_of_ratings = :number_of_ratings, ratings_sum = :ratings_sum, number_of_prices = :number_of_prices, prices_sum = :prices_sum
+                WHERE id = :id
+            """.trimMargin(),
+            mapOf(
+                "id" to record.id,
+                "name" to record.name,
+                "description" to record.description,
+                "image_url" to record.imageUrl,
+                "number_of_ratings" to record.numberOfRatings,
+                "ratings_sum" to record.ratingsSum,
+                "number_of_prices" to record.numberOfPrices,
+                "prices_sum" to record.pricesSum,
+            )
+        )
     }
 
     private val rowMapper = RowMapper<RestaurantRecord> { resultSet, _ ->
@@ -53,7 +77,11 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
                 id = getUUID("id"),
                 name = getString("name"),
                 description = getString("description"),
-                imageUrl = getString("image_url")
+                imageUrl = getString("image_url"),
+                numberOfRatings = getInt("number_of_ratings"),
+                ratingsSum = getInt("ratings_sum"),
+                numberOfPrices = getInt("number_of_prices"),
+                pricesSum = getInt("prices_sum")
             )
         }
     }
@@ -63,5 +91,9 @@ data class RestaurantRecord(
     val id: UUID,
     val name: String,
     val description: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val numberOfRatings: Int,
+    val ratingsSum: Int,
+    val numberOfPrices: Int,
+    val pricesSum: Int,
 )

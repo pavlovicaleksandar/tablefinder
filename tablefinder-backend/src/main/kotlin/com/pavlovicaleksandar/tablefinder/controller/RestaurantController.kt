@@ -33,7 +33,6 @@ class RestaurantController(private val service: RestaurantService) {
         if (restaurant != null) {
             return restaurant.toRestaurantResponseDTO()
         }
-        // TODO handle not found case
         return null
     }
 
@@ -46,7 +45,16 @@ class RestaurantController(private val service: RestaurantService) {
 
 data class CreateRestaurantDTO(val name: String, val description: String, val imageUrl: String)
 
-data class RestaurantResponseDTO(val id: UUID, val name: String, val description: String, val imageUrl: String)
+data class RestaurantResponseDTO(
+    val id: UUID,
+    val name: String,
+    val description: String,
+    val imageUrl: String,
+    val numberOfPrices: Int,
+    val numberOfRatings: Int,
+    val pricesSum: Int,
+    val ratingsSum: Int
+)
 
 private fun List<Restaurant>.toRestaurantResponseDTO(): List<RestaurantResponseDTO> {
     return map {
@@ -59,6 +67,10 @@ private fun Restaurant.toRestaurantResponseDTO(): RestaurantResponseDTO {
         id = this.id,
         name = this.name,
         description = this.description,
-        imageUrl = this.imageUrl
+        imageUrl = this.imageUrl,
+        ratingsSum = this.ratingsSum,
+        pricesSum = this.pricesSum,
+        numberOfRatings = this.numberOfRatings,
+        numberOfPrices = this.numberOfPrices
     )
 }

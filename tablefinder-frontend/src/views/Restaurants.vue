@@ -1,10 +1,41 @@
 <template>
   <v-container fluid>
-    <v-row>
-      <v-text-field v-model="search" label="Search by name" outlined></v-text-field>
-    </v-row>
-    <v-row justify="end">
-      <router-link to="/restaurants/add"><v-btn color="secondary" class="mr-6 mb-3">Add new</v-btn></router-link>
+    <v-row justify="start">
+      <v-col cols="3">
+        <v-text-field v-model="search" label="Search by name" outlined></v-text-field>
+      </v-col>
+      <v-col cols="2">
+        <v-select color="secondary"
+                  v-model="selectedOptionForRating"
+                  label="Rating"
+                  variant="outlined"
+                  :items="ratingOptions"
+                  item-value="value"
+                  item-title="displayText"
+                  return-object
+                  single-line
+        >
+        </v-select>
+      </v-col>
+      <v-col cols="2">
+        <v-select color="secondary"
+                  v-model="selectedOptionForPrice"
+                  label="Price"
+                  variant="outlined"
+                  :items="priceOptions"
+                  item-value="value"
+                  item-title="displayText"
+                  return-object
+                  single-line
+        >
+        </v-select>
+      </v-col>
+      <v-col cols="2" >
+        <v-btn color="secondary">Filter</v-btn>
+      </v-col>
+      <v-col cols="2" >
+        <router-link to="/restaurants/add"><v-btn color="secondary">Add new</v-btn></router-link>
+      </v-col>
     </v-row>
     <v-row>
       <v-col v-for="(restaurant, index) in filteredRestaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
@@ -50,10 +81,26 @@ export default {
     return {
       restaurants: [],
       showPopup: false,
-      search: ''
+      search: '',
+      priceOptions: [
+        { displayText: 'All prices', value: null },
+        { displayText: '$', value: 1 },
+        { displayText: '$$', value: 2 },
+        { displayText: '$$$', value: 3 }
+      ],
+      selectedOptionForPrice: { displayText: 'All prices', value: null },
+      ratingOptions: [
+        { displayText: 'All ratings', value: null },
+        { displayText: 'above 2 stars', value: 2 },
+        { displayText: 'above 3 stars', value: 3 },
+        { displayText: 'above 4 stars', value: 3 },
+      ],
+      selectedOptionForRating: { displayText: 'All ratings', value: null },
     }
   },
   mounted() {
+    this.selectedOptionForRating = { displayText: 'All ratings', value: null }
+    this.selectedOptionForPrice = { displayText: 'All prices', value: null }
     this.fetchRestaurants()
   },
   methods: {

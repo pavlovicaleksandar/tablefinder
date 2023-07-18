@@ -30,7 +30,11 @@ fun CreateRestaurantDTO.toRestaurantRecord(): RestaurantRecord {
         id = UUID.randomUUID(),
         name = this.name,
         description = this.description,
-        imageUrl = this.imageUrl
+        imageUrl = this.imageUrl,
+        ratingsSum = 0,
+        numberOfPrices = 0,
+        pricesSum = 0,
+        numberOfRatings = 0
     )
 }
 private fun RestaurantRecord.toRestaurant(): Restaurant {
@@ -38,7 +42,11 @@ private fun RestaurantRecord.toRestaurant(): Restaurant {
         id = this.id,
         name = this.name,
         description = this.description,
-        imageUrl = this.imageUrl
+        imageUrl = this.imageUrl,
+        pricesSum = this.pricesSum,
+        ratingsSum = this.ratingsSum,
+        numberOfPrices = this.numberOfPrices,
+        numberOfRatings = this.numberOfRatings
     )
 }
 
@@ -46,7 +54,11 @@ data class Restaurant(
     val id: UUID,
     val name: String,
     val description: String,
-    val imageUrl: String
+    val imageUrl: String,
+    val numberOfRatings: Int,
+    val numberOfPrices: Int,
+    val ratingsSum: Int,
+    val pricesSum: Int,
 )
 
 private fun List<RestaurantRecord>.toRestaurantList(): List<Restaurant> {
