@@ -31,16 +31,28 @@
         </v-select>
       </v-col>
       <v-col cols="2" >
-        <v-btn color="secondary">Filter</v-btn>
+        <v-btn color="secondary" @click="filterRestaurants()">Filter</v-btn>
       </v-col>
       <v-col cols="2" >
         <router-link to="/restaurants/add"><v-btn color="secondary">Add new</v-btn></router-link>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="filteredRestaurants.length == 0" style="align-items: center;justify-content: center">
+        No restaurants found
+    </v-row>
+    <v-row  >
       <v-col v-for="(restaurant, index) in filteredRestaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
           <v-card>
             <v-card-title>{{ restaurant.name }}</v-card-title>
+            <v-card-text>
+              <v-row>
+                <v-rating readonly v-model="restaurant.rating" color="secondary"></v-rating>
+              </v-row>
+              <v-row>
+                  Number of reviews: ({{restaurant.numberOfRatings}})
+              </v-row>
+            </v-card-text>
+            <v-card-text>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</v-card-text>
             <v-img :src="restaurant.imageUrl" class="restaurant-img"></v-img>
             <v-card-actions>
               <v-menu>
@@ -83,25 +95,23 @@ export default {
       showPopup: false,
       search: '',
       priceOptions: [
-        { displayText: 'All prices', value: null },
+        { displayText: 'All prices', value: 0 },
         { displayText: '$', value: 1 },
         { displayText: '$$', value: 2 },
         { displayText: '$$$', value: 3 }
       ],
-      selectedOptionForPrice: { displayText: 'All prices', value: null },
+      selectedOptionForPrice: { displayText: 'All prices', value: 0 },
       ratingOptions: [
-        { displayText: 'All ratings', value: null },
+        { displayText: 'All ratings', value: 0 },
         { displayText: 'above 2 stars', value: 2 },
         { displayText: 'above 3 stars', value: 3 },
-        { displayText: 'above 4 stars', value: 3 },
+        { displayText: 'above 4 stars', value: 4 },
       ],
-      selectedOptionForRating: { displayText: 'All ratings', value: null },
+      selectedOptionForRating: { displayText: 'All ratings', value: 0 },
     }
   },
   mounted() {
-    this.selectedOptionForRating = { displayText: 'All ratings', value: null }
-    this.selectedOptionForPrice = { displayText: 'All prices', value: null }
-    this.fetchRestaurants()
+    this.filterRestaurants()
   },
   methods: {
     fetchRestaurants() {
@@ -118,6 +128,11 @@ export default {
           console.error('Error deleting restaurant:', error);
         });
       location.reload()
+    },
+    filterRestaurants() {
+      fetch(`http://localhost:8080/restaurants?priceFilter=${this.selectedOptionForPrice.value}&ratingFilter=${this.selectedOptionForRating.value}`)
+        .then(response => response.json())
+        .then(data => this.restaurants = data)
     }
   },
   computed: {

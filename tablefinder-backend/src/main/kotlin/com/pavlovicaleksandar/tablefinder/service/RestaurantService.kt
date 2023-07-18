@@ -5,11 +5,17 @@ import com.pavlovicaleksandar.tablefinder.repository.RestaurantRecord
 import com.pavlovicaleksandar.tablefinder.repository.RestaurantRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
+import kotlin.math.roundToInt
 
 @Service
 class RestaurantService(private val repository: RestaurantRepository) {
-    fun findAll(): List<Restaurant> {
-        return repository.findAll().toRestaurantList()
+    fun findAll(ratingFilter: Int, priceFilter: Int): List<Restaurant> {
+        return repository.findAll().toRestaurantList().filter {
+            val rating = if (it.numberOfRatings != 0) it.ratingsSum.div(it.numberOfRatings.toDouble()) else 0.0
+            val price = if (it.numberOfPrices != 0) it.pricesSum.div(it.numberOfPrices.toDouble()) else 0.0
+
+            rating >= ratingFilter && (price.roundToInt() == priceFilter || priceFilter == 0)
+        }
     }
 
     fun findById(restaurantId: UUID): Restaurant? {

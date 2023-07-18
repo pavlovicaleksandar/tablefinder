@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import kotlin.math.roundToInt
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 
 @RestController
 @RequestMapping("/restaurants")
@@ -23,8 +25,8 @@ class RestaurantController(private val service: RestaurantService) {
         return service.createRestaurant(createRestaurantDTO).toRestaurantResponseDTO()
     }
     @GetMapping
-    fun getAllRestaurants(): List<RestaurantResponseDTO> {
-        return service.findAll().toRestaurantResponseDTO()
+    fun getAllRestaurants(@RequestParam(defaultValue = "0") ratingFilter: Int, @RequestParam(defaultValue = "0") priceFilter: Int): List<RestaurantResponseDTO> {
+        return service.findAll(ratingFilter, priceFilter).toRestaurantResponseDTO()
     }
 
     @GetMapping("/{restaurantId}")
@@ -53,7 +55,9 @@ data class RestaurantResponseDTO(
     val numberOfPrices: Int,
     val numberOfRatings: Int,
     val pricesSum: Int,
-    val ratingsSum: Int
+    val ratingsSum: Int,
+    val rating: Double,
+    val price: Int
 )
 
 private fun List<Restaurant>.toRestaurantResponseDTO(): List<RestaurantResponseDTO> {
@@ -71,6 +75,8 @@ private fun Restaurant.toRestaurantResponseDTO(): RestaurantResponseDTO {
         ratingsSum = this.ratingsSum,
         pricesSum = this.pricesSum,
         numberOfRatings = this.numberOfRatings,
-        numberOfPrices = this.numberOfPrices
+        numberOfPrices = this.numberOfPrices,
+        rating = if (this.numberOfRatings != 0) this.ratingsSum.div(this.numberOfRatings.toDouble()) else 0.0,
+        price = (if (this.numberOfPrices != 0) this.pricesSum.div(this.numberOfPrices.toDouble()) else 0.0).roundToInt()
     )
 }
