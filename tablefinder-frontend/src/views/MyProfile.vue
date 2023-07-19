@@ -8,16 +8,24 @@
           </v-toolbar>
           <v-card-text>
               <v-text-field readonly v-model="user.username" label="Username" required></v-text-field>
-              <v-text-field v-model="user.email" label="Email" required></v-text-field>
+              <v-text-field readonly v-model="user.role" label="Role"></v-text-field>
+              <v-text-field v-model="user.email" label="Email"></v-text-field>
               <v-text-field v-model="user.phoneNumber" label="Phone Number"></v-text-field>
-              <v-card-text v-if="message != null" class="mt-n6">
+              <v-text-field v-model="newPassword" label="New password" type="password"></v-text-field>
+              <v-text-field v-model="confirmNewPassword" label="Confirm new password" type="password"></v-text-field>
+              <v-card-text v-if="errorMessage != null" class="mt-n6">
                 <v-alert color="error">
-                  {{message}}
+                  {{errorMessage}}
+                </v-alert>
+              </v-card-text>
+            <v-card-text v-if="successMessage != null" class="mt-n6">
+                <v-alert color="success">
+                  {{successMessage}}
                 </v-alert>
               </v-card-text>
               <v-row>
                 <v-col class="text-center">
-                  <v-btn color="primary">Edit</v-btn>
+                  <v-btn color="primary" @click="editUser">Edit</v-btn>
                 </v-col>
               </v-row>
           </v-card-text>
@@ -34,57 +42,69 @@ export default {
   data() {
     return {
       user: {},
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      phoneNumber: '',
-      message: null
+      newPassword: null,
+      confirmNewPassword: null,
+      errorMessage: null,
+      successMessage: null,
+
     };
   },
   mounted() {
-    this.message = null
-    this.user = JSON.parse(localStorage.getItem('user'))
+    this.errorMessage = null
+    this.successMessage = null
+    this.user = this.getUser(JSON.parse(localStorage.getItem('user')).id)
   },
   methods: {
-    registerUser() {
+    editUser() {
       // Validate form inputs
-      if (!this.username || !this.email || !this.password || !this.confirmPassword) {
-        this.message = "All fields marked with * are required"
+      if (!this.user.email) {
+        this.errorMessage = "All fields marked with * are required"
         return;
       }
 
-      if (this.password !== this.confirmPassword) {
-        this.message = "Passwords are not matching"
-        return;
+      if (!this.isValidEmail(this.user.email)) {
+        this.errorMessage = "Email is in wrong format"
+        return
       }
-
-      if (!this.isValidEmail(this.email)) {
-        this.message = "Email is in wrong format"
+      if (this.newPassword && this.newPassword != this.confirmNewPassword) {
+        this.errorMessage = "Passwords are not matching"
         return
       }
 
-      // Make API call to register the user with the provided data
       const userData = {
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        phoneNumber: this.phoneNumber
+        email: this.user.email,
+        password: this.newPassword,
+        phoneNumber: this.user.phoneNumber,
+        role: this.role
       };
 
 
-      axios.post('http://localhost:8080/users/register', userData)
+      axios.put(`http://localhost:8080/users/${this.user.id}`, userData)
         .then(response => {
-          console.log('Successfully registered');
-          this.$router.push('/')
+          console.log('Successfully updated user');
+          this.successMessage = "Successfully updated profile"
+          this.errorMessage = null
+          // setTimeout(function(){
+          //   window.location.reload();
+          // }, 2000);
         })
         .catch(error => {
-          console.error('Error registration:', error);
+          console.error('Error updating user:', error);
         });
 
     },
     isValidEmail(email) {
       return /^[^@]+@\w+(\.\w+)+\w$/.test(email);
+    },
+    getUser(id) {
+      axios.get(`http://localhost:8080/users/${id}`)
+        .then(response => {
+          console.log('Successfully updated user');
+          this.user = response.data
+        })
+        .catch(error => {
+          console.error('Error updating user:', error);
+        });
     }
   }
 };

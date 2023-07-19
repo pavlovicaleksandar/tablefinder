@@ -9,13 +9,14 @@ import java.util.UUID
 class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
     fun save(user: UserRecord): Int {
         return jdbcTemplate.update(
-            "insert into users(id, username, email, password, role) values(:id, :username, :email, :password, :role)",
+            "insert into users(id, username, email, password, role, phone_number) values(:id, :username, :email, :password, :role, :phone_number)",
             mapOf(
                 "id" to user.id,
                 "username" to user.username,
                 "email" to user.email,
                 "password" to user.password,
-                "role" to user.role
+                "role" to user.role,
+                "phone_number" to user.phoneNumber
             )
         )
     }
@@ -55,6 +56,23 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         )
     }
 
+    fun updateUser(userRecord: UserRecord) {
+        jdbcTemplate.update(
+            """
+                UPDATE users 
+                SET email = :email, role = :role, phone_number = :phone_number, password = :password
+                WHERE id = :id
+            """.trimIndent(),
+            mapOf(
+                "id" to userRecord.id,
+                "email" to userRecord.email,
+                "role" to userRecord.role,
+                "phone_number" to userRecord.phoneNumber,
+                "password" to userRecord.password
+            )
+        )
+    }
+
     private val rowMapper = RowMapper<UserRecord> { resultSet, _ ->
         with(resultSet) {
             UserRecord(
@@ -62,7 +80,8 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
                 username = getString("username"),
                 email = getString("email"),
                 password = getString("password"),
-                role = getString("role")
+                role = getString("role"),
+                phoneNumber = getString("phone_number")
             )
         }
     }
@@ -73,5 +92,6 @@ data class UserRecord(
     val username: String,
     val email: String,
     val password: String,
-    val role: String
+    val role: String,
+    val phoneNumber: String
 )

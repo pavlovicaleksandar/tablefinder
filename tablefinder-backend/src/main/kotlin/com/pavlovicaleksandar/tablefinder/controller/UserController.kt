@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import org.springframework.http.ResponseEntity.ok
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PutMapping
 
 @RestController
 @RequestMapping("/users")
@@ -37,6 +39,7 @@ class UserController(
             val token = jwtTokenService.generateToken(user.username, user.role)
             ResponseEntity(
                 LoginResponseDTO(
+                    user.id,
                     user.username,
                     user.email,
                     user.role,
@@ -47,6 +50,12 @@ class UserController(
         } else {
             ResponseEntity(HttpStatus.NOT_FOUND)
         }
+    }
+
+    @PutMapping("{userId}")
+    fun updateUser(@RequestBody updateUserDTO: UpdateUserDTO, @PathVariable userId: UUID): ResponseEntity<Unit> {
+        service.updateUser(userId, updateUserDTO)
+        return ok().build()
     }
 
     @PostMapping("/userInfo")
@@ -83,7 +92,10 @@ class UserController(
     }
 }
 
+data class UpdateUserDTO(val email: String?, val role: String?, val phoneNumber: String?, val password: String?)
+
 data class LoginResponseDTO(
+    val id: UUID,
     val username: String,
     val email: String,
     val role: String,
@@ -95,5 +107,6 @@ data class LoginDTO(val username: String, val password: String)
 data class RegisterUserDTO(
     val username: String,
     val email: String,
-    val password: String
+    val password: String,
+    val phoneNumber: String
 )

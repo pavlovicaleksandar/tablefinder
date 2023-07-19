@@ -1,6 +1,7 @@
 package com.pavlovicaleksandar.tablefinder.service
 
 import com.pavlovicaleksandar.tablefinder.controller.RegisterUserDTO
+import com.pavlovicaleksandar.tablefinder.controller.UpdateUserDTO
 import com.pavlovicaleksandar.tablefinder.repository.UserRecord
 import com.pavlovicaleksandar.tablefinder.repository.UserRepository
 import org.springframework.stereotype.Service
@@ -35,6 +36,18 @@ class UserService(private val repository: UserRepository) {
 
     fun <T : Any> Optional<out T>.toList(): List<T> =
         if (isPresent) listOf(get()) else emptyList()
+
+    fun updateUser(userId: UUID, updateUserDTO: UpdateUserDTO) {
+        val userToBeUpdated = repository.findById(userId)!!
+        val userRecord = userToBeUpdated.copy(
+            email = updateUserDTO.email ?: userToBeUpdated.email,
+            role = updateUserDTO.role ?: userToBeUpdated.role,
+            phoneNumber = updateUserDTO.phoneNumber ?: userToBeUpdated.phoneNumber,
+            password = if (updateUserDTO.password != null)
+                hashPassword(updateUserDTO.password) else userToBeUpdated.password
+        )
+        repository.updateUser(userRecord)
+    }
 }
 
 data class User(
@@ -42,7 +55,8 @@ data class User(
     val username: String,
     val email: String,
     val password: String,
-    val role: String
+    val role: String,
+    val phoneNumber: String
 )
 
 private fun UserRecord.toUser(): User {
@@ -51,7 +65,8 @@ private fun UserRecord.toUser(): User {
         username = username,
         email = email,
         password = password,
-        role = role
+        role = role,
+        phoneNumber = phoneNumber
     )
 }
 
@@ -67,7 +82,8 @@ fun RegisterUserDTO.toUser(): User {
         username = username,
         email = email,
         password = hashPassword(password),
-        role = "GUEST"
+        role = "GUEST",
+        phoneNumber = phoneNumber
     )
 }
 
@@ -76,5 +92,6 @@ fun User.toRecord(): UserRecord = UserRecord(
     username = username,
     email = email,
     password = password,
-    role = role
+    role = role,
+    phoneNumber = phoneNumber
 )
