@@ -55,7 +55,8 @@
                 </v-container>
               </v-card-text>
               <v-card-actions>
-                <v-btn color="secondary" @click="addReview" variant="outlined" class="mt-n8">Add</v-btn>
+                <v-btn v-if="selectedRating!=null" color="secondary" @click="addReview" variant="outlined" class="mt-n8">Add</v-btn>
+                <v-btn v-if="selectedRating == null" color="secondary" @click="addReview" variant="outlined" disabled class="mt-n8">Add</v-btn>
               </v-card-actions>
             </v-card>
           </v-list-item>
@@ -130,6 +131,7 @@ export default {
     }
   },
   mounted() {
+    this.selectedRating = null
     this.user = JSON.parse(localStorage.getItem('user'))
     this.fetchRestaurantById()
     this.fetchReviews()
