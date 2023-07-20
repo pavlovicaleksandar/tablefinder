@@ -28,6 +28,19 @@ class ReviewService(
     fun getReviewsByRestaurantId(restaurantId: UUID): List<ReviewRecord> {
         return repository.getByRestaurantId(restaurantId)
     }
+
+    fun deleteReview(reviewId: UUID) {
+        val reviewRecord = repository.getById(reviewId)!!
+        repository.deleteReview(reviewId)
+        val restaurantRecord = restaurantRepository.findById(reviewRecord.restaurantId)!!
+        val newRestaurantRecord = restaurantRecord.copy(
+            numberOfRatings = restaurantRecord.numberOfRatings - 1,
+            numberOfPrices = restaurantRecord.numberOfPrices - 1,
+            ratingsSum = restaurantRecord.ratingsSum - reviewRecord.rating,
+            pricesSum = restaurantRecord.pricesSum - reviewRecord.price
+        )
+        restaurantRepository.updateRestaurant(newRestaurantRecord)
+    }
 }
 
 fun CreateReviewDTO.toReviewRecord(): ReviewRecord {

@@ -39,6 +39,25 @@ class ReviewRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         )
     }
 
+    fun getById(reviewId: UUID): ReviewRecord? {
+        return jdbcTemplate.query(
+            "select * from reviews where id = :id",
+            mapOf(
+                "id" to reviewId
+            ),
+            rowMapper
+        ).firstOrNull()
+    }
+
+    fun deleteReview(reviewId: UUID) {
+        jdbcTemplate.update(
+            "delete from reviews where id = :id",
+            mapOf(
+                "id" to reviewId
+            ),
+        )
+    }
+
     private val rowMapper = RowMapper<ReviewRecord> { resultSet, _ ->
         with(resultSet) {
             ReviewRecord(

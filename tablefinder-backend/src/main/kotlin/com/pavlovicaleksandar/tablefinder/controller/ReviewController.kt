@@ -6,6 +6,7 @@ import java.util.UUID
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.noContent
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -26,6 +27,12 @@ class ReviewController(private val service: ReviewService) {
     @PostMapping
     fun createReview(@RequestBody createReviewDTO: CreateReviewDTO): ResponseEntity<Unit> {
         service.createReview(createReviewDTO)
+        return noContent().build()
+    }
+
+    @DeleteMapping("{reviewId}")
+    fun createReview(@PathVariable reviewId: UUID): ResponseEntity<Unit> {
+        service.deleteReview(reviewId)
         return noContent().build()
     }
 }

@@ -89,6 +89,9 @@
                       <p>{{ review.comment }}</p>
                     </v-col>
                   </v-row>
+                  <v-row justify="end">
+                    <v-btn color="red" @click="removeReview(review.id)">Remove</v-btn>
+                  </v-row>
                 </v-container>
               </v-card-text>
             </v-card>
@@ -167,6 +170,16 @@ export default {
             console.error('Error adding new review:', error);
           });
       }
+    },
+    removeReview(reviewId) {
+      axios.delete(`http://localhost:8080/reviews/${reviewId}`)
+        .then(response => {
+          console.log('Successfully removed review');
+          location.reload()
+        })
+        .catch(error => {
+          console.error('Error removing review:', error);
+        });
     }
   }
 }

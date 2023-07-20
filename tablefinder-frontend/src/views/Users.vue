@@ -9,7 +9,7 @@
       <v-btn color="secondary">
         Edit
       </v-btn>
-      <v-btn @click="deleteUser(item.columns.username)" color="secondary">
+      <v-btn @click="deleteUser(item.columns.username)" color="red" class="ml-2">
         Delete
       </v-btn>
     </template>
