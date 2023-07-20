@@ -1,5 +1,6 @@
 package com.pavlovicaleksandar.tablefinder.controller
 
+import com.pavlovicaleksandar.tablefinder.repository.LinkedTagRecord
 import com.pavlovicaleksandar.tablefinder.service.Restaurant
 import com.pavlovicaleksandar.tablefinder.service.RestaurantService
 import org.springframework.http.ResponseEntity
@@ -57,7 +58,8 @@ data class RestaurantResponseDTO(
     val pricesSum: Int,
     val ratingsSum: Int,
     val rating: Double,
-    val price: Int
+    val price: Int,
+    val tags: List<LinkedTagRecord>
 )
 
 private fun List<Restaurant>.toRestaurantResponseDTO(): List<RestaurantResponseDTO> {
@@ -77,6 +79,7 @@ private fun Restaurant.toRestaurantResponseDTO(): RestaurantResponseDTO {
         numberOfRatings = this.numberOfRatings,
         numberOfPrices = this.numberOfPrices,
         rating = if (this.numberOfRatings != 0) this.ratingsSum.div(this.numberOfRatings.toDouble()) else 0.0,
-        price = (if (this.numberOfPrices != 0) this.pricesSum.div(this.numberOfPrices.toDouble()) else 0.0).roundToInt()
+        price = (if (this.numberOfPrices != 0) this.pricesSum.div(this.numberOfPrices.toDouble()) else 0.0).roundToInt(),
+        tags = this.tags
     )
 }

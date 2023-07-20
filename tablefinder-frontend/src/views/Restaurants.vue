@@ -37,6 +37,19 @@
         <router-link to="/restaurants/add"><v-btn color="secondary">Add new</v-btn></router-link>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <v-select
+          v-model="selectedTags"
+          :items="tags"
+          item-value="id"
+          item-title="name"
+          chips
+          label="Tags"
+          multiple
+        ></v-select>
+      </v-col>
+    </v-row>
     <v-row v-if="filteredRestaurants.length == 0" style="align-items: center;justify-content: center">
         No restaurants found
     </v-row>
@@ -108,16 +121,19 @@ export default {
         { displayText: 'above 4 stars', value: 4 },
       ],
       selectedOptionForRating: { displayText: 'All ratings', value: 0 },
+      tags: [],
+      selectedTags: []
     }
   },
   mounted() {
     this.filterRestaurants()
+    this.fetchTags()
   },
   methods: {
-    fetchRestaurants() {
-      fetch('http://localhost:8080/restaurants')
+    fetchTags() {
+      fetch('http://localhost:8080/tags')
         .then(response => response.json())
-        .then(data => this.restaurants = data)
+        .then(data => this.tags = data)
     },
     deleteRestaurant(restaurantId) {
       axios.delete(`http://localhost:8080/restaurants/${restaurantId}`)
@@ -133,7 +149,20 @@ export default {
       fetch(`http://localhost:8080/restaurants?priceFilter=${this.selectedOptionForPrice.value}&ratingFilter=${this.selectedOptionForRating.value}`)
         .then(response => response.json())
         .then(data => this.restaurants = data)
-    }
+    },
+    // newFilterRestaurants() {
+    //   axios.get(`http://localhost:8080/restaurants`,{
+    //     params: {
+    //       selectedTags: this.selectedTags,
+    //       priceFilter: this.selectedOptionForPrice.value,
+    //       ratingFilter: this.selectedOptionForRating.value
+    //     },
+    //     paramsSerializer: params => {
+    //       return JSON.stringify(params)
+    //     }})
+    //     .then(response => response.json())
+    //     .then(data => this.restaurants = data)
+    // }
   },
   computed: {
     filteredRestaurants() {

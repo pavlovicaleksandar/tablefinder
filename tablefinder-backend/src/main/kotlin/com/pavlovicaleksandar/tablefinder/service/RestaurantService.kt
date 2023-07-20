@@ -1,25 +1,33 @@
 package com.pavlovicaleksandar.tablefinder.service
 
 import com.pavlovicaleksandar.tablefinder.controller.CreateRestaurantDTO
+import com.pavlovicaleksandar.tablefinder.repository.LinkedTagRecord
 import com.pavlovicaleksandar.tablefinder.repository.RestaurantRecord
 import com.pavlovicaleksandar.tablefinder.repository.RestaurantRepository
+import com.pavlovicaleksandar.tablefinder.repository.TagRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
 import kotlin.math.roundToInt
 
 @Service
-class RestaurantService(private val repository: RestaurantRepository) {
+class RestaurantService(private val repository: RestaurantRepository, private val tagRepository: TagRepository) {
     fun findAll(ratingFilter: Int, priceFilter: Int): List<Restaurant> {
-        return repository.findAll().toRestaurantList().filter {
+        val restaurantRecords = repository.findAll().filter {
             val rating = if (it.numberOfRatings != 0) it.ratingsSum.div(it.numberOfRatings.toDouble()) else 0.0
             val price = if (it.numberOfPrices != 0) it.pricesSum.div(it.numberOfPrices.toDouble()) else 0.0
 
             rating >= ratingFilter && (price.roundToInt() == priceFilter || priceFilter == 0)
         }
+
+        return restaurantRecords.map {
+            val linkedTags = tagRepository.getLinkedTagsFor(it.id)
+            it.toRestaurant(linkedTags)
+        }
     }
 
     fun findById(restaurantId: UUID): Restaurant? {
-        return repository.findById(restaurantId)?.toRestaurant()
+        val linkedTags = tagRepository.getLinkedTagsFor(restaurantId)
+        return repository.findById(restaurantId)?.toRestaurant(linkedTags)
     }
 
     fun deleteById(restaurantId: UUID) {
@@ -27,7 +35,7 @@ class RestaurantService(private val repository: RestaurantRepository) {
     }
 
     fun createRestaurant(dto: CreateRestaurantDTO): Restaurant {
-        return repository.createRestaurant(dto.toRestaurantRecord()).toRestaurant()
+        return repository.createRestaurant(dto.toRestaurantRecord()).toRestaurant(emptyList<LinkedTagRecord>().toMutableList())
     }
 }
 
@@ -43,7 +51,7 @@ fun CreateRestaurantDTO.toRestaurantRecord(): RestaurantRecord {
         numberOfRatings = 0
     )
 }
-private fun RestaurantRecord.toRestaurant(): Restaurant {
+private fun RestaurantRecord.toRestaurant(linkedTags: MutableList<LinkedTagRecord>): Restaurant {
     return Restaurant(
         id = this.id,
         name = this.name,
@@ -52,7 +60,8 @@ private fun RestaurantRecord.toRestaurant(): Restaurant {
         pricesSum = this.pricesSum,
         ratingsSum = this.ratingsSum,
         numberOfPrices = this.numberOfPrices,
-        numberOfRatings = this.numberOfRatings
+        numberOfRatings = this.numberOfRatings,
+        tags = linkedTags.toList()
     )
 }
 
@@ -65,10 +74,6 @@ data class Restaurant(
     val numberOfPrices: Int,
     val ratingsSum: Int,
     val pricesSum: Int,
+    val tags: List<LinkedTagRecord>
 )
 
-private fun List<RestaurantRecord>.toRestaurantList(): List<Restaurant> {
-    return map {
-        it.toRestaurant()
-    }
-}
