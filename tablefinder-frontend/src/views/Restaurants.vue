@@ -58,12 +58,10 @@
           <v-card>
             <v-card-title>{{ restaurant.name }}</v-card-title>
             <v-card-text>
-              <v-row>
                 <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
-              </v-row>
-              <v-row>
+            </v-card-text>
+            <v-card-text>
                   Number of reviews: ({{restaurant.numberOfRatings}})
-              </v-row>
             </v-card-text>
             <v-card-text>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</v-card-text>
             <v-img :src="restaurant.imageUrl" class="restaurant-img"></v-img>
@@ -152,19 +150,6 @@ export default {
         .then(response => response.json())
         .then(data => this.restaurants = data)
     },
-    // newFilterRestaurants() {
-    //   axios.get(`http://localhost:8080/restaurants`,{
-    //     params: {
-    //       selectedTags: this.selectedTags,
-    //       priceFilter: this.selectedOptionForPrice.value,
-    //       ratingFilter: this.selectedOptionForRating.value
-    //     },
-    //     paramsSerializer: params => {
-    //       return JSON.stringify(params)
-    //     }})
-    //     .then(response => response.json())
-    //     .then(data => this.restaurants = data)
-    // }
     areRestaurantTagsInFilteredTags(restaurantTags, filteredTags) {
       const set1 = new Set(restaurantTags.map(item => item['tagId']));
       const set2 = new Set(filteredTags);
@@ -197,7 +182,7 @@ export default {
 
 <style>
 .restaurant-img {
-  width: 300px; /* Set the desired width for the card */
-  height: 300px; /* Set the desired height for the card */
+  width: 300px;
+  height: 300px;
 }
 </style>
