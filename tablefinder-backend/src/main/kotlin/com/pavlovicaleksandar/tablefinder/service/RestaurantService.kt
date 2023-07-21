@@ -1,6 +1,7 @@
 package com.pavlovicaleksandar.tablefinder.service
 
 import com.pavlovicaleksandar.tablefinder.controller.CreateRestaurantDTO
+import com.pavlovicaleksandar.tablefinder.controller.UpdateRestaurantDTO
 import com.pavlovicaleksandar.tablefinder.repository.LinkedTagRecord
 import com.pavlovicaleksandar.tablefinder.repository.RestaurantRecord
 import com.pavlovicaleksandar.tablefinder.repository.RestaurantRepository
@@ -41,6 +42,21 @@ class RestaurantService(private val repository: RestaurantRepository, private va
             LinkedTagRecord(restaurantRecord.id, it.id, it.name)
         }
         return restaurantRecord.toRestaurant(linkedTags.toMutableList())
+    }
+
+    fun updateRestaurant(restaurantId: UUID, dto: UpdateRestaurantDTO) {
+        val restaurantRecord = repository.findById(restaurantId)!!
+        val newRestaurantRecord = restaurantRecord.copy(
+            name = dto.name,
+            description = dto.description,
+            imageUrl = dto.imageUrl
+        )
+        repository.updateRestaurant(newRestaurantRecord)
+        tagRepository.deleteAllForRestaurantWith(restaurantId)
+        dto.tags.forEach {
+            tagRepository.linkToRestaurant(restaurantRecord.id, it)
+            LinkedTagRecord(restaurantRecord.id, it.id, it.name)
+        }
     }
 }
 

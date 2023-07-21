@@ -75,7 +75,9 @@
 
                 <v-list>
                   <v-list-item>
-                    <v-list-item-title>Edit</v-list-item-title>
+                    <router-link :to="{ name: 'EditRestaurant', params: { id: restaurant.id } }" style="text-decoration: none">
+                      <v-list-item-title>Edit</v-list-item-title>
+                    </router-link>
                   </v-list-item>
                   <v-list-item @click="deleteRestaurant(restaurant.id)">
                     <v-list-item-title>Delete</v-list-item-title>

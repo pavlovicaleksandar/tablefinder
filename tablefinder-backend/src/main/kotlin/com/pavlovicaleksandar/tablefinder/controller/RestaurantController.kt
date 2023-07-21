@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 import kotlin.math.roundToInt
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 
@@ -26,12 +27,19 @@ class RestaurantController(private val service: RestaurantService) {
     fun createRestaurant(@RequestBody createRestaurantDTO: CreateRestaurantDTO): RestaurantResponseDTO {
         return service.createRestaurant(createRestaurantDTO).toRestaurantResponseDTO()
     }
+
+    @PutMapping("{restaurantId}")
+    fun updateUser(@RequestBody updateRestaurantDTO: UpdateRestaurantDTO, @PathVariable restaurantId: UUID): ResponseEntity<Unit> {
+        service.updateRestaurant(restaurantId, updateRestaurantDTO)
+        return ResponseEntity.ok().build()
+    }
+
     @GetMapping
     fun getAllRestaurants(@RequestParam(defaultValue = "0") ratingFilter: Int, @RequestParam(defaultValue = "0") priceFilter: Int): List<RestaurantResponseDTO> {
         return service.findAll(ratingFilter, priceFilter).toRestaurantResponseDTO()
     }
 
-    @GetMapping("/{restaurantId}")
+    @GetMapping("{restaurantId}")
     fun getRestaurantById(@PathVariable restaurantId: UUID): RestaurantResponseDTO? {
         val restaurant = service.findById(restaurantId)
         if (restaurant != null) {
@@ -46,6 +54,8 @@ class RestaurantController(private val service: RestaurantService) {
         return noContent().build()
     }
 }
+
+data class UpdateRestaurantDTO(val name: String, val description: String, val imageUrl: String, val tags: List<TagRecord>)
 
 data class CreateRestaurantDTO(val name: String, val description: String, val imageUrl: String, val tags: List<TagRecord>)
 

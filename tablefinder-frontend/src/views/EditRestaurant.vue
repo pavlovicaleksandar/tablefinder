@@ -1,0 +1,118 @@
+<template>
+  <v-container fluid>
+    <v-row justify="center">
+      <v-col cols="12" md="6" lg="4">
+        <v-card class="elevation-12">
+          <v-toolbar color="primary" dark>
+            <v-toolbar-title>Edit restaurant</v-toolbar-title>
+          </v-toolbar>
+          <v-card-text>
+            <v-text-field v-model="restaurant.name" label="Name"></v-text-field>
+            <v-text-field v-model="restaurant.imageUrl" label="Image url"></v-text-field>
+            <v-select
+              v-model="restaurant.tags"
+              :items="tags"
+              item-value="id"
+              item-title="name"
+              chips
+              label="Tags"
+              return-object
+              multiple
+            ></v-select>
+            <v-textarea v-model="restaurant.description" label="Description"></v-textarea>
+            <v-card-text v-if="errorMessage != null" class="mt-n6">
+              <v-alert color="error">
+                {{errorMessage}}
+              </v-alert>
+            </v-card-text>
+            <v-card-text v-if="successMessage != null" class="mt-n6">
+              <v-alert color="success">
+                {{successMessage}}
+              </v-alert>
+            </v-card-text>
+            <v-row>
+              <v-col class="text-center">
+                <v-btn color="primary" @click="editRestaurant">Edit</v-btn>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      restaurant: {},
+      tags: [],
+      errorMessage: null,
+      successMessage: null,
+    };
+  },
+  mounted() {
+    this.errorMessage = null
+    this.successMessage = null
+    this.fetchTags()
+    this.fetchRestaurantById()
+  },
+  methods: {
+    fetchRestaurantById() {
+      fetch(`http://localhost:8080/restaurants/${this.id}`)
+        .then(response => response.json())
+        .then(data => this.restaurant = data)
+        .then(data => this.restaurant.tags = this.restaurant.tags.map(item => {
+          return {
+            id: item.tagId,
+            name: item.tagName
+          }
+        }))
+    },
+    fetchTags() {
+      fetch('http://localhost:8080/tags')
+        .then(response => response.json())
+        .then(data => this.tags = data)
+    },
+    editRestaurant() {
+      // if (!this.user.email) {
+      //   this.errorMessage = "All fields marked with * are required"
+      //   return;
+      // }
+      //
+      // if (!this.isValidEmail(this.user.email)) {
+      //   this.errorMessage = "Email is in wrong format"
+      //   return
+      // }
+      // if (this.newPassword && this.newPassword != this.confirmNewPassword) {
+      //   this.errorMessage = "Passwords are not matching"
+      //   return
+      // }
+
+      const restaurantData = {
+        name: this.restaurant.name,
+        description: this.restaurant.description,
+        imageUrl: this.restaurant.imageUrl,
+        tags: this.restaurant.tags
+      };
+
+      axios.put(`http://localhost:8080/restaurants/${this.restaurant.id}`, restaurantData)
+        .then(response => {
+          console.log('Successfully created new restaurant');
+        })
+        .catch(error => {
+          console.error('Error creating new restaurant:', error);
+        });
+    }
+  }
+};
+</script>

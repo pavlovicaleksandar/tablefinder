@@ -52,6 +52,18 @@ class TagRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         )
     }
 
+    fun deleteAllForRestaurantWith(restaurantId: UUID) {
+        jdbcTemplate.update(
+            """
+                DELETE FROM linked_tags 
+                WHERE restaurant_id = :restaurant_id
+            """.trimMargin(),
+            mapOf(
+                "restaurant_id" to restaurantId
+            )
+        )
+    }
+
     private val linkedTagRowMapper = RowMapper<LinkedTagRecord> { resultSet, _ ->
         with(resultSet) {
             LinkedTagRecord(
