@@ -1,6 +1,7 @@
 package com.pavlovicaleksandar.tablefinder.controller
 
 import com.pavlovicaleksandar.tablefinder.repository.LinkedTagRecord
+import com.pavlovicaleksandar.tablefinder.repository.TagRecord
 import com.pavlovicaleksandar.tablefinder.service.Restaurant
 import com.pavlovicaleksandar.tablefinder.service.RestaurantService
 import org.springframework.http.ResponseEntity
@@ -46,7 +47,7 @@ class RestaurantController(private val service: RestaurantService) {
     }
 }
 
-data class CreateRestaurantDTO(val name: String, val description: String, val imageUrl: String)
+data class CreateRestaurantDTO(val name: String, val description: String, val imageUrl: String, val tags: List<TagRecord>)
 
 data class RestaurantResponseDTO(
     val id: UUID,

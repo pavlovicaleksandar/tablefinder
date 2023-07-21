@@ -14,16 +14,26 @@ class TagRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         )
     }
 
+    fun findById(id: UUID): List<TagRecord> {
+        return jdbcTemplate.query(
+            "select * from tags where id = :id",
+            mapOf(
+                "id" to id
+            ),
+            tagRowMapper
+        )
+    }
+
     fun linkToRestaurant(restaurantId: UUID, tagRecord: TagRecord) {
         jdbcTemplate.update(
             """
-                INSERT INTO linked_tags(restaurant_id, tag_id, name) 
-                            values(:restaurant_id, :tag_id, :name)
+                INSERT INTO linked_tags(restaurant_id, tag_id, tag_name) 
+                            values(:restaurant_id, :tag_id, :tag_name)
             """.trimMargin(),
             mapOf(
                 "restaurant_id" to restaurantId,
                 "tag_id" to tagRecord.id,
-                "name" to tagRecord.name,
+                "tag_name" to tagRecord.name,
             )
         )
     }

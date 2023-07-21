@@ -35,7 +35,12 @@ class RestaurantService(private val repository: RestaurantRepository, private va
     }
 
     fun createRestaurant(dto: CreateRestaurantDTO): Restaurant {
-        return repository.createRestaurant(dto.toRestaurantRecord()).toRestaurant(emptyList<LinkedTagRecord>().toMutableList())
+        val restaurantRecord = repository.createRestaurant(dto.toRestaurantRecord())
+        val linkedTags = dto.tags.map {
+            tagRepository.linkToRestaurant(restaurantRecord.id, it)
+            LinkedTagRecord(restaurantRecord.id, it.id, it.name)
+        }
+        return restaurantRecord.toRestaurant(linkedTags.toMutableList())
     }
 }
 

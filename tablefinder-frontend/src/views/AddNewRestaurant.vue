@@ -14,6 +14,16 @@
             <v-form @submit.prevent="addNewRestaurant">
               <v-text-field v-model="name" label="Name" required></v-text-field>
               <v-text-field v-model="imageUrl" label="Image url" required></v-text-field>
+              <v-select
+                v-model="selectedTags"
+                :items="tags"
+                item-value="id"
+                item-title="name"
+                chips
+                label="Tags"
+                return-object
+                multiple
+              ></v-select>
               <v-textarea color="secondary" v-model="description"  label="Description" variant="outlined" base-color="primary"></v-textarea>
               <v-row>
                 <v-col class="text-center">
@@ -36,18 +46,29 @@ export default {
     return {
       name: '',
       description: '',
-      imageUrl: ''
+      imageUrl: '',
+      tags: [],
+      selectedTags: []
     };
   },
+  mounted() {
+    this.fetchTags()
+  },
   methods: {
+    fetchTags() {
+      fetch('http://localhost:8080/tags')
+        .then(response => response.json())
+        .then(data => this.tags = data)
+    },
     addNewRestaurant() {
 
       const restaurantData = {
         name: this.name,
         description: this.description,
-        imageUrl: this.imageUrl
+        imageUrl: this.imageUrl,
+        tags: this.selectedTags
       };
-
+      console.log(JSON.stringify(restaurantData))
       axios.post('http://localhost:8080/restaurants', restaurantData)
         .then(response => {
           console.log('Successfully created new restaurant');
@@ -57,7 +78,7 @@ export default {
           console.error('Error creating new restaurant:', error);
         });
 
-    }
+    },
   }
 };
 </script>
