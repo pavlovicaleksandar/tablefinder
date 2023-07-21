@@ -9,6 +9,9 @@
         <v-img :src='restaurant.imageUrl' width="800"></v-img>
         <div class="restaurant-description">
           <span class="text-h4">{{ restaurant.name }}</span>
+          <div>
+            <v-chip v-for="tag in restaurant.tags" :key="tag.id">{{tag.tagName}}</v-chip>
+          </div>
           <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
           <span>Number of reviews: ({{restaurant.numberOfRatings}})</span>
           <h3>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</h3>
