@@ -163,13 +163,31 @@ export default {
     //     .then(response => response.json())
     //     .then(data => this.restaurants = data)
     // }
+    areRestaurantTagsInFilteredTags(restaurantTags, filteredTags) {
+      const set1 = new Set(restaurantTags.map(item => item['tagId']));
+      const set2 = new Set(filteredTags);
+
+      for (const item of set1) {
+        if (set2.has(item)) {
+          return true
+        }
+      }
+
+      return false;
+    },
   },
   computed: {
     filteredRestaurants() {
       const searchTerm = this.search.toLowerCase();
-      return this.restaurants.filter((restaurant) => {
-        return restaurant.name.toLowerCase().includes(searchTerm);
-      });
+      return this.restaurants
+        .filter((restaurant) => {
+          return restaurant.name.toLowerCase().includes(searchTerm);
+        })
+        .filter((restaurant) => {
+          console.log(JSON.stringify(restaurant.tags))
+          console.log(JSON.stringify(this.selectedTags))
+          return this.selectedTags.length == 0 || this.areRestaurantTagsInFilteredTags(restaurant.tags, this.selectedTags)
+        })
     }
   }
 }
