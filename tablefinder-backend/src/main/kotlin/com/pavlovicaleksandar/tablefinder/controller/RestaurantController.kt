@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 import kotlin.math.roundToInt
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -35,8 +36,8 @@ class RestaurantController(private val service: RestaurantService) {
     }
 
     @GetMapping
-    fun getAllRestaurants(@RequestParam(defaultValue = "0") ratingFilter: Int, @RequestParam(defaultValue = "0") priceFilter: Int): List<RestaurantResponseDTO> {
-        return service.findAll(ratingFilter, priceFilter).toRestaurantResponseDTO()
+    fun getAllRestaurants(@RequestParam(defaultValue = "0") ratingFilter: Int, @RequestParam(defaultValue = "0") priceFilter: Int, authentication: Authentication): List<RestaurantResponseDTO> {
+        return service.findAll(ratingFilter, priceFilter, authentication.toUser()).toRestaurantResponseDTO()
     }
 
     @GetMapping("{restaurantId}")

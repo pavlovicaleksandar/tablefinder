@@ -12,12 +12,18 @@ import kotlin.math.roundToInt
 
 @Service
 class RestaurantService(private val repository: RestaurantRepository, private val tagRepository: TagRepository) {
-    fun findAll(ratingFilter: Int, priceFilter: Int): List<Restaurant> {
+    fun findAll(ratingFilter: Int, priceFilter: Int, userInfo: UserInfo): List<Restaurant> {
         val restaurantRecords = repository.findAll().filter {
             val rating = if (it.numberOfRatings != 0) it.ratingsSum.div(it.numberOfRatings.toDouble()) else 0.0
             val price = if (it.numberOfPrices != 0) it.pricesSum.div(it.numberOfPrices.toDouble()) else 0.0
 
             rating >= ratingFilter && (price.roundToInt() == priceFilter || priceFilter == 0)
+        }.filter {
+            if (userInfo.role == Role.Moderator) {
+                it.moderatorUsername == userInfo.username
+            } else {
+                true
+            }
         }
 
         return restaurantRecords.map {
