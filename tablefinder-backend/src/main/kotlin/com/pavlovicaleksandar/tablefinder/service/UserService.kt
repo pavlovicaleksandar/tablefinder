@@ -41,7 +41,7 @@ class UserService(private val repository: UserRepository) {
         val userToBeUpdated = repository.findById(userId)!!
         val userRecord = userToBeUpdated.copy(
             email = updateUserDTO.email ?: userToBeUpdated.email,
-            role = updateUserDTO.role ?: userToBeUpdated.role,
+            role = updateUserDTO.role?.name ?: userToBeUpdated.role,
             phoneNumber = updateUserDTO.phoneNumber ?: userToBeUpdated.phoneNumber,
             password = if (updateUserDTO.password != null)
                 hashPassword(updateUserDTO.password) else userToBeUpdated.password
@@ -50,12 +50,18 @@ class UserService(private val repository: UserRepository) {
     }
 }
 
+enum class Role {
+    Guest,
+    Moderator,
+    Admin
+}
+
 data class User(
     val id: UUID,
     val username: String,
     val email: String,
     val password: String,
-    val role: String,
+    val role: Role,
     val phoneNumber: String
 )
 
@@ -65,7 +71,7 @@ private fun UserRecord.toUser(): User {
         username = username,
         email = email,
         password = password,
-        role = role,
+        role = Role.valueOf(role),
         phoneNumber = phoneNumber
     )
 }
@@ -82,7 +88,7 @@ fun RegisterUserDTO.toUser(): User {
         username = username,
         email = email,
         password = hashPassword(password),
-        role = "GUEST",
+        role = Role.Guest,
         phoneNumber = phoneNumber
     )
 }
@@ -92,6 +98,6 @@ fun User.toRecord(): UserRecord = UserRecord(
     username = username,
     email = email,
     password = password,
-    role = role,
+    role = role.name,
     phoneNumber = phoneNumber
 )

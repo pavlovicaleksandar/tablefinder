@@ -1,6 +1,7 @@
 package com.pavlovicaleksandar.tablefinder.controller
 
 import com.pavlovicaleksandar.tablefinder.service.JwtTokenService
+import com.pavlovicaleksandar.tablefinder.service.Role
 import com.pavlovicaleksandar.tablefinder.service.User
 import com.pavlovicaleksandar.tablefinder.service.UserInfo
 import com.pavlovicaleksandar.tablefinder.service.UserService
@@ -92,13 +93,13 @@ class UserController(
     }
 }
 
-data class UpdateUserDTO(val email: String?, val role: String?, val phoneNumber: String?, val password: String?)
+data class UpdateUserDTO(val email: String?, val role: Role?, val phoneNumber: String?, val password: String?)
 
 data class LoginResponseDTO(
     val id: UUID,
     val username: String,
     val email: String,
-    val role: String,
+    val role: Role,
     val token: String
 )
 

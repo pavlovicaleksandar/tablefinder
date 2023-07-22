@@ -26,7 +26,7 @@ class JwtTokenService (
             .subject(user.username)
             .claim("userId", user.id)
             .claim("username", user.username)
-            .claim("role", user.role)
+            .claim("role", user.role.name)
             .build()
 
         return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).tokenValue
@@ -37,7 +37,7 @@ class JwtTokenService (
             val jwt = jwtDecoder.decode(token)
             val userId = UUID.fromString(jwt.claims["userId"] as String)
             val username = jwt.claims["username"] as String
-            val role = jwt.claims["role"] as String
+            val role = Role.valueOf(jwt.claims["role"] as String)
             UserInfo(userId, username, role)
         } catch (e: Exception) {
             null
@@ -45,4 +45,4 @@ class JwtTokenService (
     }
 }
 
-data class UserInfo(val userId: UUID, val username: String, val role: String)
+data class UserInfo(val userId: UUID, val username: String, val role: Role)
