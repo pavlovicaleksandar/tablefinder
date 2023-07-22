@@ -66,7 +66,7 @@
             <v-card-text>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</v-card-text>
             <v-img :src="restaurant.imageUrl" class="restaurant-img"></v-img>
             <v-card-actions>
-              <v-menu>
+              <v-menu v-if="loggedInUser.role !== 'Guest'">
                 <template v-slot:activator="{ props }">
                   <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
                 </template>
