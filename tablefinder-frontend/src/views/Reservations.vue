@@ -8,8 +8,7 @@
     <template v-slot:[`item.dateAndTime`]="{ item }">
       {{ new Date(item.columns.dateAndTime).toLocaleString() }}
     </template>
-    <template v-slot:[`item.actions`]="{ item }">
-      {{}}
+    <template v-slot:[`item.actions`]="{ item }" v-if="loggedInUser.role !== 'Guest'">
       <AcceptRejectReservation :statusForButton="'Accept'" :status="'ACCEPTED'" :reservation="{id: item.value}" v-if="item.columns.status === 'PENDING'"></AcceptRejectReservation>
       <AcceptRejectReservation :statusForButton="'Reject'" :status="'REJECTED'" :reservation="{id: item.value}" v-if="item.columns.status === 'PENDING'"></AcceptRejectReservation>
     </template>
