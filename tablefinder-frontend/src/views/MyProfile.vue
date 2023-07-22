@@ -37,6 +37,7 @@
 
 <script>
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   data() {
@@ -46,13 +47,20 @@ export default {
       confirmNewPassword: null,
       errorMessage: null,
       successMessage: null,
-
+      loggedInUser: null
     };
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo == null) {
+        window.location.href = '/'
+      }
+      this.user = this.getUser(userInfo.userId)
+    })
     this.errorMessage = null
     this.successMessage = null
-    this.user = this.getUser(JSON.parse(localStorage.getItem('user')).id)
+    // this.user = this.getUser(JSON.parse(localStorage.getItem('user')).id)
   },
   methods: {
     editUser() {

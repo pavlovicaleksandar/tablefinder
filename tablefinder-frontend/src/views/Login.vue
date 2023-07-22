@@ -29,16 +29,24 @@
 
 <script>
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   data() {
     return {
       username: '',
       password: '',
-      message: null
+      message: null,
+      loggedInUser: null
     }
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo != null) {
+        window.location.href = '/restaurants'
+      }
+    })
     this.message = null
   },
   methods: {

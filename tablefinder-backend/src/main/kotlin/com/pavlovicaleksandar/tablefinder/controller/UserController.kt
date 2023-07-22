@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 import org.springframework.http.ResponseEntity.ok
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -59,15 +60,9 @@ class UserController(
         return ok().build()
     }
 
-    @PostMapping("/userInfo")
-    fun getUserInfo(@RequestBody token: String): ResponseEntity<UserInfo> {
-        val userInfo = jwtTokenService.parseToken(token)
-
-        return if (userInfo != null) {
-            ResponseEntity(userInfo, HttpStatus.OK)
-        } else {
-            ResponseEntity(HttpStatus.NOT_FOUND)
-        }
+    @GetMapping("/userInfo")
+    fun getUserInfo(authentication: Authentication): ResponseEntity<UserInfo> {
+        return ResponseEntity(authentication.toUser(), HttpStatus.OK)
     }
 
     @GetMapping("/{id}")

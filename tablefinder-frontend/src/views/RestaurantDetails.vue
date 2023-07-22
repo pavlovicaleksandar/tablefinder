@@ -108,6 +108,7 @@
 <script>
 import ReservePopup from "@/components/ReservePopup";
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   components: {
@@ -137,8 +138,15 @@ export default {
     }
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo == null) {
+        window.location.href = '/'
+      }
+      this.user = value
+    })
     this.selectedRating = null
-    this.user = JSON.parse(localStorage.getItem('user'))
+    // this.user = JSON.parse(localStorage.getItem('user'))
     this.fetchRestaurantById()
     this.fetchReviews()
   },

@@ -19,12 +19,19 @@
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   components: {
     VDataTable,
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo == null) {
+        window.location.href = '/'
+      }
+    })
     this.fetchUsers()
   },
   data() {
@@ -38,7 +45,8 @@ export default {
         {title: 'role', align: 'start', key: 'role'},
         {title: 'Actions', value: 'actions', key: 'actions', sortable: false},
       ],
-      users: []
+      users: [],
+      loggedInUser: null
     }
   },
   methods: {

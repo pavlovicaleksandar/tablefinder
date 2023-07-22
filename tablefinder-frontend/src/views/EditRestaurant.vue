@@ -44,6 +44,7 @@
 
 <script>
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   props: {
@@ -58,9 +59,16 @@ export default {
       tags: [],
       errorMessage: null,
       successMessage: null,
+      loggedInUser: null
     };
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo == null) {
+        window.location.href = '/'
+      }
+    })
     this.errorMessage = null
     this.successMessage = null
     this.fetchTags()

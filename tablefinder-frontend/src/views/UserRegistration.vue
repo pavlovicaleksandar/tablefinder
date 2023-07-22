@@ -33,6 +33,7 @@
 
 <script>
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   data() {
@@ -46,6 +47,11 @@ export default {
     };
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      if (userInfo != null) {
+        window.location.href = '/restaurants'
+      }
+    })
     this.message = null
   },
   methods: {

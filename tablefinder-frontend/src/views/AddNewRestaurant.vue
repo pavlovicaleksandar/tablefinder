@@ -40,6 +40,7 @@
 
 <script>
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   data() {
@@ -48,10 +49,17 @@ export default {
       description: '',
       imageUrl: '',
       tags: [],
-      selectedTags: []
+      selectedTags: [],
+      loggedInUser: null
     };
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo == null) {
+        window.location.href = '/'
+      }
+    })
     this.fetchTags()
   },
   methods: {

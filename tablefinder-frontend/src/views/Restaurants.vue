@@ -34,7 +34,7 @@
         <v-btn color="secondary" @click="filterRestaurants()">Filter</v-btn>
       </v-col>
       <v-col cols="2" >
-        <router-link to="/restaurants/add"><v-btn color="secondary">Add new</v-btn></router-link>
+        <router-link v-if="this.loggedInUser.role === 'Admin'" to="/restaurants/add"><v-btn color="secondary">Add new</v-btn></router-link>
       </v-col>
     </v-row>
     <v-row>
@@ -97,6 +97,7 @@
 <script>
 import axios from "axios";
 import ReservePopup from "@/components/ReservePopup";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   components: {
@@ -122,10 +123,17 @@ export default {
       ],
       selectedOptionForRating: { displayText: 'All ratings', value: 0 },
       tags: [],
-      selectedTags: []
+      selectedTags: [],
+      loggedInUser: {}
     }
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo == null) {
+        window.location.href = '/'
+      }
+    })
     this.filterRestaurants()
     this.fetchTags()
   },

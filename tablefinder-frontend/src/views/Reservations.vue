@@ -20,6 +20,7 @@
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import AcceptRejectReservation from "@/components/AcceptRejectReservation";
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
   components: {
@@ -27,6 +28,12 @@ export default {
     AcceptRejectReservation,
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo == null) {
+        window.location.href = '/'
+      }
+    })
     this.fetchReservations()
   },
   data() {
@@ -42,7 +49,8 @@ export default {
         {title: 'Restaurant Note', align: 'start', key: 'noteFromRestaurant'},
         {title: 'Actions', value: 'actions', key: 'actions', sortable: false},
       ],
-      reservations: []
+      reservations: [],
+      loggedInUser: null
     }
   },
   methods: {
