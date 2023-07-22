@@ -48,6 +48,12 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
             rowMapper
         )
     }
+    fun findAllModerators(): List<UserRecord> {
+        return jdbcTemplate.query(
+            "select * from users where role = 'Moderator'",
+            rowMapper
+        )
+    }
 
     fun deleteByUsername(username: String) {
         jdbcTemplate.update(

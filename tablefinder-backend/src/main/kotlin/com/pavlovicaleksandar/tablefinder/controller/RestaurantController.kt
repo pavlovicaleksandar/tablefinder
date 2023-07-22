@@ -29,7 +29,7 @@ class RestaurantController(private val service: RestaurantService) {
     }
 
     @PutMapping("{restaurantId}")
-    fun updateUser(@RequestBody updateRestaurantDTO: UpdateRestaurantDTO, @PathVariable restaurantId: UUID): ResponseEntity<Unit> {
+    fun updateRestaurant(@RequestBody updateRestaurantDTO: UpdateRestaurantDTO, @PathVariable restaurantId: UUID): ResponseEntity<Unit> {
         service.updateRestaurant(restaurantId, updateRestaurantDTO)
         return ResponseEntity.ok().build()
     }
@@ -55,9 +55,21 @@ class RestaurantController(private val service: RestaurantService) {
     }
 }
 
-data class UpdateRestaurantDTO(val name: String, val description: String, val imageUrl: String, val tags: List<TagRecord>)
+data class UpdateRestaurantDTO(
+    val name: String,
+    val description: String,
+    val imageUrl: String,
+    val tags: List<TagRecord>,
+    val moderatorUsername: String
+)
 
-data class CreateRestaurantDTO(val name: String, val description: String, val imageUrl: String, val tags: List<TagRecord>)
+data class CreateRestaurantDTO(
+    val name: String,
+    val description: String,
+    val imageUrl: String,
+    val tags: List<TagRecord>,
+    val moderatorUsername: String
+)
 
 data class RestaurantResponseDTO(
     val id: UUID,
@@ -70,7 +82,8 @@ data class RestaurantResponseDTO(
     val ratingsSum: Int,
     val rating: Double,
     val price: Int,
-    val tags: List<LinkedTagRecord>
+    val tags: List<LinkedTagRecord>,
+    val moderatorUsername: String
 )
 
 private fun List<Restaurant>.toRestaurantResponseDTO(): List<RestaurantResponseDTO> {
@@ -91,6 +104,7 @@ private fun Restaurant.toRestaurantResponseDTO(): RestaurantResponseDTO {
         numberOfPrices = this.numberOfPrices,
         rating = if (this.numberOfRatings != 0) this.ratingsSum.div(this.numberOfRatings.toDouble()) else 0.0,
         price = (if (this.numberOfPrices != 0) this.pricesSum.div(this.numberOfPrices.toDouble()) else 0.0).roundToInt(),
-        tags = this.tags
+        tags = this.tags,
+        moderatorUsername = moderatorUsername
     )
 }

@@ -42,9 +42,8 @@ export default {
       headers: [
         {title: 'Username', align: 'start', key: 'username'},
         {title: 'Email', align: 'start', key: 'email'},
-        {title: 'Is active', align: 'start', key: 'isActive'},
         {title: 'Phone number', align: 'start', key: 'phoneNumber'},
-        {title: 'role', align: 'start', key: 'role'},
+        {title: 'Role', align: 'start', key: 'role'},
         {title: 'Actions', value: 'actions', key: 'actions', sortable: false},
       ],
       users: [],
@@ -71,3 +70,6 @@ export default {
 };
 </script>
 
+<style scoped>
+
+</style>

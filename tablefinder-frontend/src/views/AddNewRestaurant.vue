@@ -24,6 +24,13 @@
                 return-object
                 multiple
               ></v-select>
+              <v-select
+                v-model="selectedModerator"
+                :items="moderators"
+                item-value="username"
+                item-title="username"
+                label="Moderator"
+              ></v-select>
               <v-textarea color="secondary" v-model="description"  label="Description" variant="outlined" base-color="primary"></v-textarea>
               <v-row>
                 <v-col class="text-center">
@@ -50,6 +57,8 @@ export default {
       imageUrl: '',
       tags: [],
       selectedTags: [],
+      moderators: [],
+      selectedModerator: null,
       loggedInUser: null
     };
   },
@@ -61,6 +70,7 @@ export default {
       }
     })
     this.fetchTags()
+    this.fetchModerators()
   },
   methods: {
     fetchTags() {
@@ -68,13 +78,19 @@ export default {
         .then(response => response.data)
         .then(data => this.tags = data)
     },
+    fetchModerators() {
+      axios.get('http://localhost:8080/users/moderators')
+        .then(response => response.data)
+        .then(data => this.moderators = data)
+    },
     addNewRestaurant() {
 
       const restaurantData = {
         name: this.name,
         description: this.description,
         imageUrl: this.imageUrl,
-        tags: this.selectedTags
+        tags: this.selectedTags,
+        moderatorUsername: this.selectedModerator
       };
       console.log(JSON.stringify(restaurantData))
       axios.post('http://localhost:8080/restaurants', restaurantData)

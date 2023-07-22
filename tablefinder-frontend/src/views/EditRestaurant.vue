@@ -19,6 +19,13 @@
               return-object
               multiple
             ></v-select>
+            <v-select
+              v-model="restaurant.moderatorUsername"
+              :items="moderators"
+              item-value="username"
+              item-title="username"
+              label="Moderator"
+            ></v-select>
             <v-textarea v-model="restaurant.description" label="Description"></v-textarea>
             <v-card-text v-if="errorMessage != null" class="mt-n6">
               <v-alert color="error">
@@ -59,7 +66,8 @@ export default {
       tags: [],
       errorMessage: null,
       successMessage: null,
-      loggedInUser: null
+      loggedInUser: null,
+      moderators: [],
     };
   },
   mounted() {
@@ -73,6 +81,7 @@ export default {
     this.successMessage = null
     this.fetchTags()
     this.fetchRestaurantById()
+    this.fetchModerators()
   },
   methods: {
     fetchRestaurantById() {
@@ -85,6 +94,11 @@ export default {
             name: item.tagName
           }
         }))
+    },
+    fetchModerators() {
+      axios.get('http://localhost:8080/users/moderators')
+        .then(response => response.data)
+        .then(data => this.moderators = data)
     },
     fetchTags() {
       axios.get('http://localhost:8080/tags')
@@ -110,7 +124,8 @@ export default {
         name: this.restaurant.name,
         description: this.restaurant.description,
         imageUrl: this.restaurant.imageUrl,
-        tags: this.restaurant.tags
+        tags: this.restaurant.tags,
+        moderatorUsername: this.restaurant.moderatorUsername
       };
 
       axios.put(`http://localhost:8080/restaurants/${this.restaurant.id}`, restaurantData)

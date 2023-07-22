@@ -81,6 +81,12 @@ class UserController(
         return ResponseEntity(users, HttpStatus.OK)
     }
 
+    @GetMapping("moderators")
+    fun getAllModerators(): ResponseEntity<List<User>> {
+        val users = service.getAllModerators()
+        return ResponseEntity(users, HttpStatus.OK)
+    }
+
     @DeleteMapping("/{username}")
     fun deleteUserByUsername(@PathVariable username: String): ResponseEntity<Any> {
         service.deleteByUsername(username)

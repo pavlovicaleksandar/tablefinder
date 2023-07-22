@@ -34,8 +34,8 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
     fun createRestaurant(record: RestaurantRecord): RestaurantRecord {
         jdbcTemplate.update(
             """
-                INSERT INTO restaurants(id, name, description, image_url, number_of_ratings, ratings_sum, number_of_prices, prices_sum) 
-                            values(:id, :name, :description, :image_url, :number_of_ratings, :ratings_sum, :number_of_prices, :prices_sum)
+                INSERT INTO restaurants(id, name, description, image_url, number_of_ratings, ratings_sum, number_of_prices, prices_sum, moderator_username) 
+                            values(:id, :name, :description, :image_url, :number_of_ratings, :ratings_sum, :number_of_prices, :prices_sum, :moderator_username)
             """.trimMargin(),
             mapOf(
                 "id" to record.id,
@@ -46,6 +46,7 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
                 "ratings_sum" to record.ratingsSum,
                 "number_of_prices" to record.numberOfPrices,
                 "prices_sum" to record.pricesSum,
+                "moderator_username" to record.moderatorUsername
             )
         )
         return record
@@ -55,7 +56,7 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
         jdbcTemplate.update(
             """
                 UPDATE restaurants 
-                SET name = :name, description = :description, image_url = :image_url, number_of_ratings = :number_of_ratings, ratings_sum = :ratings_sum, number_of_prices = :number_of_prices, prices_sum = :prices_sum
+                SET name = :name, description = :description, image_url = :image_url, number_of_ratings = :number_of_ratings, ratings_sum = :ratings_sum, number_of_prices = :number_of_prices, prices_sum = :prices_sum, moderator_username = :moderator_username
                 WHERE id = :id
             """.trimMargin(),
             mapOf(
@@ -67,6 +68,7 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
                 "ratings_sum" to record.ratingsSum,
                 "number_of_prices" to record.numberOfPrices,
                 "prices_sum" to record.pricesSum,
+                "moderator_username" to record.moderatorUsername
             )
         )
     }
@@ -81,7 +83,8 @@ class RestaurantRepository(private val jdbcTemplate: NamedParameterJdbcTemplate)
                 numberOfRatings = getInt("number_of_ratings"),
                 ratingsSum = getInt("ratings_sum"),
                 numberOfPrices = getInt("number_of_prices"),
-                pricesSum = getInt("prices_sum")
+                pricesSum = getInt("prices_sum"),
+                moderatorUsername = getString("moderator_username")
             )
         }
     }
@@ -96,4 +99,5 @@ data class RestaurantRecord(
     val ratingsSum: Int,
     val numberOfPrices: Int,
     val pricesSum: Int,
+    val moderatorUsername: String,
 )

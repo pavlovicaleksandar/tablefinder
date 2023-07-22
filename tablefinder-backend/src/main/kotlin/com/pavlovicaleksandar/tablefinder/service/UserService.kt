@@ -22,6 +22,9 @@ class UserService(private val repository: UserRepository) {
     fun getAllUsers(): List<User> {
         return repository.findAll().toUserList()
     }
+    fun getAllModerators(): List<User> {
+        return repository.findAllModerators().toUserList()
+    }
 
     fun getUserByUsernameAndPassword(username: String, password: String): User? {
         return repository.findByUsernameAndPassword(

@@ -49,7 +49,8 @@ class RestaurantService(private val repository: RestaurantRepository, private va
         val newRestaurantRecord = restaurantRecord.copy(
             name = dto.name,
             description = dto.description,
-            imageUrl = dto.imageUrl
+            imageUrl = dto.imageUrl,
+            moderatorUsername = dto.moderatorUsername
         )
         repository.updateRestaurant(newRestaurantRecord)
         tagRepository.deleteAllForRestaurantWith(restaurantId)
@@ -66,10 +67,11 @@ fun CreateRestaurantDTO.toRestaurantRecord(): RestaurantRecord {
         name = this.name,
         description = this.description,
         imageUrl = this.imageUrl,
+        numberOfRatings = 0,
         ratingsSum = 0,
         numberOfPrices = 0,
         pricesSum = 0,
-        numberOfRatings = 0
+        moderatorUsername = this.moderatorUsername
     )
 }
 private fun RestaurantRecord.toRestaurant(linkedTags: MutableList<LinkedTagRecord>): Restaurant {
@@ -82,7 +84,8 @@ private fun RestaurantRecord.toRestaurant(linkedTags: MutableList<LinkedTagRecor
         ratingsSum = this.ratingsSum,
         numberOfPrices = this.numberOfPrices,
         numberOfRatings = this.numberOfRatings,
-        tags = linkedTags.toList()
+        tags = linkedTags.toList(),
+        moderatorUsername = this.moderatorUsername
     )
 }
 
@@ -95,6 +98,7 @@ data class Restaurant(
     val numberOfPrices: Int,
     val ratingsSum: Int,
     val pricesSum: Int,
-    val tags: List<LinkedTagRecord>
+    val tags: List<LinkedTagRecord>,
+    val moderatorUsername: String
 )
 
