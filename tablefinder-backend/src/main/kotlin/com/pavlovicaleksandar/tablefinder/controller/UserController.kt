@@ -36,7 +36,7 @@ class UserController(
     fun login(@RequestBody login: LoginDTO): ResponseEntity<LoginResponseDTO> {
         val user = service.getUserByUsernameAndPassword(login.username, login.password)
         return if (user != null) {
-            val token = jwtTokenService.generateToken(user.username, user.role)
+            val token = jwtTokenService.createToken(user)
             ResponseEntity(
                 LoginResponseDTO(
                     user.id,
@@ -60,7 +60,7 @@ class UserController(
 
     @PostMapping("/userInfo")
     fun getUserInfo(@RequestBody token: String): ResponseEntity<UserInfo> {
-        val userInfo = jwtTokenService.getUserInfo(token)
+        val userInfo = jwtTokenService.parseToken(token)
 
         return if (userInfo != null) {
             ResponseEntity(userInfo, HttpStatus.OK)

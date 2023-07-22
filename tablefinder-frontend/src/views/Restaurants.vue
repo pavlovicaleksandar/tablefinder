@@ -131,8 +131,8 @@ export default {
   },
   methods: {
     fetchTags() {
-      fetch('http://localhost:8080/tags')
-        .then(response => response.json())
+      axios.get('http://localhost:8080/tags')
+        .then(response => response.data)
         .then(data => this.tags = data)
     },
     deleteRestaurant(restaurantId) {
@@ -146,8 +146,8 @@ export default {
       location.reload()
     },
     filterRestaurants() {
-      fetch(`http://localhost:8080/restaurants?priceFilter=${this.selectedOptionForPrice.value}&ratingFilter=${this.selectedOptionForRating.value}`)
-        .then(response => response.json())
+      axios.get(`http://localhost:8080/restaurants?priceFilter=${this.selectedOptionForPrice.value}&ratingFilter=${this.selectedOptionForRating.value}`)
+        .then(response => response.data)
         .then(data => this.restaurants = data)
     },
     areRestaurantTagsInFilteredTags(restaurantTags, filteredTags) {

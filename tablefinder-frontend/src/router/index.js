@@ -1,5 +1,12 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
+import axios from "axios";
+
+let loggedInUser = JSON.parse(localStorage.getItem( 'user'))
+
+if (loggedInUser != null) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem( 'user')).token}`
+}
 
 const routes = [
   {

@@ -19,6 +19,7 @@
 <script>
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import AcceptRejectReservation from "@/components/AcceptRejectReservation";
+import axios from "axios";
 
 export default {
   components: {
@@ -46,8 +47,8 @@ export default {
   },
   methods: {
     fetchReservations() {
-      fetch('http://localhost:8080/reservations')
-        .then(response => response.json())
+      axios.get('http://localhost:8080/reservations')
+        .then(response => response.data)
         .then(data => this.reservations = data)
     },
   }

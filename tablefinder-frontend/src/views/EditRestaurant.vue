@@ -68,8 +68,8 @@ export default {
   },
   methods: {
     fetchRestaurantById() {
-      fetch(`http://localhost:8080/restaurants/${this.id}`)
-        .then(response => response.json())
+      axios.get(`http://localhost:8080/restaurants/${this.id}`)
+        .then(response => response.data)
         .then(data => this.restaurant = data)
         .then(data => this.restaurant.tags = this.restaurant.tags.map(item => {
           return {
@@ -79,8 +79,8 @@ export default {
         }))
     },
     fetchTags() {
-      fetch('http://localhost:8080/tags')
-        .then(response => response.json())
+      axios.get('http://localhost:8080/tags')
+        .then(response => response.data)
         .then(data => this.tags = data)
     },
     editRestaurant() {

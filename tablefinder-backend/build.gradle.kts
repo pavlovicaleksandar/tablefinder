@@ -18,9 +18,11 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("io.jsonwebtoken:jjwt:0.9.1")
+//    implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:2.3.3")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")

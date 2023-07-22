@@ -43,8 +43,8 @@ export default {
   },
   methods: {
     fetchUsers() {
-      fetch('http://localhost:8080/users')
-        .then(response => response.json())
+      axios.get('http://localhost:8080/users')
+        .then(response => response.data)
         .then(data => this.users = data)
     },
     deleteUser(username) {
@@ -61,6 +61,3 @@ export default {
 };
 </script>
 
-<style>
-/* Add custom styles for the component */
-</style>

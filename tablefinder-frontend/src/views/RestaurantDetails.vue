@@ -144,13 +144,13 @@ export default {
   },
   methods: {
     fetchRestaurantById() {
-      fetch(`http://localhost:8080/restaurants/${this.id}`)
-        .then(response => response.json())
+      axios.get(`http://localhost:8080/restaurants/${this.id}`)
+        .then(response => response.data)
         .then(data => this.restaurant = data)
     },
     fetchReviews() {
-      fetch(`http://localhost:8080/reviews/${this.id}`)
-        .then(response => response.json())
+      axios.get(`http://localhost:8080/reviews/${this.id}`)
+        .then(response => response.data)
         .then(data => this.reviews = data)
         .then(data => this.isAddReviewEnabled = data.find(review => review.username === this.user.username) === undefined)
     },

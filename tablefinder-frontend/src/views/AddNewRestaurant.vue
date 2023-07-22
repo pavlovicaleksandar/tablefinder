@@ -56,8 +56,8 @@ export default {
   },
   methods: {
     fetchTags() {
-      fetch('http://localhost:8080/tags')
-        .then(response => response.json())
+      axios.get('http://localhost:8080/tags')
+        .then(response => response.data)
         .then(data => this.tags = data)
     },
     addNewRestaurant() {

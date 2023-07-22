@@ -2,8 +2,10 @@ package com.pavlovicaleksandar.tablefinder.controller
 
 import com.pavlovicaleksandar.tablefinder.repository.TagRecord
 import com.pavlovicaleksandar.tablefinder.service.TagService
+import com.pavlovicaleksandar.tablefinder.service.UserInfo
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.ok
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,4 +19,16 @@ class TagController(private val service: TagService) {
     fun getAll(): ResponseEntity<List<TagRecord>> {
         return ok(service.findAll())
     }
+
+    @GetMapping("test")
+    fun test(): String{
+        return "test"
+    }
+    @GetMapping("testt")
+    fun testt(authentication: Authentication): UserInfo {
+        return authentication.toUser()
+    }
+}
+fun Authentication.toUser(): UserInfo {
+    return principal as UserInfo
 }

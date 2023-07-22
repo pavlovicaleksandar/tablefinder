@@ -1,63 +1,48 @@
 package com.pavlovicaleksandar.tablefinder.service
 
-import io.jsonwebtoken.Claims
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
-import java.util.Date
+import java.time.Instant
+import java.time.temporal.ChronoUnit
+import java.util.UUID
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.oauth2.jwt.JwsHeader
+import org.springframework.security.oauth2.jwt.JwtClaimsSet
+import org.springframework.security.oauth2.jwt.JwtDecoder
+import org.springframework.security.oauth2.jwt.JwtEncoder
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters
 import org.springframework.stereotype.Service
 
 @Service
 class JwtTokenService (
     @Value("\${jwt.secret}")
     private val secret: String,
+    private val jwtDecoder: JwtDecoder,
+    private val jwtEncoder: JwtEncoder,
 ) {
+    fun createToken(user: User): String {
+        val jwsHeader = JwsHeader.with { "HS256" }.build()
+        val claims = JwtClaimsSet.builder()
+            .issuedAt(Instant.now())
+            .expiresAt(Instant.now().plus(30L, ChronoUnit.DAYS))
+            .subject(user.username)
+            .claim("userId", user.id)
+            .claim("username", user.username)
+            .claim("role", user.role)
+            .build()
 
-    private val expiration: Long = 24*60*60*60
-
-    fun generateToken(username: String, role: String): String {
-        val now = Date()
-        val expiryDate = Date(now.time + expiration)
-
-        return Jwts.builder()
-            .setSubject(username)
-            .setIssuedAt(now)
-            .setExpiration(expiryDate)
-            .setClaims(mapOf(
-                "username" to username,
-                "role" to role
-            ))
-            .signWith(SignatureAlgorithm.HS512, secret)
-            .compact()
+        return jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).tokenValue
     }
 
-    fun validateToken(token: String): Boolean {
+    fun parseToken(token: String): UserInfo? {
         return try {
-            val claims: Claims = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .body
-            !claims.expiration.before(Date())
-        } catch (ex: Exception) {
-            false
-        }
-    }
-
-    fun getUserInfo(token: String): UserInfo? {
-        return try {
-            val claims: Claims = Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .body
-
-            val username = claims["username"] as String
-            val role = claims["role"] as String
-
-            return UserInfo(username, role)
-        } catch (ex: Exception) {
+            val jwt = jwtDecoder.decode(token)
+            val userId = UUID.fromString(jwt.claims["userId"] as String)
+            val username = jwt.claims["username"] as String
+            val role = jwt.claims["role"] as String
+            UserInfo(userId, username, role)
+        } catch (e: Exception) {
             null
         }
     }
 }
 
-data class UserInfo(val username: String, val role: String)
+data class UserInfo(val userId: UUID, val username: String, val role: String)
