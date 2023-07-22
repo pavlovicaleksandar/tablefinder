@@ -50,8 +50,7 @@
 
 <script>
 import axios from "axios";
-// pickedDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-// pickedTime: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toLocaleTimeString().substr(0, 5),
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
 
@@ -63,10 +62,17 @@ export default {
       pickedTime: (new Date(Date.now())).toLocaleTimeString().substr(0, 5),
       numberOfPeople: 1,
       noteForRestaurant: '',
-      isReservationCreated: false
+      isReservationCreated: false,
+      loggedInUser: null
     };
   },
   mounted() {
+    getCurrentlyLoggedInUser().then(userInfo => {
+      this.loggedInUser = userInfo
+      if (userInfo == null) {
+        window.location.href = '/'
+      }
+    })
     this.isReservationCreated = false
   },
   methods: {
@@ -85,7 +91,7 @@ export default {
       console.log(new Date(timestamp))
       const reservationData = {
         restaurantId: this.restaurant.id,
-        userId: '1465694f-ceef-46c4-b2bf-823f68066cb7',
+        userId: this.loggedInUser.userId,
         dateAndTime: timestamp,
         numberOfPeople: this.numberOfPeople,
         noteForRestaurant: this.noteForRestaurant

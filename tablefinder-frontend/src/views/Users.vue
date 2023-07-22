@@ -47,7 +47,7 @@ export default {
         {title: 'Actions', value: 'actions', key: 'actions', sortable: false},
       ],
       users: [],
-      loggedInUser: null
+      loggedInUser: {}
     }
   },
   methods: {

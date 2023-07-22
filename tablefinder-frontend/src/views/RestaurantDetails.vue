@@ -93,7 +93,7 @@
                     </v-col>
                   </v-row>
                   <v-row justify="end">
-                    <v-btn color="red" @click="removeReview(review.id)">Remove</v-btn>
+                    <v-btn v-if="user.role === 'Admin' || user.username === review.username" color="red" @click="removeReview(review.id)">Remove</v-btn>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -133,7 +133,7 @@ export default {
       selectedOptionForPrice: { displayText: '$', value: 1 },
       selectedRating: null,
       comment: null,
-      user: null,
+      user: {},
       isAddReviewEnabled: true
     }
   },
@@ -143,10 +143,9 @@ export default {
       if (userInfo == null) {
         window.location.href = '/'
       }
-      this.user = value
+      this.user = userInfo
     })
     this.selectedRating = null
-    // this.user = JSON.parse(localStorage.getItem('user'))
     this.fetchRestaurantById()
     this.fetchReviews()
   },

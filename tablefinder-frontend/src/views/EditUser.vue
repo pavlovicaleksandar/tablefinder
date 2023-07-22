@@ -58,7 +58,7 @@ export default {
       confirmNewPassword: null,
       errorMessage: null,
       successMessage: null,
-      loggedInUser: null
+      loggedInUser: {}
     };
   },
   mounted() {

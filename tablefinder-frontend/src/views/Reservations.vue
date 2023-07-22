@@ -50,7 +50,7 @@ export default {
         {title: 'Actions', value: 'actions', key: 'actions', sortable: false},
       ],
       reservations: [],
-      loggedInUser: null
+      loggedInUser: {}
     }
   },
   methods: {

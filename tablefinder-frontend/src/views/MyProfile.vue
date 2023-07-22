@@ -47,7 +47,7 @@ export default {
       confirmNewPassword: null,
       errorMessage: null,
       successMessage: null,
-      loggedInUser: null
+      loggedInUser: {}
     };
   },
   mounted() {
@@ -60,7 +60,6 @@ export default {
     })
     this.errorMessage = null
     this.successMessage = null
-    // this.user = this.getUser(JSON.parse(localStorage.getItem('user')).id)
   },
   methods: {
     editUser() {
@@ -104,8 +103,8 @@ export default {
     isValidEmail(email) {
       return /^[^@]+@\w+(\.\w+)+\w$/.test(email);
     },
-    getUser(id) {
-      axios.get(`http://localhost:8080/users/${id}`)
+    async getUser(id) {
+      await axios.get(`http://localhost:8080/users/${id}`)
         .then(response => {
           console.log('Successfully updated user');
           this.user = response.data

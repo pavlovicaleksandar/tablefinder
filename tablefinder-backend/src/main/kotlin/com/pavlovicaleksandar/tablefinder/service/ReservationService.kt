@@ -16,11 +16,34 @@ class ReservationService(
     val userRepository: UserRepository,
     val restaurantRepository: RestaurantRepository
 ) {
-    fun findAllReservations(): List<Reservation> {
-        return reservationRepository.findAll().map {
-            val user = userRepository.findById(it.userId)
-            val restaurant = restaurantRepository.findById(it.restaurantId)
-            it.toReservation(user!!.username, restaurant!!.name)
+    fun findAllReservationsFor(userInfo: UserInfo): List<Reservation> {
+        return when (userInfo.role) {
+            Role.Admin -> {
+                reservationRepository.findAll().map {
+                    val user = userRepository.findById(it.userId)!!
+                    val restaurant = restaurantRepository.findById(it.restaurantId)!!
+                    it.toReservation(user.username, restaurant.name)
+                }
+            }
+            Role.Moderator -> {
+                reservationRepository.findAll().filter {
+                    val restaurant = restaurantRepository.findById(it.restaurantId)!!
+                    restaurant.moderatorUsername ==userInfo.username
+                }.map {
+                    val user = userRepository.findById(it.userId)
+                    val restaurant = restaurantRepository.findById(it.restaurantId)
+                    it.toReservation(user!!.username, restaurant!!.name)
+                }
+            }
+            Role.Guest -> {
+                return reservationRepository.findAll().filter {
+                  it.userId == userInfo.userId
+                }.map {
+                    val user = userRepository.findById(it.userId)
+                    val restaurant = restaurantRepository.findById(it.restaurantId)
+                    it.toReservation(user!!.username, restaurant!!.name)
+                }
+            }
         }
     }
 

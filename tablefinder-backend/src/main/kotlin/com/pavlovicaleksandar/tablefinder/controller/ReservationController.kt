@@ -2,6 +2,7 @@ package com.pavlovicaleksandar.tablefinder.controller
 
 import com.pavlovicaleksandar.tablefinder.service.Reservation
 import com.pavlovicaleksandar.tablefinder.service.ReservationService
+import com.pavlovicaleksandar.tablefinder.service.Role
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.accepted
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 
@@ -25,8 +27,9 @@ class ReservationController(private val service: ReservationService) {
     }
 
     @GetMapping
-    fun getAllReservations(): List<ReservationResponseDTO> {
-        return service.findAllReservations().toReservationResponseDTO()
+    fun getAllReservations(authentication: Authentication): List<ReservationResponseDTO> {
+        val user = authentication.toUser()
+        return service.findAllReservationsFor(user).toReservationResponseDTO()
     }
     @PutMapping("/{reservationId}")
     fun changeReservationStatus(@PathVariable reservationId: UUID, @RequestBody dto: ChangeReservationStatusDTO): ResponseEntity<Any> {

@@ -59,7 +59,7 @@ export default {
       selectedTags: [],
       moderators: [],
       selectedModerator: null,
-      loggedInUser: null
+      loggedInUser: {}
     };
   },
   mounted() {

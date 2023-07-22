@@ -37,7 +37,7 @@ export default {
       username: '',
       password: '',
       message: null,
-      loggedInUser: null
+      loggedInUser: {}
     }
   },
   mounted() {

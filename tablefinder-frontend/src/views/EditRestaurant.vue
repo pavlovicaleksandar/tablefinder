@@ -66,7 +66,7 @@ export default {
       tags: [],
       errorMessage: null,
       successMessage: null,
-      loggedInUser: null,
+      loggedInUser: {},
       moderators: [],
     };
   },
