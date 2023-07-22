@@ -19,15 +19,6 @@ class TagController(private val service: TagService) {
     fun getAll(): ResponseEntity<List<TagRecord>> {
         return ok(service.findAll())
     }
-
-    @GetMapping("test")
-    fun test(): String{
-        return "test"
-    }
-    @GetMapping("testt")
-    fun testt(authentication: Authentication): UserInfo {
-        return authentication.toUser()
-    }
 }
 fun Authentication.toUser(): UserInfo {
     return principal as UserInfo

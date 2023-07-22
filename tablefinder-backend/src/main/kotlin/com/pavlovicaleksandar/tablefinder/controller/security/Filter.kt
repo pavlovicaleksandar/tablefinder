@@ -51,14 +51,11 @@ class SecurityConfig (
 ) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        // Define public and private routes
         http.authorizeHttpRequests()
             .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
             .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
-//            .requestMatchers("/api/**").authenticated()
             .anyRequest().authenticated()
 
-        // Configure JWT
         http.oauth2ResourceServer().jwt()
         http.authenticationManager { auth ->
             val jwt = auth as BearerTokenAuthenticationToken
@@ -66,7 +63,6 @@ class SecurityConfig (
             UsernamePasswordAuthenticationToken(user, "", listOf(SimpleGrantedAuthority("USER")))
         }
 
-        // Other configuration
         http.cors()
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.csrf().disable()
@@ -78,7 +74,6 @@ class SecurityConfig (
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
-        // allow localhost for dev purposes
         val configuration = CorsConfiguration()
         configuration.allowedOrigins = listOf("http://localhost:3000", "http://localhost:8080")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")

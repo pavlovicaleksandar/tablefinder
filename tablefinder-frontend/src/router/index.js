@@ -30,6 +30,12 @@ const routes = [
         props: true
       },
       {
+        path: 'users/:id',
+        name: 'EditUser',
+        component: () => import(/* webpackChunkName: "home" */ '@/views/EditUser.vue'),
+        props: true
+      },
+      {
         path: 'restaurants/edit/:id',
         name: 'EditRestaurant',
         component: () => import(/* webpackChunkName: "home" */ '@/views/EditRestaurant.vue'),

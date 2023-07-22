@@ -6,9 +6,11 @@
     class="elevation-1"
   >
     <template v-slot:[`item.actions`]="{ item }">
-      <v-btn color="secondary">
-        Edit
-      </v-btn>
+      <router-link :to="{ name: 'EditUser', params: { id: item.raw.id } }" style="text-decoration: none">
+        <v-btn color="secondary">
+          Edit
+        </v-btn>
+      </router-link>
       <v-btn @click="deleteUser(item.columns.username)" color="red" class="ml-2">
         Delete
       </v-btn>
