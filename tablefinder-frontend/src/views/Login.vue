@@ -8,8 +8,8 @@
           </v-toolbar>
           <v-card-text>
             <v-form>
-              <v-text-field label="Username" v-model="username"></v-text-field>
-              <v-text-field label="Password" v-model="password" type="password"></v-text-field>
+              <v-text-field label="Username" v-model="username" color="primary"></v-text-field>
+              <v-text-field label="Password" v-model="password" type="password" color="primary"></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-text v-if="message != null" class="mt-n6">
@@ -17,9 +17,8 @@
               {{message}}
             </v-alert>
           </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" @click="login">Login</v-btn>
+          <v-card-actions style="display: flex; justify-content: center;">
+            <v-btn color="primary" @click="login" variant="elevated" style="min-width: 120px;">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

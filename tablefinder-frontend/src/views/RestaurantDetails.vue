@@ -13,7 +13,7 @@
           </v-col>
           <v-col>
             <v-row>
-              <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
+              <v-rating readonly v-model="restaurant.rating" color="primary" half-increments></v-rating>
             </v-row>
             <v-chip v-for="tag in restaurant.tags" :key="tag.id">{{tag.tagName}}</v-chip>
             <span>Number of reviews: ({{restaurant.numberOfRatings}})</span>
@@ -57,11 +57,11 @@
                       <v-rating
                         v-model="selectedRating"
                         bg-color="orange-lighten-1"
-                        color="secondary"
+                        color="primary"
                       ></v-rating>
                     </v-col>
                     <v-col cols="12" md="12">
-                      <v-select color="secondary"
+                      <v-select color="primary"
                                 v-model="selectedOptionForPrice"
                                 label="Price"
                                 variant="outlined"
@@ -74,14 +74,14 @@
                       </v-select>
                     </v-col>
                     <v-col cols="12" md="12">
-                      <v-textarea color="secondary" v-model="comment"  label="Review (optional)" variant="outlined"></v-textarea>
+                      <v-textarea color="primary" v-model="comment"  label="Review (optional)" variant="outlined"></v-textarea>
                     </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
               <v-card-actions>
-                <v-btn v-if="selectedRating!=null" color="secondary" @click="addReview" variant="outlined" class="mt-n8">Add</v-btn>
-                <v-btn v-if="selectedRating == null" color="secondary" @click="addReview" variant="outlined" disabled class="mt-n8">Add</v-btn>
+                <v-btn v-if="selectedRating!=null" color="primary" @click="addReview" variant="outlined" class="mt-n8">Add</v-btn>
+                <v-btn v-if="selectedRating == null" color="primary" @click="addReview" variant="outlined" disabled class="mt-n8">Add</v-btn>
               </v-card-actions>
             </v-card>
           </v-list-item>
@@ -103,7 +103,7 @@
                       <v-rating
                         v-model="review.rating"
                         bg-color="orange-lighten-1"
-                        color="secondary"
+                        color="primary"
                         readonly
                       ></v-rating>
                     </v-col>

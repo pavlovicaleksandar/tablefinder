@@ -7,7 +7,7 @@
   >
     <template v-slot:[`item.actions`]="{ item }">
       <router-link :to="{ name: 'EditUser', params: { id: item.raw.id } }" style="text-decoration: none">
-        <v-btn color="secondary">
+        <v-btn color="primary">
           Edit
         </v-btn>
       </router-link>

@@ -7,8 +7,8 @@
             <v-toolbar-title>Edit restaurant</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-text-field v-model="restaurant.name" label="Name"></v-text-field>
-            <v-text-field v-model="restaurant.imageUrl" label="Image url"></v-text-field>
+            <v-text-field v-model="restaurant.name" label="Name" color="primary"></v-text-field>
+            <v-text-field v-model="restaurant.imageUrl" label="Image url" color="primary"></v-text-field>
             <v-select
               v-model="restaurant.tags"
               :items="tags"
@@ -18,6 +18,7 @@
               label="Tags"
               return-object
               multiple
+              color="primary"
             ></v-select>
             <v-select
               v-model="restaurant.moderatorUsername"
@@ -25,8 +26,9 @@
               item-value="username"
               item-title="username"
               label="Moderator"
+              color="primary"
             ></v-select>
-            <v-textarea v-model="restaurant.description" label="Description"></v-textarea>
+            <v-textarea v-model="restaurant.description" label="Description" color="primary"></v-textarea>
             <v-card-text v-if="errorMessage != null" class="mt-n6">
               <v-alert color="error">
                 {{errorMessage}}

@@ -20,7 +20,7 @@
               </v-card-text>
               <v-row>
                 <v-col class="text-center">
-                  <v-btn type="submit" color="primary">Register</v-btn>
+                  <v-btn type="submit" color="primary" style="min-width: 120px;">Register</v-btn>
                 </v-col>
               </v-row>
             </v-form>

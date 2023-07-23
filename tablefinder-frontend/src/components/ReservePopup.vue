@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click.stop="showPopup=true" color="secondary">Reserve now</v-btn>
+  <v-btn @click.stop="showPopup=true" color="primary">Reserve now</v-btn>
   <v-dialog v-model="showPopup" max-width="500px">
     <v-card v-if="!isReservationCreated">
       <v-toolbar color="primary" dark>
@@ -18,13 +18,13 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="12">
-              <v-textarea color="secondary" v-model="noteForRestaurant"  label="Note" variant="outlined"></v-textarea>
+              <v-textarea color="primary" v-model="noteForRestaurant"  label="Note" variant="outlined"></v-textarea>
             </v-col>
           </v-row>
         </v-container>
       </v-card-text>
       <v-card-actions  style="display: flex; justify-content: center;" class="mb-3">
-        <v-btn color="secondary" @click="reserve" variant="elevated" style="min-width: 120px;">Reserve</v-btn>
+        <v-btn color="primary" @click="reserve" variant="elevated" style="min-width: 120px;">Reserve</v-btn>
         <v-btn color="error" @click="cancel" variant="elevated" style="min-width: 120px;">Cancel</v-btn>
       </v-card-actions>
     </v-card>
@@ -42,7 +42,7 @@
         </v-container>
       </v-card-text>
       <v-card-actions style="display: flex; justify-content: center;" class="mb-3">
-        <v-btn color="secondary" @click="closeModal" variant="elevated" style="min-width: 120px;">OK</v-btn>
+        <v-btn color="primary" @click="closeModal" variant="elevated" style="min-width: 120px;">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

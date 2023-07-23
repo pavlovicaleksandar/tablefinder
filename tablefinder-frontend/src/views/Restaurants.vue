@@ -2,11 +2,11 @@
   <v-container fluid>
     <v-row justify="start">
       <v-col cols="12" sm="6" md="4" lg="3" xl="2">
-        <v-text-field v-model="search" label="Search by name" outlined></v-text-field>
+        <v-text-field v-model="search" label="Search by name" outlined color="primary"></v-text-field>
       </v-col>
       <v-col cols="6" sm="4" md="3" lg="2" xl="1">
         <v-select
-          color="secondary"
+          color="primary"
           v-model="selectedOptionForRating"
           label="Rating"
           variant="outlined"
@@ -19,7 +19,7 @@
       </v-col>
       <v-col cols="6" sm="4" md="3" lg="2" xl="1">
         <v-select
-          color="secondary"
+          color="primary"
           v-model="selectedOptionForPrice"
           label="Price"
           variant="outlined"
@@ -31,11 +31,11 @@
         ></v-select>
       </v-col>
       <v-col cols="6" sm="4" md="3" lg="2" xl="1">
-        <v-btn color="secondary" @click="filterRestaurants()" style="min-width: 120px;">Filter</v-btn>
+        <v-btn color="primary" @click="filterRestaurants()" style="min-width: 120px;">Filter</v-btn>
       </v-col>
       <v-col cols="6" sm="4" md="3" lg="2" xl="1">
         <router-link v-if="loggedInUser.role === 'Admin'" to="/restaurants/add">
-          <v-btn color="secondary" style="min-width: 120px;">Add new</v-btn>
+          <v-btn color="primary" style="min-width: 120px;">Add new</v-btn>
         </router-link>
       </v-col>
     </v-row>
@@ -60,7 +60,7 @@
         <v-card class="restaurant-card">
           <v-card-title>{{ restaurant.name }}</v-card-title>
           <v-card-text>
-            <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
+            <v-rating readonly v-model="restaurant.rating" color="primary" half-increments></v-rating>
           </v-card-text>
           <v-card-text>
             Number of reviews: ({{ restaurant.numberOfRatings }})
@@ -74,7 +74,7 @@
               </template>
               <v-list>
                 <v-list-item>
-                  <router-link :to="{ name: 'EditRestaurant', params: { id: restaurant.id } }" style="text-decoration: none">
+                  <router-link :to="{ name: 'EditRestaurant', params: { id: restaurant.id } }" style="text-decoration: none; color: black">
                     <v-list-item-title>Edit</v-list-item-title>
                   </router-link>
                 </v-list-item>
@@ -84,7 +84,7 @@
               </v-list>
             </v-menu>
             <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }" style="text-decoration: none">
-              <v-btn color="secondary">View</v-btn>
+              <v-btn color="primary">View</v-btn>
             </router-link>
             <ReservePopup :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
           </v-card-actions>

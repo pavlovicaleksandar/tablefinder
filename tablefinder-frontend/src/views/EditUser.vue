@@ -11,12 +11,12 @@
             <v-toolbar-title>Edit user</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-text-field readonly v-model="user.username" label="Username" required></v-text-field>
-            <v-select v-model="user.role" :items="['Guest', 'Moderator', 'Admin']" label="Role"></v-select>
-            <v-text-field v-model="user.email" label="Email"></v-text-field>
-            <v-text-field v-model="user.phoneNumber" label="Phone Number"></v-text-field>
-            <v-text-field v-model="newPassword" label="New password" type="password"></v-text-field>
-            <v-text-field v-model="confirmNewPassword" label="Confirm new password" type="password"></v-text-field>
+            <v-text-field readonly v-model="user.username" label="Username" required color="primary"></v-text-field>
+            <v-select v-model="user.role" :items="['Guest', 'Moderator', 'Admin']" label="Role" color="primary"></v-select>
+            <v-text-field v-model="user.email" label="Email" color="primary"></v-text-field>
+            <v-text-field v-model="user.phoneNumber" label="Phone Number" color="primary"></v-text-field>
+            <v-text-field v-model="newPassword" label="New password" type="password" color="primary"></v-text-field>
+            <v-text-field v-model="confirmNewPassword" label="Confirm new password" type="password" color="primary"></v-text-field>
             <v-card-text v-if="errorMessage != null" class="mt-n6">
               <v-alert color="error">
                 {{errorMessage}}

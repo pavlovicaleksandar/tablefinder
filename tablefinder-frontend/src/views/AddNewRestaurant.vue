@@ -12,8 +12,8 @@
           </v-toolbar>
           <v-card-text>
             <v-form @submit.prevent="addNewRestaurant">
-              <v-text-field v-model="name" label="Name" required></v-text-field>
-              <v-text-field v-model="imageUrl" label="Image url" required></v-text-field>
+              <v-text-field v-model="name" label="Name" required color="primary"></v-text-field>
+              <v-text-field v-model="imageUrl" label="Image url" required color="primary"></v-text-field>
               <v-select
                 v-model="selectedTags"
                 :items="tags"
@@ -23,6 +23,7 @@
                 label="Tags"
                 return-object
                 multiple
+                color="primary"
               ></v-select>
               <v-select
                 v-model="selectedModerator"
@@ -30,8 +31,9 @@
                 item-value="username"
                 item-title="username"
                 label="Moderator"
+                color="primary"
               ></v-select>
-              <v-textarea color="secondary" v-model="description"  label="Description" variant="outlined" base-color="primary"></v-textarea>
+              <v-textarea color="primary" v-model="description"  label="Description" variant="outlined" base-color="primary"></v-textarea>
               <v-card-text v-if="errorMessage != null">
                 <v-alert color="error">
                   {{errorMessage}}
