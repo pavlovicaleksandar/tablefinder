@@ -32,6 +32,11 @@
                 label="Moderator"
               ></v-select>
               <v-textarea color="secondary" v-model="description"  label="Description" variant="outlined" base-color="primary"></v-textarea>
+              <v-card-text v-if="errorMessage != null">
+                <v-alert color="error">
+                  {{errorMessage}}
+                </v-alert>
+              </v-card-text>
               <v-row>
                 <v-col class="text-center">
                   <v-btn type="submit" color="primary">Confirm</v-btn>
@@ -59,7 +64,8 @@ export default {
       selectedTags: [],
       moderators: [],
       selectedModerator: null,
-      loggedInUser: {}
+      loggedInUser: {},
+      errorMessage: null
     };
   },
   mounted() {
@@ -84,6 +90,10 @@ export default {
         .then(data => this.moderators = data)
     },
     addNewRestaurant() {
+      if (!this.name || !this.description || !this.imageUrl || !this.selectedModerator) {
+        this.errorMessage = "All fields marked with * are required"
+        return
+      }
 
       const restaurantData = {
         name: this.name,

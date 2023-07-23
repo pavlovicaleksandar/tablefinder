@@ -106,19 +106,10 @@ export default {
         .then(data => this.tags = data)
     },
     editRestaurant() {
-      // if (!this.user.email) {
-      //   this.errorMessage = "All fields marked with * are required"
-      //   return;
-      // }
-      //
-      // if (!this.isValidEmail(this.user.email)) {
-      //   this.errorMessage = "Email is in wrong format"
-      //   return
-      // }
-      // if (this.newPassword && this.newPassword != this.confirmNewPassword) {
-      //   this.errorMessage = "Passwords are not matching"
-      //   return
-      // }
+      if (!this.restaurant.name || !this.restaurant.description || !this.restaurant.imageUrl || !this.restaurant.moderatorUsername) {
+        this.errorMessage = "All fields marked with * are required"
+        return
+      }
 
       const restaurantData = {
         name: this.restaurant.name,
@@ -130,6 +121,7 @@ export default {
 
       axios.put(`http://localhost:8080/restaurants/${this.restaurant.id}`, restaurantData)
         .then(response => {
+          this.successMessage = "Successfully edited restaurant"
           console.log('Successfully created new restaurant');
         })
         .catch(error => {
