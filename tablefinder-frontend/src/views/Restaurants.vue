@@ -1,40 +1,42 @@
 <template>
   <v-container fluid>
     <v-row justify="start">
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="4" lg="3" xl="2">
         <v-text-field v-model="search" label="Search by name" outlined></v-text-field>
       </v-col>
-      <v-col cols="2">
-        <v-select color="secondary"
-                  v-model="selectedOptionForRating"
-                  label="Rating"
-                  variant="outlined"
-                  :items="ratingOptions"
-                  item-value="value"
-                  item-title="displayText"
-                  return-object
-                  single-line
-        >
-        </v-select>
+      <v-col cols="6" sm="4" md="3" lg="2" xl="1">
+        <v-select
+          color="secondary"
+          v-model="selectedOptionForRating"
+          label="Rating"
+          variant="outlined"
+          :items="ratingOptions"
+          item-value="value"
+          item-title="displayText"
+          return-object
+          single-line
+        ></v-select>
       </v-col>
-      <v-col cols="2">
-        <v-select color="secondary"
-                  v-model="selectedOptionForPrice"
-                  label="Price"
-                  variant="outlined"
-                  :items="priceOptions"
-                  item-value="value"
-                  item-title="displayText"
-                  return-object
-                  single-line
-        >
-        </v-select>
+      <v-col cols="6" sm="4" md="3" lg="2" xl="1">
+        <v-select
+          color="secondary"
+          v-model="selectedOptionForPrice"
+          label="Price"
+          variant="outlined"
+          :items="priceOptions"
+          item-value="value"
+          item-title="displayText"
+          return-object
+          single-line
+        ></v-select>
       </v-col>
-      <v-col cols="2" >
+      <v-col cols="6" sm="4" md="3" lg="2" xl="1">
         <v-btn color="secondary" @click="filterRestaurants()">Filter</v-btn>
       </v-col>
-      <v-col cols="2" >
-        <router-link v-if="this.loggedInUser.role === 'Admin'" to="/restaurants/add"><v-btn color="secondary">Add new</v-btn></router-link>
+      <v-col cols="6" sm="4" md="3" lg="2" xl="1">
+        <router-link v-if="loggedInUser.role === 'Admin'" to="/restaurants/add">
+          <v-btn color="secondary">Add new</v-btn>
+        </router-link>
       </v-col>
     </v-row>
     <v-row>
@@ -50,49 +52,48 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-row v-if="filteredRestaurants.length == 0" style="align-items: center;justify-content: center">
-        No restaurants found
+    <v-row v-if="filteredRestaurants.length === 0" style="align-items: center; justify-content: center">
+      No restaurants found
     </v-row>
-    <v-row  >
+    <v-row>
       <v-col v-for="(restaurant, index) in filteredRestaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
-          <v-card>
-            <v-card-title>{{ restaurant.name }}</v-card-title>
-            <v-card-text>
-                <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
-            </v-card-text>
-            <v-card-text>
-                  Number of reviews: ({{restaurant.numberOfRatings}})
-            </v-card-text>
-            <v-card-text>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</v-card-text>
-            <v-img :src="restaurant.imageUrl" class="restaurant-img"></v-img>
-            <v-card-actions>
-              <v-menu v-if="loggedInUser.role !== 'Guest'">
-                <template v-slot:activator="{ props }">
-                  <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
-                </template>
-
-                <v-list>
-                  <v-list-item>
-                    <router-link :to="{ name: 'EditRestaurant', params: { id: restaurant.id } }" style="text-decoration: none">
-                      <v-list-item-title>Edit</v-list-item-title>
-                    </router-link>
-                  </v-list-item>
-                  <v-list-item @click="deleteRestaurant(restaurant.id)">
-                    <v-list-item-title>Delete</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-              <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }" style="text-decoration: none">
-                <v-btn color="secondary">View</v-btn>
-              </router-link>
-              <ReservePopup :restaurant="{id: restaurant.id, name: restaurant.name}">
-              </ReservePopup>
-            </v-card-actions>
-          </v-card>
+        <v-card>
+          <v-card-title>{{ restaurant.name }}</v-card-title>
+          <v-card-text>
+            <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
+          </v-card-text>
+          <v-card-text>
+            Number of reviews: ({{ restaurant.numberOfRatings }})
+          </v-card-text>
+          <v-card-text>Price: {{ ['N/A', '$', '$$', '$$$'].at(restaurant.price) }}</v-card-text>
+          <v-img :src="restaurant.imageUrl" class="restaurant-img" contain></v-img>
+          <v-card-actions>
+            <v-menu v-if="loggedInUser.role !== 'Guest'">
+              <template v-slot:activator="{ props }">
+                <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+              </template>
+              <v-list>
+                <v-list-item>
+                  <router-link :to="{ name: 'EditRestaurant', params: { id: restaurant.id } }" style="text-decoration: none">
+                    <v-list-item-title>Edit</v-list-item-title>
+                  </router-link>
+                </v-list-item>
+                <v-list-item @click="deleteRestaurant(restaurant.id)">
+                  <v-list-item-title>Delete</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }" style="text-decoration: none">
+              <v-btn color="secondary">View</v-btn>
+            </router-link>
+            <ReservePopup :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
+          </v-card-actions>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
+
 
 <script>
 import axios from "axios";
