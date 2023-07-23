@@ -5,6 +5,32 @@
     :items="reservations"
     class="elevation-1"
   >
+    <template v-slot:[`item.status`]="{ item }">
+      <v-chip
+        class="ma-2"
+        color="orange"
+        text-color="white"
+        v-if="item.columns.status === 'PENDING'"
+      >
+        Pending
+      </v-chip>
+      <v-chip
+        class="ma-2"
+        color="red"
+        text-color="white"
+        v-if="item.columns.status === 'REJECTED'"
+      >
+        Rejected
+      </v-chip>
+      <v-chip
+        class="ma-2"
+        color="green"
+        text-color="white"
+        v-if="item.columns.status === 'ACCEPTED'"
+      >
+        Accepted
+      </v-chip>
+    </template>
     <template v-slot:[`item.dateAndTime`]="{ item }">
       {{ new Date(item.columns.dateAndTime).toLocaleString() }}
     </template>

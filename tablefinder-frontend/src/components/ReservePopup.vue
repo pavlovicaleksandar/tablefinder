@@ -23,9 +23,9 @@
           </v-row>
         </v-container>
       </v-card-text>
-      <v-card-actions>
-        <v-btn color="secondary" @click="reserve" variant="outlined">Reserve</v-btn>
-        <v-btn color="error" @click="cancel" variant="outlined">Cancel</v-btn>
+      <v-card-actions  style="display: flex; justify-content: center;" class="mb-3">
+        <v-btn color="secondary" @click="reserve" variant="elevated" style="min-width: 120px;">Reserve</v-btn>
+        <v-btn color="error" @click="cancel" variant="elevated" style="min-width: 120px;">Cancel</v-btn>
       </v-card-actions>
     </v-card>
     <v-card v-if="isReservationCreated">
@@ -41,8 +41,8 @@
           </v-row>
         </v-container>
       </v-card-text>
-      <v-card-actions>
-        <v-btn color="secondary" @click="closeModal" variant="outlined" >OK</v-btn>
+      <v-card-actions style="display: flex; justify-content: center;" class="mb-3">
+        <v-btn color="secondary" @click="closeModal" variant="elevated" style="min-width: 120px;">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

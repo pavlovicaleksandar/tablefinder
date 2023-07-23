@@ -31,11 +31,11 @@
         ></v-select>
       </v-col>
       <v-col cols="6" sm="4" md="3" lg="2" xl="1">
-        <v-btn color="secondary" @click="filterRestaurants()">Filter</v-btn>
+        <v-btn color="secondary" @click="filterRestaurants()" style="min-width: 120px;">Filter</v-btn>
       </v-col>
       <v-col cols="6" sm="4" md="3" lg="2" xl="1">
         <router-link v-if="loggedInUser.role === 'Admin'" to="/restaurants/add">
-          <v-btn color="secondary">Add new</v-btn>
+          <v-btn color="secondary" style="min-width: 120px;">Add new</v-btn>
         </router-link>
       </v-col>
     </v-row>
@@ -56,8 +56,8 @@
       No restaurants found
     </v-row>
     <v-row>
-      <v-col v-for="(restaurant, index) in filteredRestaurants" :key="index" cols="12" sm="6" md="4" lg="3" xl="2">
-        <v-card>
+      <v-col v-for="(restaurant, index) in filteredRestaurants" :key="index" cols="12" sm="6" md="4" lg="3">
+        <v-card class="restaurant-card">
           <v-card-title>{{ restaurant.name }}</v-card-title>
           <v-card-text>
             <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>

@@ -4,24 +4,46 @@
       <v-icon start icon="mdi-arrow-left"></v-icon>
       Back
     </v-btn>
-    <div class="wrapper">
-      <div class="d-flex gap-12">
-        <v-img :src='restaurant.imageUrl' width="800"></v-img>
-        <div class="restaurant-description">
-          <span class="text-h4">{{ restaurant.name }}</span>
-          <div>
+    <v-card>
+      <v-card-title>{{restaurant.name}}</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-img :src='restaurant.imageUrl'></v-img>
+          </v-col>
+          <v-col>
+            <v-row>
+              <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
+            </v-row>
             <v-chip v-for="tag in restaurant.tags" :key="tag.id">{{tag.tagName}}</v-chip>
-          </div>
-          <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>
-          <span>Number of reviews: ({{restaurant.numberOfRatings}})</span>
-          <h3>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</h3>
-          <span>{{ restaurant.description }}</span>
-          <div class="reserve-now-btn">
-            <ReservePopup></ReservePopup>
-          </div>
-        </div>
-      </div>
-    </div>
+            <span>Number of reviews: ({{restaurant.numberOfRatings}})</span>
+            <h3>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</h3>
+            <span>{{ restaurant.description }}</span>
+            <div class="reserve-now-btn">
+              <ReservePopup></ReservePopup>
+            </div>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+<!--    <div class="wrapper">-->
+<!--      <div class="d-flex gap-12">-->
+<!--        <v-img :src='restaurant.imageUrl' width="50%"></v-img>-->
+<!--        <div class="restaurant-description">-->
+<!--          <span class="text-h4">{{ restaurant.name }}</span>-->
+<!--          <div>-->
+<!--            <v-chip v-for="tag in restaurant.tags" :key="tag.id">{{tag.tagName}}</v-chip>-->
+<!--          </div>-->
+<!--          <v-rating readonly v-model="restaurant.rating" color="secondary" half-increments></v-rating>-->
+<!--          <span>Number of reviews: ({{restaurant.numberOfRatings}})</span>-->
+<!--          <h3>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</h3>-->
+<!--          <span>{{ restaurant.description }}</span>-->
+<!--          <div class="reserve-now-btn">-->
+<!--            <ReservePopup></ReservePopup>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
     <v-card>
       <v-card-title class="headline">User Reviews</v-card-title>
       <v-card-text>
@@ -63,7 +85,6 @@
               </v-card-actions>
             </v-card>
           </v-list-item>
-          <hr>
           <v-list-item v-for="review in reviews" :key="review.id">
             <v-card>
               <v-card-title>{{ review.username }}</v-card-title>
@@ -199,20 +220,6 @@ export default {
 
 
 <style scoped>
-.wrapper {
-  display: flex;
-  align-items: center;
-  min-height: 660px;
-  height: calc(100vh - 8.5em);
-}
-.restaurant-description {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-.gap-12 {
-  gap: 3rem;
-}
 .reserve-now-btn {
   margin-top: auto;
   display: flex;
