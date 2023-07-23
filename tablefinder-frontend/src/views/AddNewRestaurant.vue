@@ -41,7 +41,7 @@
               </v-card-text>
               <v-row>
                 <v-col class="text-center">
-                  <v-btn type="submit" color="primary">Confirm</v-btn>
+                  <v-btn type="submit" color="primary" style="min-width: 120px;">Confirm</v-btn>
                 </v-col>
               </v-row>
             </v-form>

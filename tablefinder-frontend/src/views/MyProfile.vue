@@ -25,7 +25,7 @@
               </v-card-text>
               <v-row>
                 <v-col class="text-center">
-                  <v-btn color="primary" @click="editUser">Confirm</v-btn>
+                  <v-btn color="primary" @click="editUser" style="min-width: 120px;">Confirm</v-btn>
                 </v-col>
               </v-row>
           </v-card-text>

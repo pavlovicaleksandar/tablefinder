@@ -114,7 +114,7 @@
                     </v-col>
                   </v-row>
                   <v-row justify="end">
-                    <v-btn v-if="user.role === 'Admin' || user.username === review.username" color="red" @click="removeReview(review.id)">Remove</v-btn>
+                    <v-btn v-if="user.role === 'Admin' || user.username === review.username" color="red" @click="removeReview(review.id)" style="min-width: 120px;">Remove</v-btn>
                   </v-row>
                 </v-container>
               </v-card-text>
