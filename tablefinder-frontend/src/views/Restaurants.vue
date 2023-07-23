@@ -189,9 +189,3 @@ export default {
 }
 </script>
 
-<style>
-.restaurant-img {
-  width: 300px;
-  height: 300px;
-}
-</style>
