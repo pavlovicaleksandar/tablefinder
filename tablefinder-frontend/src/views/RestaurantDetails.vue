@@ -20,7 +20,7 @@
             <h3>Price: {{['N/A', '$', '$$', '$$$'].at(restaurant.price)}}</h3>
             <span>{{ restaurant.description }}</span>
             <div class="reserve-now-btn">
-              <ReservePopup></ReservePopup>
+              <ReservePopup :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
             </div>
           </v-col>
         </v-row>
