@@ -134,16 +134,14 @@ export default {
       selectedRating: null,
       comment: null,
       user: {},
-      isAddReviewEnabled: true
     }
   },
   mounted() {
     getCurrentlyLoggedInUser().then(userInfo => {
-      this.loggedInUser = userInfo
+      this.user = userInfo
       if (userInfo == null) {
         window.location.href = '/'
       }
-      this.user = userInfo
     })
     this.selectedRating = null
     this.fetchRestaurantById()
@@ -159,7 +157,6 @@ export default {
       axios.get(`http://localhost:8080/reviews/${this.id}`)
         .then(response => response.data)
         .then(data => this.reviews = data)
-        .then(data => this.isAddReviewEnabled = data.find(review => review.username === this.user.username) === undefined)
     },
     addReview() {
       if (this.comment != null && this.comment.trim() !== '') {
@@ -190,6 +187,11 @@ export default {
         .catch(error => {
           console.error('Error removing review:', error);
         });
+    }
+  },
+  computed: {
+    isAddReviewEnabled() {
+      return this.reviews.find(review => review.username === this.user.username) === undefined
     }
   }
 }
