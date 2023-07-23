@@ -80,8 +80,8 @@
                 </v-container>
               </v-card-text>
               <v-card-actions>
-                <v-btn v-if="selectedRating!=null" color="primary" @click="addReview" variant="outlined" class="mt-n8">Add</v-btn>
-                <v-btn v-if="selectedRating == null" color="primary" @click="addReview" variant="outlined" disabled class="mt-n8">Add</v-btn>
+                <v-btn v-if="selectedRating!=null" color="primary" @click="addReview" variant="elevated" class="mt-n8" style="min-width: 120px;">Add</v-btn>
+                <v-btn v-if="selectedRating == null" color="primary" @click="addReview" variant="elevated" disabled class="mt-n8" style="min-width: 120px;">Add</v-btn>
               </v-card-actions>
             </v-card>
           </v-list-item>
@@ -180,24 +180,25 @@ export default {
         .then(data => this.reviews = data)
     },
     addReview() {
-      if (this.comment != null && this.comment.trim() !== '') {
-        const reviewData = {
-          username: this.user.username,
-          comment: this.comment,
-          rating: this.selectedRating,
-          price: this.selectedOptionForPrice.value,
-          restaurantId: this.restaurant.id
-        };
-
-        axios.post('http://localhost:8080/reviews', reviewData)
-          .then(response => {
-            console.log('Successfully added new review');
-            location.reload()
-          })
-          .catch(error => {
-            console.error('Error adding new review:', error);
-          });
+      if (this.comment == null) {
+        this.comment = ''
       }
+      const reviewData = {
+        username: this.user.username,
+        comment: this.comment,
+        rating: this.selectedRating,
+        price: this.selectedOptionForPrice.value,
+        restaurantId: this.restaurant.id
+      };
+
+      axios.post('http://localhost:8080/reviews', reviewData)
+        .then(response => {
+          console.log('Successfully added new review');
+          location.reload()
+        })
+        .catch(error => {
+          console.error('Error adding new review:', error);
+        });
     },
     removeReview(reviewId) {
       axios.delete(`http://localhost:8080/reviews/${reviewId}`)
