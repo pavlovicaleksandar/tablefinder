@@ -13,7 +13,7 @@
           </v-row>
           <v-row>
             <v-col cols="12" md="12">
-              <v-text-field v-model.number="numberOfPeople" label="Number of People" type="number" min="1"></v-text-field>
+              <v-text-field v-model.number="numberOfPeople" label="Number of People" type="number" min="1" oninput="if (this.value < 1) this.value = 1;"></v-text-field>
             </v-col>
           </v-row>
           <v-row>
@@ -22,6 +22,11 @@
             </v-col>
           </v-row>
         </v-container>
+      </v-card-text>
+      <v-card-text v-if="errorMessage != null" class="mb-3">
+        <v-alert color="error">
+          {{errorMessage}}
+        </v-alert>
       </v-card-text>
       <v-card-actions  style="display: flex; justify-content: center;" class="mb-3">
         <v-btn color="primary" @click="reserve" variant="elevated" style="min-width: 120px;">Reserve</v-btn>
@@ -63,10 +68,16 @@ export default {
       numberOfPeople: 1,
       noteForRestaurant: '',
       isReservationCreated: false,
-      loggedInUser: null
+      loggedInUser: null,
+      errorMessage: null
     };
   },
   mounted() {
+    this.numberOfPeople = 1
+    this.noteForRestaurant = ''
+    this.errorMessage = null
+    this.pickedDate = (new Date(Date.now())).toISOString().substr(0, 10)
+    this.pickedTime = (new Date(Date.now())).toLocaleTimeString().substr(0, 5)
     getCurrentlyLoggedInUser().then(userInfo => {
       this.loggedInUser = userInfo
       if (userInfo == null) {
@@ -84,6 +95,12 @@ export default {
 
       // Create a new Date object with the parsed values
       const parsedDate = new Date(year, month - 1, day, hours, minutes);
+
+      const timestampNow = (new Date()).getTime()
+      if (parsedDate < timestampNow) {
+        this.errorMessage = "You cannot make reservation for date & time in past"
+        return
+      }
 
       // Get the timestamp in milliseconds
       const timestamp = parsedDate.getTime();
