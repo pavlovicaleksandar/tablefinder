@@ -87,7 +87,7 @@
               <v-btn color="primary">View</v-btn>
             </router-link>
             <ReservePopup v-if="loggedInUser != null" :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
-            <router-link  to="/"><v-btn v-if="loggedInUser == null" color="primary">Reserve now</v-btn></router-link>
+            <router-link  to="/login"><v-btn v-if="loggedInUser == null" color="primary">Reserve now</v-btn></router-link>
           </v-card-actions>
         </v-card>
       </v-col>

@@ -17,6 +17,13 @@ const routes = [
       {
         path: '',
         name: 'Home',
+        beforeEnter: (to, from) => {
+          window.location.href = '/restaurants'
+        },
+      },
+      {
+        path: 'login',
+        name: 'Login',
         component: () => import(/* webpackChunkName: "home" */ '@/views/Login.vue'),
       },
       {
@@ -39,7 +46,7 @@ const routes = [
           // reject the navigation
           getCurrentlyLoggedInUser().then(userInfo => {
             if (userInfo == null) {
-              window.location.href = '/'
+              window.location.href = '/login'
             }
           })
         },
@@ -53,7 +60,7 @@ const routes = [
           // reject the navigation
           getCurrentlyLoggedInUser().then(userInfo => {
             if (userInfo == null) {
-              window.location.href = '/'
+              window.location.href = '/login'
             }
           })
         },
@@ -67,7 +74,7 @@ const routes = [
           // reject the navigation
           getCurrentlyLoggedInUser().then(userInfo => {
             if (userInfo == null) {
-              window.location.href = '/'
+              window.location.href = '/login'
             }
           })
         },
@@ -81,7 +88,7 @@ const routes = [
           // reject the navigation
           getCurrentlyLoggedInUser().then(userInfo => {
             if (userInfo == null) {
-              window.location.href = '/'
+              window.location.href = '/login'
             }
           })
         },
@@ -101,7 +108,7 @@ const routes = [
           // reject the navigation
           getCurrentlyLoggedInUser().then(userInfo => {
             if (userInfo == null) {
-              window.location.href = '/'
+              window.location.href = '/login'
             }
           })
         },
@@ -115,7 +122,7 @@ const routes = [
           // reject the navigation
           getCurrentlyLoggedInUser().then(userInfo => {
             if (userInfo == null) {
-              window.location.href = '/'
+              window.location.href = '/login'
             }
           })
         },

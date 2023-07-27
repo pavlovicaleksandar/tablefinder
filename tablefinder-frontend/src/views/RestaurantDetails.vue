@@ -40,7 +40,7 @@
             <v-row style="display: flex; justify-content: flex-end;">
               <div class="reserve-now-btn mr-6 mt-15">
                 <ReservePopup v-if="user != null" :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
-                <router-link  to="/"><v-btn v-if="user == null" color="primary">Reserve now</v-btn></router-link>
+                <router-link  to="/login"><v-btn v-if="user == null" color="primary">Reserve now</v-btn></router-link>
               </div>
             </v-row>
           </v-col>

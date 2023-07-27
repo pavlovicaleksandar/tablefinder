@@ -15,7 +15,7 @@
       <router-link to="/users" v-if="loggedInUser != null && loggedInUser.role === 'Admin'" style="color: blue"><v-btn>Users</v-btn></router-link>
       <router-link to="/registration" v-if="loggedInUser == null" style="color: blue"><v-btn>Register</v-btn></router-link>
       <router-link to="/profile" v-if="loggedInUser != null" style="color: blue"><v-btn>My profile</v-btn></router-link>
-      <router-link to="/" v-if="loggedInUser == null" style="color: blue"><v-btn>Login</v-btn></router-link>
+      <router-link to="/login" v-if="loggedInUser == null" style="color: blue"><v-btn>Login</v-btn></router-link>
       <v-btn @click="logout" v-if="loggedInUser != null">Logout ({{ loggedInUser.username }})</v-btn>
     </div>
     <div>
