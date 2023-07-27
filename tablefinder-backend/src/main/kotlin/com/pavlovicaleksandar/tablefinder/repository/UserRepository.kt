@@ -20,6 +20,24 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
             )
         )
     }
+    fun findByUsername(username: String): UserRecord? {
+        return jdbcTemplate.query(
+            "select * from users where username = :username",
+            mapOf(
+                "username" to username,
+            ),
+            rowMapper
+        ).firstOrNull()
+    }
+    fun findByEmail(email: String): UserRecord? {
+        return jdbcTemplate.query(
+            "select * from users where email = :email",
+            mapOf(
+                "email" to email,
+            ),
+            rowMapper
+        ).firstOrNull()
+    }
 
     fun findByUsernameAndPassword(username: String, password: String): UserRecord? {
         return jdbcTemplate.query(

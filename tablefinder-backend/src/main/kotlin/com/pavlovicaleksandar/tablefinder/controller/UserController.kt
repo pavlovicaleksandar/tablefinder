@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import org.springframework.http.ResponseEntity.badRequest
 import org.springframework.http.ResponseEntity.ok
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -29,7 +30,11 @@ class UserController(
 ) {
 
     @PostMapping("/register")
-    fun register(@RequestBody user: RegisterUserDTO): ResponseEntity<Int> {
+    fun register(@RequestBody user: RegisterUserDTO): ResponseEntity<Any> {
+        val check = service.checkIsEmailOrUsernameTaken(user.username, user.email)
+        if(check != null) {
+            return badRequest().body(check)
+        }
         val success = service.createUser(user)
         return ResponseEntity(success, HttpStatus.CREATED)
     }

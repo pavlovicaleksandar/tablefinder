@@ -15,6 +15,16 @@ class UserService(private val repository: UserRepository) {
         return repository.save(user.toRecord())
     }
 
+    fun checkIsEmailOrUsernameTaken(username: String, email: String): String? {
+        if (repository.findByUsername(username) != null) {
+            return "Username already taken"
+        }
+        if (repository.findByEmail(email) != null) {
+            return "Email already taken"
+        }
+        return null
+    }
+
     fun getUserById(id: UUID): User? {
         return repository.findById(id)?.toUser()
     }

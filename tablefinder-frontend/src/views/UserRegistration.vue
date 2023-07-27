@@ -84,9 +84,10 @@ export default {
       axios.post('http://localhost:8080/users/register', userData)
         .then(response => {
           console.log('Successfully registered');
-          this.$router.push('/')
+          this.$router.push('/login')
         })
         .catch(error => {
+          this.message = error.response.data
           console.error('Error registration:', error);
         });
 
