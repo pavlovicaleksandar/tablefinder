@@ -39,7 +39,8 @@
             </v-row>
             <v-row style="display: flex; justify-content: flex-end;">
               <div class="reserve-now-btn mr-6 mt-15">
-                <ReservePopup :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
+                <ReservePopup v-if="user != null" :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
+                <router-link  to="/"><v-btn v-if="user == null" color="primary">Reserve now</v-btn></router-link>
               </div>
             </v-row>
           </v-col>
@@ -153,9 +154,6 @@ export default {
   mounted() {
     getCurrentlyLoggedInUser().then(userInfo => {
       this.user = userInfo
-      if (userInfo == null) {
-        window.location.href = '/'
-      }
     })
     this.selectedRating = null
     this.fetchRestaurantById()
@@ -206,7 +204,7 @@ export default {
   },
   computed: {
     isAddReviewEnabled() {
-      return this.reviews.find(review => review.username === this.user.username) === undefined
+      return this.user != null && this.reviews.find(review => review.username === this.user.username) === undefined
     }
   }
 }

@@ -54,6 +54,10 @@ class SecurityConfig (
         http.authorizeHttpRequests()
             .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
             .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
+            .requestMatchers(HttpMethod.GET, "/restaurants").permitAll()
+            .requestMatchers(HttpMethod.GET, "/restaurants/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/reviews/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/tags").permitAll()
             .anyRequest().authenticated()
 
         http.oauth2ResourceServer().jwt()

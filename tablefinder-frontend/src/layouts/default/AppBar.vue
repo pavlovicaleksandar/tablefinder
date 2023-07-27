@@ -10,7 +10,7 @@
       </div>
     </v-app-bar-title>
     <div>
-      <router-link to="/restaurants" v-if="loggedInUser != null" style="color: blue"><v-btn>Restaurants</v-btn></router-link>
+      <router-link to="/restaurants" style="color: blue"><v-btn>Restaurants</v-btn></router-link>
       <router-link to="/reservations" v-if="loggedInUser != null" style="color: blue"><v-btn>Reservations</v-btn></router-link>
       <router-link to="/users" v-if="loggedInUser != null && loggedInUser.role === 'Admin'" style="color: blue"><v-btn>Users</v-btn></router-link>
       <router-link to="/registration" v-if="loggedInUser == null" style="color: blue"><v-btn>Register</v-btn></router-link>

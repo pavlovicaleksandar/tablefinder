@@ -1,6 +1,7 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 import axios from "axios";
+import {getCurrentlyLoggedInUser} from "@/helpers";
 
 let loggedInUser = JSON.parse(localStorage.getItem( 'user'))
 
@@ -33,25 +34,57 @@ const routes = [
         path: 'users/:id',
         name: 'EditUser',
         component: () => import(/* webpackChunkName: "home" */ '@/views/EditUser.vue'),
-        props: true
+        props: true,
+        beforeEnter: (to, from) => {
+          // reject the navigation
+          getCurrentlyLoggedInUser().then(userInfo => {
+            if (userInfo == null) {
+              window.location.href = '/'
+            }
+          })
+        },
       },
       {
         path: 'restaurants/edit/:id',
         name: 'EditRestaurant',
         component: () => import(/* webpackChunkName: "home" */ '@/views/EditRestaurant.vue'),
-        props: true
+        props: true,
+        beforeEnter: (to, from) => {
+          // reject the navigation
+          getCurrentlyLoggedInUser().then(userInfo => {
+            if (userInfo == null) {
+              window.location.href = '/'
+            }
+          })
+        },
       },
       {
         path: 'reservations',
         name: 'Reservations',
         component: () => import(/* webpackChunkName: "home" */ '@/views/Reservations.vue'),
-        props: true
+        props: true,
+        beforeEnter: (to, from) => {
+          // reject the navigation
+          getCurrentlyLoggedInUser().then(userInfo => {
+            if (userInfo == null) {
+              window.location.href = '/'
+            }
+          })
+        },
       },
       {
         path: 'users',
         name: 'Users',
         component: () => import(/* webpackChunkName: "home" */ '@/views/Users.vue'),
-        props: true
+        props: true,
+        beforeEnter: (to, from) => {
+          // reject the navigation
+          getCurrentlyLoggedInUser().then(userInfo => {
+            if (userInfo == null) {
+              window.location.href = '/'
+            }
+          })
+        },
       },
       {
         path: 'registration',
@@ -63,13 +96,29 @@ const routes = [
         path: 'restaurants/add',
         name: 'AddNewRestaurant',
         component: () => import(/* webpackChunkName: "home" */ '@/views/AddNewRestaurant.vue'),
-        props: true
+        props: true,
+        beforeEnter: (to, from) => {
+          // reject the navigation
+          getCurrentlyLoggedInUser().then(userInfo => {
+            if (userInfo == null) {
+              window.location.href = '/'
+            }
+          })
+        },
       },
       {
         path: 'profile',
         name: 'MyProfile',
         component: () => import(/* webpackChunkName: "home" */ '@/views/MyProfile.vue'),
-        props: true
+        props: true,
+        beforeEnter: (to, from) => {
+          // reject the navigation
+          getCurrentlyLoggedInUser().then(userInfo => {
+            if (userInfo == null) {
+              window.location.href = '/'
+            }
+          })
+        },
       }
     ],
   },

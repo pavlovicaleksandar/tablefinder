@@ -58,7 +58,6 @@ import axios from "axios";
 import {getCurrentlyLoggedInUser} from "@/helpers";
 
 export default {
-
   props: ['restaurant'],
   data() {
     return {
@@ -80,9 +79,6 @@ export default {
     this.pickedTime = (new Date(Date.now())).toLocaleTimeString().substr(0, 5)
     getCurrentlyLoggedInUser().then(userInfo => {
       this.loggedInUser = userInfo
-      if (userInfo == null) {
-        window.location.href = '/'
-      }
     })
     this.isReservationCreated = false
   },

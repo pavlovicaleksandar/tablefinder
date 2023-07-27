@@ -64,9 +64,6 @@ export default {
   mounted() {
     getCurrentlyLoggedInUser().then(userInfo => {
       this.loggedInUser = userInfo
-      if (userInfo == null) {
-        window.location.href = '/'
-      }
     })
     this.getUserById()
     this.errorMessage = null

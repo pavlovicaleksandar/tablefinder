@@ -34,7 +34,7 @@
         <v-btn color="primary" @click="filterRestaurants()" style="min-width: 120px;">Filter</v-btn>
       </v-col>
       <v-col cols="6" sm="4" md="3" lg="2" xl="1">
-        <router-link v-if="loggedInUser.role === 'Admin'" to="/restaurants/add">
+        <router-link v-if="loggedInUser != null && loggedInUser.role === 'Admin'" to="/restaurants/add">
           <v-btn color="primary" style="min-width: 120px;">Add new</v-btn>
         </router-link>
       </v-col>
@@ -68,7 +68,7 @@
           <v-card-text>Price: {{ ['N/A', '$', '$$', '$$$'].at(restaurant.price) }}</v-card-text>
           <v-img :src="restaurant.imageUrl" class="restaurant-img" contain></v-img>
           <v-card-actions>
-            <v-menu v-if="loggedInUser.role !== 'Guest'">
+            <v-menu v-if="loggedInUser != null && loggedInUser.role !== 'Guest'">
               <template v-slot:activator="{ props }">
                 <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
               </template>
@@ -86,7 +86,8 @@
             <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }" style="text-decoration: none">
               <v-btn color="primary">View</v-btn>
             </router-link>
-            <ReservePopup :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
+            <ReservePopup v-if="loggedInUser != null" :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
+            <router-link  to="/"><v-btn v-if="loggedInUser == null" color="primary">Reserve now</v-btn></router-link>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -125,16 +126,15 @@ export default {
       selectedOptionForRating: { displayText: 'All ratings', value: 0 },
       tags: [],
       selectedTags: [],
-      loggedInUser: {}
+      loggedInUser: null
     }
   },
   mounted() {
-    getCurrentlyLoggedInUser().then(userInfo => {
-      this.loggedInUser = userInfo
-      if (userInfo == null) {
-        window.location.href = '/'
-      }
-    })
+    if (localStorage.getItem( 'user') != null) {
+      getCurrentlyLoggedInUser().then(userInfo => {
+        this.loggedInUser = userInfo
+      })
+    }
     this.filterRestaurants()
     this.fetchTags()
   },

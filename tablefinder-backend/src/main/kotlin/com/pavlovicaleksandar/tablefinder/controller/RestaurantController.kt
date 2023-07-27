@@ -4,6 +4,8 @@ import com.pavlovicaleksandar.tablefinder.repository.LinkedTagRecord
 import com.pavlovicaleksandar.tablefinder.repository.TagRecord
 import com.pavlovicaleksandar.tablefinder.service.Restaurant
 import com.pavlovicaleksandar.tablefinder.service.RestaurantService
+import com.pavlovicaleksandar.tablefinder.service.Role.Guest
+import com.pavlovicaleksandar.tablefinder.service.UserInfo
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.noContent
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import java.util.UUID.randomUUID
 import kotlin.math.roundToInt
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam
 @RequestMapping("/restaurants")
 @CrossOrigin(origins = ["http://localhost:3000"])
 class RestaurantController(private val service: RestaurantService) {
+    val NOT_LOGGED_IN_USER = UserInfo(randomUUID(), "not-logged-user", Guest)
+
     @PostMapping
     fun createRestaurant(@RequestBody createRestaurantDTO: CreateRestaurantDTO): RestaurantResponseDTO {
         return service.createRestaurant(createRestaurantDTO).toRestaurantResponseDTO()
@@ -36,8 +41,9 @@ class RestaurantController(private val service: RestaurantService) {
     }
 
     @GetMapping
-    fun getAllRestaurants(@RequestParam(defaultValue = "0") ratingFilter: Int, @RequestParam(defaultValue = "0") priceFilter: Int, authentication: Authentication): List<RestaurantResponseDTO> {
-        return service.findAll(ratingFilter, priceFilter, authentication.toUser()).toRestaurantResponseDTO()
+    fun getAllRestaurants(@RequestParam(defaultValue = "0") ratingFilter: Int, @RequestParam(defaultValue = "0") priceFilter: Int, authentication: Authentication?): List<RestaurantResponseDTO> {
+
+        return service.findAll(ratingFilter, priceFilter, authentication?.toUser() ?: NOT_LOGGED_IN_USER).toRestaurantResponseDTO()
     }
 
     @GetMapping("{restaurantId}")
