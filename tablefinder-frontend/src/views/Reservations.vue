@@ -8,7 +8,7 @@
     <template v-slot:[`item.status`]="{ item }">
       <v-chip
         class="ma-2"
-        color="orange"
+        color="blue"
         text-color="white"
         v-if="item.columns.status === 'PENDING'"
       >
@@ -30,13 +30,22 @@
       >
         Accepted
       </v-chip>
+      <v-chip
+        class="ma-2"
+        color="orange"
+        text-color="white"
+        v-if="item.columns.status === 'CANCELED'"
+      >
+        Canceled
+      </v-chip>
     </template>
     <template v-slot:[`item.dateAndTime`]="{ item }">
       {{ new Date(item.columns.dateAndTime).toLocaleString() }}
     </template>
-    <template v-slot:[`item.actions`]="{ item }" v-if="loggedInUser.role !== 'Guest'">
-      <AcceptRejectReservation :statusForButton="'Accept'" :status="'ACCEPTED'" :reservation="{id: item.value}" v-if="item.columns.status === 'PENDING'"></AcceptRejectReservation>
-      <AcceptRejectReservation :statusForButton="'Reject'" :status="'REJECTED'" :reservation="{id: item.value}" v-if="item.columns.status === 'PENDING'"></AcceptRejectReservation>
+    <template v-slot:[`item.actions`]="{ item }">
+      <AcceptRejectReservation v-if="loggedInUser.role !== 'Guest' && item.columns.status === 'PENDING'" :statusForButton="'Accept'" :status="'ACCEPTED'" :reservation="{id: item.value}"></AcceptRejectReservation>
+      <AcceptRejectReservation v-if="loggedInUser.role !== 'Guest'  && item.columns.status === 'PENDING'" :statusForButton="'Reject'" :status="'REJECTED'" :reservation="{id: item.value}"></AcceptRejectReservation>
+      <AcceptRejectReservation v-if="loggedInUser.role == 'Guest' && item.columns.status === 'PENDING'" :statusForButton="'Cancel'" :status="'CANCELED'" :reservation="{id: item.value}"></AcceptRejectReservation>
     </template>
   </v-data-table>
 </template>

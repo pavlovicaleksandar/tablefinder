@@ -1,6 +1,7 @@
 <template>
   <v-btn v-if="statusForButton === 'Accept'" @click.stop="showPopup=true" color="success" style="min-width: 120px;" class="mr-2">{{statusForButton}}</v-btn>
   <v-btn v-if="statusForButton === 'Reject'" @click.stop="showPopup=true" color="red" style="min-width: 120px;">{{statusForButton}}</v-btn>
+  <v-btn v-if="statusForButton === 'Cancel'" @click.stop="confirm" color="red" style="min-width: 120px;">{{statusForButton}}</v-btn>
   <v-dialog v-model="showPopup" max-width="500px">
     <v-card>
       <v-toolbar color="primary" dark>
