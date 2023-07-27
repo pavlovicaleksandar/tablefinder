@@ -39,7 +39,7 @@
             </v-row>
             <v-row style="display: flex; justify-content: flex-end;">
               <div class="reserve-now-btn mr-6 mt-15">
-                <ReservePopup v-if="user != null" :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
+                <ReservePopup v-if="user != null && user.role == 'Guest'" :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
                 <router-link  to="/login"><v-btn v-if="user == null" color="primary">Reserve now</v-btn></router-link>
               </div>
             </v-row>
@@ -204,7 +204,7 @@ export default {
   },
   computed: {
     isAddReviewEnabled() {
-      return this.user != null && this.reviews.find(review => review.username === this.user.username) === undefined
+      return this.user != null && this.reviews.find(review => review.username === this.user.username) === undefined && this.user.role == 'Guest'
     }
   }
 }

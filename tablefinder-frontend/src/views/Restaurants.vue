@@ -86,7 +86,7 @@
             <router-link :to="{ name: 'RestaurantDetails', params: { id: restaurant.id } }" style="text-decoration: none">
               <v-btn color="primary">View</v-btn>
             </router-link>
-            <ReservePopup v-if="loggedInUser != null" :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
+            <ReservePopup v-if="loggedInUser != null && loggedInUser.role == 'Guest'" :restaurant="{ id: restaurant.id, name: restaurant.name }"></ReservePopup>
             <router-link  to="/login"><v-btn v-if="loggedInUser == null" color="primary">Reserve now</v-btn></router-link>
           </v-card-actions>
         </v-card>
