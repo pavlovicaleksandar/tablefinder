@@ -21,11 +21,11 @@
               color="primary"
             ></v-select>
             <v-select
-              v-model="restaurant.moderatorUsername"
-              :items="moderators"
+              v-model="restaurant.managerUsername"
+              :items="managers"
               item-value="username"
               item-title="username"
-              label="Moderator"
+              label="Manager"
               color="primary"
             ></v-select>
             <v-textarea v-model="restaurant.description" label="Description" color="primary"></v-textarea>
@@ -69,7 +69,7 @@ export default {
       errorMessage: null,
       successMessage: null,
       loggedInUser: {},
-      moderators: [],
+      managers: [],
     };
   },
   mounted() {
@@ -80,7 +80,7 @@ export default {
     this.successMessage = null
     this.fetchTags()
     this.fetchRestaurantById()
-    this.fetchModerators()
+    this.fetchManagers()
   },
   methods: {
     fetchRestaurantById() {
@@ -94,10 +94,10 @@ export default {
           }
         }))
     },
-    fetchModerators() {
-      axios.get('http://localhost:8080/users/moderators')
+    fetchManagers() {
+      axios.get('http://localhost:8080/users/managers')
         .then(response => response.data)
-        .then(data => this.moderators = data)
+        .then(data => this.managers = data)
     },
     fetchTags() {
       axios.get('http://localhost:8080/tags')
@@ -105,7 +105,7 @@ export default {
         .then(data => this.tags = data)
     },
     editRestaurant() {
-      if (!this.restaurant.name || !this.restaurant.description || !this.restaurant.imageUrl || !this.restaurant.moderatorUsername) {
+      if (!this.restaurant.name || !this.restaurant.description || !this.restaurant.imageUrl || !this.restaurant.managerUsername) {
         this.errorMessage = "All fields marked with * are required"
         return
       }
@@ -115,7 +115,7 @@ export default {
         description: this.restaurant.description,
         imageUrl: this.restaurant.imageUrl,
         tags: this.restaurant.tags,
-        moderatorUsername: this.restaurant.moderatorUsername
+        managerUsername: this.restaurant.managerUsername
       };
 
       axios.put(`http://localhost:8080/restaurants/${this.restaurant.id}`, restaurantData)

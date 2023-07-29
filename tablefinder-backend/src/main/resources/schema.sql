@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
    ratings_sum INTEGER NOT NULL,
    number_of_prices INTEGER NOT NULL,
    prices_sum INTEGER NOT NULL,
-   moderator_username TEXT NOT NULL
+   manager_username TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS reservations (
@@ -66,36 +66,36 @@ INSERT INTO linked_tags values ('11e20fd9-a530-40cb-8890-628561c85021', '33e20fd
 
 INSERT INTO restaurants values('11e20fd9-a530-40cb-8890-628561c85021', 'Bistro Bar',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum, metus vitae luctus sagittis, enim sapien molestie purus, et luctus urna erat et nisi. Donec tincidunt massa eu justo iaculis gravida. In metus eros, iaculis vitae auctor faucibus, pellentesque vitae lectus. Proin consequat lorem nunc, ut sagittis ex pellentesque sit amet. Proin pharetra, leo nec porttitor sagittis, turpis magna fermentum quam, sed dignissim odio eros id neque. Vivamus varius ullamcorper ligula. Nulla quam purus, consectetur ut orci eu, feugiat accumsan leo. Integer sit amet nisi vel orci porttitor tristique. Etiam id magna sit amet lectus placerat convallis. Aenean imperdiet, nulla.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator3');
+                               0, 0, 0, 0, 'manager3');
 INSERT INTO restaurants values('22e20fd9-a530-40cb-8890-543561c85091', 'Vila Maska',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator2');
+                               0, 0, 0, 0, 'manager2');
 INSERT INTO restaurants values('33e52fd9-a530-40cb-8890-543561c85091', 'Kod Bore',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator2');
+                               0, 0, 0, 0, 'manager2');
 INSERT INTO restaurants values('44e52fd9-a530-40cb-8890-543561c85091', 'Medzik',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator1');
+                               0, 0, 0, 0, 'manager1');
 INSERT INTO restaurants values('55e52fd9-a530-40cb-8890-543561c85091', 'Terminal',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator3');
+                               0, 0, 0, 0, 'manager3');
 INSERT INTO restaurants values('66e52fd9-a530-40cb-8890-543561c85091', 'Budha Bar',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator1');
+                               0, 0, 0, 0, 'manager1');
 INSERT INTO restaurants values('77e52fd9-a530-40cb-8890-543561c85091', 'Skok po skok',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator1');
+                               0, 0, 0, 0, 'manager1');
 INSERT INTO restaurants values('88e52fd9-a530-40cb-8890-543561c85091', 'Babaroga',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator3');
+                               0, 0, 0, 0, 'manager3');
 INSERT INTO restaurants values('99e52fd9-a530-40cb-8890-543561c85091', 'Mozzarela Osteria',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
-                               0, 0, 0, 0, 'moderator1');
+                               0, 0, 0, 0, 'manager1');
 
 INSERT INTO users values('1165694f-ceef-46c4-b2bf-823f68066cb7', 'admin', 'user@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Admin', '+381658735283');
-INSERT INTO users values('22ba4c95-29c2-4672-b087-56e5f471a1df', 'moderator1', 'user11@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Moderator', '+381658735284');
-INSERT INTO users values('33ba4c95-29c2-4672-b087-56e5f471a1df', 'moderator2', 'user12@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Moderator', '+381658735284');
-INSERT INTO users values('44ba4c95-29c2-4672-b087-56e5f471a1df', 'moderator3', 'user13@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Moderator', '+381658735284');
+INSERT INTO users values('22ba4c95-29c2-4672-b087-56e5f471a1df', 'manager1', 'user11@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Manager', '+381658735284');
+INSERT INTO users values('33ba4c95-29c2-4672-b087-56e5f471a1df', 'manager2', 'user12@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Manager', '+381658735284');
+INSERT INTO users values('44ba4c95-29c2-4672-b087-56e5f471a1df', 'manager3', 'user13@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Manager', '+381658735284');
 INSERT INTO users values('55428af5-5158-4adc-a7f8-ce521719436c', 'guest1', 'user21@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Guest', '+381658735285');
 INSERT INTO users values('66428af5-5158-4adc-a7f8-ce521719436c', 'guest2', 'user22@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Guest', '+381658735285');
 

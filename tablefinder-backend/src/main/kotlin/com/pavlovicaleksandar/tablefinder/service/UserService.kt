@@ -32,8 +32,8 @@ class UserService(private val repository: UserRepository) {
     fun getAllUsers(): List<User> {
         return repository.findAll().toUserList()
     }
-    fun getAllModerators(): List<User> {
-        return repository.findAllModerators().toUserList()
+    fun getAllManagers(): List<User> {
+        return repository.findAllManagers().toUserList()
     }
 
     fun getUserByUsernameAndPassword(username: String, password: String): User? {
@@ -65,7 +65,7 @@ class UserService(private val repository: UserRepository) {
 
 enum class Role {
     Guest,
-    Moderator,
+    Manager,
     Admin
 }
 

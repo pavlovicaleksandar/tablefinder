@@ -66,9 +66,9 @@ class UserRepository(private val jdbcTemplate: NamedParameterJdbcTemplate) {
             rowMapper
         )
     }
-    fun findAllModerators(): List<UserRecord> {
+    fun findAllManagers(): List<UserRecord> {
         return jdbcTemplate.query(
-            "select * from users where role = 'Moderator'",
+            "select * from users where role = 'Manager'",
             rowMapper
         )
     }

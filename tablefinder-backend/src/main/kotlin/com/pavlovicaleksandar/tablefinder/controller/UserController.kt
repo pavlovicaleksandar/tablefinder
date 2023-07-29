@@ -86,9 +86,9 @@ class UserController(
         return ResponseEntity(users, HttpStatus.OK)
     }
 
-    @GetMapping("moderators")
-    fun getAllModerators(): ResponseEntity<List<User>> {
-        val users = service.getAllModerators()
+    @GetMapping("managers")
+    fun getAllManagers(): ResponseEntity<List<User>> {
+        val users = service.getAllManagers()
         return ResponseEntity(users, HttpStatus.OK)
     }
 

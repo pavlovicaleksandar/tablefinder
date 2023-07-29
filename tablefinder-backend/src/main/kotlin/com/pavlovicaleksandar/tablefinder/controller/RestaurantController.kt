@@ -67,7 +67,7 @@ data class UpdateRestaurantDTO(
     val description: String,
     val imageUrl: String,
     val tags: List<TagRecord>,
-    val moderatorUsername: String
+    val managerUsername: String
 )
 
 data class CreateRestaurantDTO(
@@ -75,7 +75,7 @@ data class CreateRestaurantDTO(
     val description: String,
     val imageUrl: String,
     val tags: List<TagRecord>,
-    val moderatorUsername: String
+    val managerUsername: String
 )
 
 data class RestaurantResponseDTO(
@@ -90,7 +90,7 @@ data class RestaurantResponseDTO(
     val rating: Double,
     val price: Int,
     val tags: List<LinkedTagRecord>,
-    val moderatorUsername: String
+    val managerUsername: String
 )
 
 private fun List<Restaurant>.toRestaurantResponseDTO(): List<RestaurantResponseDTO> {
@@ -112,6 +112,6 @@ private fun Restaurant.toRestaurantResponseDTO(): RestaurantResponseDTO {
         rating = if (this.numberOfRatings != 0) this.ratingsSum.div(this.numberOfRatings.toDouble()) else 0.0,
         price = (if (this.numberOfPrices != 0) this.pricesSum.div(this.numberOfPrices.toDouble()) else 0.0).roundToInt(),
         tags = this.tags,
-        moderatorUsername = moderatorUsername
+        managerUsername = managerUsername
     )
 }

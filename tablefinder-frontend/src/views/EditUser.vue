@@ -12,7 +12,7 @@
           </v-toolbar>
           <v-card-text>
             <v-text-field readonly v-model="user.username" label="Username" required color="primary"></v-text-field>
-            <v-select v-model="user.role" :items="['Guest', 'Moderator', 'Admin']" label="Role" color="primary"></v-select>
+            <v-select v-model="user.role" :items="['Guest', 'Manager', 'Admin']" label="Role" color="primary"></v-select>
             <v-text-field v-model="user.email" label="Email" color="primary"></v-text-field>
             <v-text-field v-model="user.phoneNumber" label="Phone Number" color="primary"></v-text-field>
             <v-text-field v-model="newPassword" label="New password" type="password" color="primary"></v-text-field>

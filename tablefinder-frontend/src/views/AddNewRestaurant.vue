@@ -26,11 +26,11 @@
                 color="primary"
               ></v-select>
               <v-select
-                v-model="selectedModerator"
-                :items="moderators"
+                v-model="selectedManager"
+                :items="managers"
                 item-value="username"
                 item-title="username"
-                label="Moderator"
+                label="Manager"
                 color="primary"
               ></v-select>
               <v-textarea color="primary" v-model="description"  label="Description" variant="outlined" base-color="primary"></v-textarea>
@@ -64,8 +64,8 @@ export default {
       imageUrl: '',
       tags: [],
       selectedTags: [],
-      moderators: [],
-      selectedModerator: null,
+      managers: [],
+      selectedManager: null,
       loggedInUser: {},
       errorMessage: null
     };
@@ -75,7 +75,7 @@ export default {
       this.loggedInUser = userInfo
     })
     this.fetchTags()
-    this.fetchModerators()
+    this.fetchManagers()
   },
   methods: {
     fetchTags() {
@@ -83,13 +83,13 @@ export default {
         .then(response => response.data)
         .then(data => this.tags = data)
     },
-    fetchModerators() {
-      axios.get('http://localhost:8080/users/moderators')
+    fetchManagers() {
+      axios.get('http://localhost:8080/users/managers')
         .then(response => response.data)
-        .then(data => this.moderators = data)
+        .then(data => this.managers = data)
     },
     addNewRestaurant() {
-      if (!this.name || !this.description || !this.imageUrl || !this.selectedModerator) {
+      if (!this.name || !this.description || !this.imageUrl || !this.selectedManager) {
         this.errorMessage = "All fields marked with * are required"
         return
       }
@@ -99,7 +99,7 @@ export default {
         description: this.description,
         imageUrl: this.imageUrl,
         tags: this.selectedTags,
-        moderatorUsername: this.selectedModerator
+        managerUsername: this.selectedManager
       };
       console.log(JSON.stringify(restaurantData))
       axios.post('http://localhost:8080/restaurants', restaurantData)

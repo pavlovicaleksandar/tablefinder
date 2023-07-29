@@ -25,10 +25,10 @@ class ReservationService(
                     it.toReservation(user.username, restaurant.name)
                 }
             }
-            Role.Moderator -> {
+            Role.Manager -> {
                 reservationRepository.findAll().filter {
                     val restaurant = restaurantRepository.findById(it.restaurantId)!!
-                    restaurant.moderatorUsername ==userInfo.username
+                    restaurant.managerUsername ==userInfo.username
                 }.map {
                     val user = userRepository.findById(it.userId)
                     val restaurant = restaurantRepository.findById(it.restaurantId)

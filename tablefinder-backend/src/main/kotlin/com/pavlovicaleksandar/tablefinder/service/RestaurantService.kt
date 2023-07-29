@@ -19,8 +19,8 @@ class RestaurantService(private val repository: RestaurantRepository, private va
 
             rating >= ratingFilter && (price.roundToInt() == priceFilter || priceFilter == 0)
         }.filter {
-            if (userInfo.role == Role.Moderator) {
-                it.moderatorUsername == userInfo.username
+            if (userInfo.role == Role.Manager) {
+                it.managerUsername == userInfo.username
             } else {
                 true
             }
@@ -56,7 +56,7 @@ class RestaurantService(private val repository: RestaurantRepository, private va
             name = dto.name,
             description = dto.description,
             imageUrl = dto.imageUrl,
-            moderatorUsername = dto.moderatorUsername
+            managerUsername = dto.managerUsername
         )
         repository.updateRestaurant(newRestaurantRecord)
         tagRepository.deleteAllForRestaurantWith(restaurantId)
@@ -77,7 +77,7 @@ fun CreateRestaurantDTO.toRestaurantRecord(): RestaurantRecord {
         ratingsSum = 0,
         numberOfPrices = 0,
         pricesSum = 0,
-        moderatorUsername = this.moderatorUsername
+        managerUsername = this.managerUsername
     )
 }
 private fun RestaurantRecord.toRestaurant(linkedTags: MutableList<LinkedTagRecord>): Restaurant {
@@ -91,7 +91,7 @@ private fun RestaurantRecord.toRestaurant(linkedTags: MutableList<LinkedTagRecor
         numberOfPrices = this.numberOfPrices,
         numberOfRatings = this.numberOfRatings,
         tags = linkedTags.toList(),
-        moderatorUsername = this.moderatorUsername
+        managerUsername = this.managerUsername
     )
 }
 
@@ -105,6 +105,6 @@ data class Restaurant(
     val ratingsSum: Int,
     val pricesSum: Int,
     val tags: List<LinkedTagRecord>,
-    val moderatorUsername: String
+    val managerUsername: String
 )
 
