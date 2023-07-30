@@ -66,7 +66,9 @@
             Number of reviews: ({{ restaurant.numberOfRatings }})
           </v-card-text>
           <v-card-text>Price: {{ ['N/A', '$', '$$', '$$$'].at(restaurant.price) }}</v-card-text>
-          <v-img :src="restaurant.imageUrl" class="restaurant-img" contain></v-img>
+          <v-card-text>
+            <v-img :src="restaurant.imageUrl" class="restaurant-img"></v-img>
+          </v-card-text>
           <v-card-actions>
             <v-menu v-if="loggedInUser != null && loggedInUser.role !== 'Guest'">
               <template v-slot:activator="{ props }">
@@ -188,4 +190,3 @@ export default {
   }
 }
 </script>
-

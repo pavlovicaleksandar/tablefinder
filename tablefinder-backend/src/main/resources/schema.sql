@@ -60,12 +60,25 @@ CREATE TABLE IF NOT EXISTS linked_tags (
 INSERT INTO tags values ('11e20fd9-a530-40cb-8890-628561c85021', 'Greek food');
 INSERT INTO tags values ('22e20fd9-a530-40cb-8890-628561c85021', 'Italian food');
 INSERT INTO tags values ('33e20fd9-a530-40cb-8890-628561c85021', 'Serbian food');
+INSERT INTO tags values ('34e20fd9-a530-40cb-8890-628561c85021', 'Italian Cuisine');
+INSERT INTO tags values ('35e20fd9-a530-40cb-8890-628561c85021', 'Chinese Cuisine');
+INSERT INTO tags values ('36e20fd9-a530-40cb-8890-628561c85021', 'Mexican Cuisine');
+INSERT INTO tags values ('37e20fd9-a530-40cb-8890-628561c85021', 'Indian Cuisine');
+INSERT INTO tags values ('38e20fd9-a530-40cb-8890-628561c85021', 'Thai Cuisine');
+INSERT INTO tags values ('39e20fd9-a530-40cb-8890-628561c85021', 'Vegan Options');
+INSERT INTO tags values ('40e20fd9-a530-40cb-8890-628561c85021', 'Vegetarian Options');
+INSERT INTO tags values ('41e20fd9-a530-40cb-8890-628561c85021', 'Gluten-Free Options');
+INSERT INTO tags values ('43e20fd9-a530-40cb-8890-628561c85021', 'Outdoor Seating');
+INSERT INTO tags values ('44e20fd9-a530-40cb-8890-628561c85021', 'Wi-Fi Access');
+INSERT INTO tags values ('45e20fd9-a530-40cb-8890-628561c85021', 'Family-Friendly');
+INSERT INTO tags values ('48e20fd9-a530-40cb-8890-628561c85021', 'Parking Available');
+INSERT INTO tags values ('49e20fd9-a530-40cb-8890-628561c85021', 'Pet-Friendly');
 
 INSERT INTO linked_tags values ('11e20fd9-a530-40cb-8890-628561c85021', '22e20fd9-a530-40cb-8890-628561c85021', 'Italian food');
 INSERT INTO linked_tags values ('11e20fd9-a530-40cb-8890-628561c85021', '33e20fd9-a530-40cb-8890-628561c85021', 'Serbian food');
 
-INSERT INTO restaurants values('11e20fd9-a530-40cb-8890-628561c85021', 'Bistro Bar',
-                               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum, metus vitae luctus sagittis, enim sapien molestie purus, et luctus urna erat et nisi. Donec tincidunt massa eu justo iaculis gravida. In metus eros, iaculis vitae auctor faucibus, pellentesque vitae lectus. Proin consequat lorem nunc, ut sagittis ex pellentesque sit amet. Proin pharetra, leo nec porttitor sagittis, turpis magna fermentum quam, sed dignissim odio eros id neque. Vivamus varius ullamcorper ligula. Nulla quam purus, consectetur ut orci eu, feugiat accumsan leo. Integer sit amet nisi vel orci porttitor tristique. Etiam id magna sit amet lectus placerat convallis. Aenean imperdiet, nulla.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
+INSERT INTO restaurants values('11e20fd9-a530-40cb-8890-628561c85021', 'Dva Jelena',
+                               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rutrum, metus vitae luctus sagittis, enim sapien molestie purus, et luctus urna erat et nisi. Donec tincidunt massa eu justo iaculis gravida. In metus eros, iaculis vitae auctor faucibus, pellentesque vitae lectus. Proin consequat lorem nunc, ut sagittis ex pellentesque sit amet. Proin pharetra, leo nec porttitor sagittis, turpis magna fermentum quam, sed dignissim odio eros id neque. Vivamus varius ullamcorper ligula. Nulla quam purus, consectetur ut orci eu, feugiat accumsan leo. Integer sit amet nisi vel orci porttitor tristique. Etiam id magna sit amet lectus placerat convallis. Aenean imperdiet, nulla.', 'https://www.restoranibeograd.com/storage/restaurant/interior/19/restoran_dva_jelena_31.jpg',
                                0, 0, 0, 0, 'manager3');
 INSERT INTO restaurants values('22e20fd9-a530-40cb-8890-543561c85091', 'Vila Maska',
                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec euismod mi. Vivamus pulvinar eros at felis euismod ullamcorper. Aenean nulla ex, gravida in molestie vitae, elementum congue odio. Vestibulum id interdum ex, ut fringilla nulla. Curabitur turpis orci, vestibulum id ante sed, dapibus mattis turpis. Donec fermentum mauris nec.', 'https://lh3.googleusercontent.com/p/AF1QipNrrwiOJpDrs_Rf3HpSxvyBlOqt4Kyfd_Q6Bb9a=s680-w680-h510',
