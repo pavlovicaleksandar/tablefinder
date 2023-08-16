@@ -43,7 +43,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/EditUser.vue'),
         props: true,
         beforeEnter: (to, from) => {
-          // reject the navigation
           getCurrentlyLoggedInUser().then(userInfo => {
             if (userInfo == null) {
               window.location.href = '/login'
@@ -57,7 +56,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/EditRestaurant.vue'),
         props: true,
         beforeEnter: (to, from) => {
-          // reject the navigation
           getCurrentlyLoggedInUser().then(userInfo => {
             if (userInfo == null) {
               window.location.href = '/login'

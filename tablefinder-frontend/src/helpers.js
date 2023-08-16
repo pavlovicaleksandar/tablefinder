@@ -1,8 +1,6 @@
 import axios from "axios";
 
 export async function getCurrentlyLoggedInUser() {
-    // const response = await axios.get(`http://localhost:8080/users/userInfo`)
-    // return response.data
 
   return axios.get(`http://localhost:8080/users/userInfo`)
   .then(async response => {

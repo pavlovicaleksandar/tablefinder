@@ -7,8 +7,8 @@
             <v-toolbar-title>Edit restaurant</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-text-field v-model="restaurant.name" label="Name" color="primary"></v-text-field>
-            <v-text-field v-model="restaurant.imageUrl" label="Image url" color="primary"></v-text-field>
+            <v-text-field v-model="restaurant.name" label="*Name" color="primary"></v-text-field>
+            <v-text-field v-model="restaurant.imageUrl" label="*Image url" color="primary"></v-text-field>
             <v-select
               v-model="restaurant.tags"
               :items="tags"
@@ -21,14 +21,15 @@
               color="primary"
             ></v-select>
             <v-select
+              v-if="loggedInUser.role == 'Admin'"
               v-model="restaurant.managerUsername"
               :items="managers"
               item-value="username"
               item-title="username"
-              label="Manager"
+              label="*Manager"
               color="primary"
             ></v-select>
-            <v-textarea v-model="restaurant.description" label="Description" color="primary"></v-textarea>
+            <v-textarea v-model="restaurant.description" label="*Description" color="primary"></v-textarea>
             <v-card-text v-if="errorMessage != null" class="mt-n6">
               <v-alert color="error">
                 {{errorMessage}}

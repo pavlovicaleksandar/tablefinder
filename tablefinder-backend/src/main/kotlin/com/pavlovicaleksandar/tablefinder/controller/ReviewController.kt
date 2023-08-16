@@ -5,6 +5,7 @@ import com.pavlovicaleksandar.tablefinder.service.ReviewService
 import java.util.UUID
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.noContent
+import org.springframework.http.ResponseEntity.ok
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController
 class ReviewController(private val service: ReviewService) {
 
     @GetMapping("{restaurantId}")
-    fun getReviewsByRestaurantId(@PathVariable restaurantId: UUID): List<ReviewResponseDTO> {
-        return service.getReviewsByRestaurantId(restaurantId).toReviewResponseDTO()
+    fun getReviewsByRestaurantId(@PathVariable restaurantId: UUID): ResponseEntity<List<ReviewResponseDTO>> {
+        return ok(service.getReviewsByRestaurantId(restaurantId).toReviewResponseDTO())
     }
 
     @PostMapping
@@ -31,7 +32,7 @@ class ReviewController(private val service: ReviewService) {
     }
 
     @DeleteMapping("{reviewId}")
-    fun createReview(@PathVariable reviewId: UUID): ResponseEntity<Unit> {
+    fun deleteReview(@PathVariable reviewId: UUID): ResponseEntity<Unit> {
         service.deleteReview(reviewId)
         return noContent().build()
     }

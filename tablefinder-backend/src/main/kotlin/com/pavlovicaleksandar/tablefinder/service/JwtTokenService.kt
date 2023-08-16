@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class JwtTokenService (
-    @Value("\${jwt.secret}")
-    private val secret: String,
     private val jwtDecoder: JwtDecoder,
     private val jwtEncoder: JwtEncoder,
 ) {
